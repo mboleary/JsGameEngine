@@ -16,6 +16,11 @@ export default class Script {
     loop() {
 
     }
+
+    // Override this to do Physics stuff
+    physicsLoop() {
+
+    }
 }
 
 export class AsyncScript extends Script {

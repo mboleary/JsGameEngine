@@ -31,12 +31,3 @@ function getGameObjectChildren(go) {
     return toRet;
 }
 
-// Gets all GameObjects with Scripts
-export function GetGameObjectsWithScripts(gos) {
-    let toRet = [];
-    gos.forEach((go) => {
-        if (go.scripts && go.scripts.length) {
-            toRet.push(go);
-        }
-    });
-}

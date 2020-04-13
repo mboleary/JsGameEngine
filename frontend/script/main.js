@@ -1,10 +1,12 @@
 import { canvas, initUI, toggleOverlay } from './ui.js';
 
-import { initGameLoop, setCurrentScene } from './engine/Engine.js';
+import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime } from './engine/Engine.js';
 
 import Scene from './engine/Scene.js';
 
 import GameObject from './engine/GameObject.js';
+
+import Script from './engine/Script.js';
 
 import SpriteSheet from './engine/SpriteSheet.js';
 
@@ -23,6 +25,21 @@ function main() {
         let go = new GameObject();
 
         go.texture = spritesheet.sheet.get(15);
+
+        go.transform.position.x = 5;
+
+        let script = new Script();
+
+        script.init = () => {
+            console.log("Script Initialized");
+        }
+
+        script.loop = function() {
+            let movementAmt = 5;
+            go.transform.position.x += movementAmt * (deltaTime/TARGET_MILLIS_PER_FRAME);
+        }.bind(script)
+
+        go.scripts.push(script);
         
         console.log(go);
         

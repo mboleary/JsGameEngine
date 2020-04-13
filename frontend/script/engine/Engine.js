@@ -4,6 +4,8 @@
 
 import { renderGameObjectsWith2dContext, initializeWith2dContext } from './Render.js';
 
+import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager.js';
+
 let gameLoopStarted = false;
 let stopLoop = null; // Magic reference to stop the game Loop
 let currScene = null; // Current Scene to be rendering
@@ -11,10 +13,18 @@ let currScene = null; // Current Scene to be rendering
 let gameObjects = []; // Game Objects to process each loop
 let gameObjectsIDs = new Set(); // Contains all GameObject IDs onscreen
 
+export let deltaTime = 0; // Number of Milliseconds the previous frame took to render
+export const TARGET_MILLIS_PER_FRAME = 16; // 60fps -> ~16 milliseconds
+let prevTime = 0;
+let currTime = 0;
+
 export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
     initializeWith2dContext();
+    initGameObjectScripts(gameObjects);
+
     gameLoopStarted = true;
+    currTime = window.performance.now();
     main();
 }
 
@@ -51,8 +61,14 @@ export function deleteGameObject(go) {
     });
 }
 
+
+
 // Game Loop
 function main() {
+    // Update Delta Time
+    prevTime = currTime;
+    currTime = window.performance.now();
+    deltaTime = currTime - prevTime;
 
     stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
 
@@ -62,6 +78,7 @@ function main() {
     // Get Input
 
     // Run the GameObject Scripts
+    processGameObjectScripts(gameObjects);
 
     // Do GameObject Physics
 

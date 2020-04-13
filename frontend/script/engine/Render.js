@@ -11,7 +11,7 @@ export function initializeWith2dContext() {
 }
 
 export function renderGameObjectsWith2dContext(gos) {
-    
+    context.clearRect(0, 0, canvas.clientWidth, canvas.height);
     gos.forEach((go) => {
         if (go.texture) {
             let pos = go.transform.position;
