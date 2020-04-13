@@ -23,7 +23,7 @@ export default class Script {
     }
 }
 
-export class AsyncScript extends Script {
+export const AsyncScript = Base => class extends Base {
     // override this to get an async Loop
     async asyncLoop() {
 
@@ -39,4 +39,22 @@ export class AsyncScript extends Script {
             this.asyncLoop();
         });
     }
+}
+
+// Provide a class misin that allows all code for a GameObject to be in one place
+export const GameObjectWithScript = Base => class extends Base {
+    constructor() {
+        super();
+        this.internalScript = new Script();
+        this.internalScript.init = this.init;
+        this.internalScript.loop = this.loop;
+        this.internalScript.physicsLoop = this.physicsLoop;
+        this.scripts.push(this.internalScript);
+    }
+
+    init() { }
+
+    loop() { }
+
+    physicsLoop() { }
 }

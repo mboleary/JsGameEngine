@@ -10,13 +10,15 @@ import Script from './engine/Script.js';
 
 import SpriteSheet from './engine/SpriteSheet.js';
 
-let stopFrame = null;
-
+// TEST
+import OPTIONS from '../asset/testOptions.js';
 
 function main() {
     initUI();
 
-    let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
+    // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
+    let spritesheet = new SpriteSheet();
+    spritesheet.importFromOptions(OPTIONS);
     spritesheet.ready.then(() => {
 
         // Set the Scene
@@ -24,7 +26,7 @@ function main() {
         
         let go = new GameObject();
 
-        go.texture = spritesheet.sheet.get(15);
+        go.texture = spritesheet.sheet.get("goomba_1");
 
         go.transform.position.x = 5;
 
