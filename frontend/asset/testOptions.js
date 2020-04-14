@@ -8,7 +8,7 @@ export default {
         {
             name: "goomba_1",
             x: 0,
-            y: 0,
+            y: 16,
             width: 16,
             height: 16,
             scaleX: 1,
@@ -17,7 +17,7 @@ export default {
         {
             name: "goomba_2",
             x: 16,
-            y: 0,
+            y: 16,
             width: 16,
             height: 16,
             scaleX: 1,
@@ -25,8 +25,8 @@ export default {
         },
         {
             name: "goomba_squish",
-            x: 24,
-            y: 0,
+            x: 32,
+            y: 16,
             width: 16,
             height: 16,
             scaleX: 1,

@@ -8,6 +8,12 @@ export default class Transform {
         this.rotation = new Three(0, 0, 0);
         this.scale = new Three(1, 1, 1);
     }
+
+    deepCopy(transform) {
+        this.position = new Three(transform.position.x, transform.position.y, transform.position.z);
+        this.rotation = new Three(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+        this.scale = new Three(transform.scale.x, transform.scale.y, transform.scale.z);
+    }
 }
 
 /**

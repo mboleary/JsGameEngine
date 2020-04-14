@@ -6,11 +6,14 @@ let resolve = null;
 let reject = null;
 
 export default class SpriteSheet {
-    // Use this if all of the sprites are the same dimensions
-    constructor(fpath, width, height) {
+    
+    constructor() {
         this.image = new Image();
         this.sheet = new Map();
+    }
 
+    // Use this if all of the sprites are the same dimensions
+    importFromPath(fpath, width, height) {
         if (fpath && width && height) {
             this.image.src = fpath;
             this.spriteWidth = width;
@@ -19,8 +22,9 @@ export default class SpriteSheet {
                 resolve = res;
                 reject = rej;
                 this.image.onload = generateSpriteSheet.bind(this);
-                
+                this.image.onerror = rej;
             });
+            return this.ready;
         }
     }
 
@@ -33,11 +37,11 @@ export default class SpriteSheet {
                 resolve = res;
                 reject = rej;
                 this.image.onload = generateSpriteSheetWithOptions.bind(this);
+                this.image.onerror = rej;
             });
+            return this.ready;
         }
     }
-    
-    
 }
 
 function generateSpriteSheet() {

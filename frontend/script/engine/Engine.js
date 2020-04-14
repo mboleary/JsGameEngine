@@ -6,6 +6,8 @@ import { renderGameObjectsWith2dContext, initializeWith2dContext } from './Rende
 
 import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager.js';
 
+import SpriteSheet from './SpriteSheet.js';
+
 let gameLoopStarted = false;
 let stopLoop = null; // Magic reference to stop the game Loop
 let currScene = null; // Current Scene to be rendering
@@ -18,6 +20,9 @@ export const TARGET_MILLIS_PER_FRAME = 16; // 60fps -> ~16 milliseconds
 let prevTime = 0;
 let currTime = 0;
 
+export const spriteSheet = new SpriteSheet();
+
+// Starts the Game Loop
 export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
     initializeWith2dContext();
@@ -49,6 +54,7 @@ export function deleteGameObject(go) {
     if (!gameObjectsIDs.has(go.id)) return;
     setTimeout(() => {
         gameObjectsIDs.delete(go.id);
+        // @TODO Delete from the parent, and also delete the children
         // for ( let i = 0; i < gameObjects.length; i++) {
         //     let item = gameObjects[i];
         //     if (item.id === go.id) {

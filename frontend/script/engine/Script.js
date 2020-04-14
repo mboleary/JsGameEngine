@@ -46,10 +46,12 @@ export const GameObjectWithScript = Base => class extends Base {
     constructor() {
         super();
         this.internalScript = new Script();
-        this.internalScript.init = this.init;
-        this.internalScript.loop = this.loop;
-        this.internalScript.physicsLoop = this.physicsLoop;
+        // Binding to the new 'this' is a must for inheritance to work properly
+        this.internalScript.init = this.init.bind(this);
+        this.internalScript.loop = this.loop.bind(this);
+        this.internalScript.physicsLoop = this.physicsLoop.bind(this);
         this.scripts.push(this.internalScript);
+        this.gameObject = this;
     }
 
     init() { }

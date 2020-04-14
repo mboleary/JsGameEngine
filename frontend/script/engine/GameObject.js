@@ -28,6 +28,12 @@ export default class GameObject {
         this.children.push(go);
     }
 
+    attachScript(scr) {
+        scr.gameObject = this;
+        this.scripts.push(scr);
+        scr.init();
+    }
+
     // // Queue this GameObject for deletion
     // destroy() {
 
