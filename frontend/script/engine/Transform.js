@@ -14,6 +14,8 @@ export default class Transform {
         this.rotation = new Three(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         this.scale = new Three(transform.scale.x, transform.scale.y, transform.scale.z);
     }
+
+    // @TODO Figure out a way to get coordinates for rendering things
 }
 
 /**

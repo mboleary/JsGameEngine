@@ -41,30 +41,81 @@ export function setCurrentScene(scene) {
     })
 }
 
+// @TODO Also enroll the Children too!
 export function enrollGameObject(go) {
     if (!go) return;
     // Check for ID
     if (gameObjectsIDs.has(go.id)) return;
-    gameObjects.push(go);
-    gameObjectsIDs.add(go.id);
+    setTimeout(() => {
+        gameObjects.push(go);
+        gameObjectsIDs.add(go.id);
+        initGameObjectScripts([go]);
+    })
 }
 
 export function deleteGameObject(go) {
     if (!go) return;
     if (!gameObjectsIDs.has(go.id)) return;
+    // Done after the Loop, since we don't want to modify the array while it's being accessed
     setTimeout(() => {
         gameObjectsIDs.delete(go.id);
-        // @TODO Delete from the parent, and also delete the children
-        // for ( let i = 0; i < gameObjects.length; i++) {
-        //     let item = gameObjects[i];
-        //     if (item.id === go.id) {
+        let toDel = null;
 
-        //     }
-        // }
+        // Delete Entry in Array
+        for (let i = 0; i < gameObjects.length; i++) {
+            let item = gameObjects[i];
+            if (item.id === go.id) {
+                toDel = gameObjects[i];
+                gameObjects.splice(i, 1);
+                break;
+            }
+        }
 
-        // @TODO Test this
-        gameObjects.splice(gameObjects.indexOf(go), 1);
+        if (!toDel) return; // Item was not found
+
+        // Delete Parent's child instance (if any)
+        if (toDel.parent != null && toDel.parent.children && toDel.parent.children.length) {
+            for (let i = 0; i < toDel.parent.children.length; i++) {
+                let item = toDel.parent.children[i];
+                if (item.id === go.id) {
+                    toDel.parent.children.splice(i, 1);
+                    break;
+                }
+            }
+        }
+
+        // Delete the Children from the Array
+        if (toDel.children && toDel.children.length) {
+            let idsToFind = [];
+            for (let i = 0; i < toDel.children.length; i++) {
+                let ids = getChildIDs(toDel.children[i]);
+                ids.forEach((item) => idsToFind.push(item));
+            }
+            for (let i = 0; i < gameObjects.length && idsToFind.length > 0; i++) {
+                for (let j = 0; j < idsToFind.length; j++) {
+                    if (gameObjects[i].id === idsToFind[j]) {
+                        idsToFind.splice(j, 1);
+                        gameObjects.splice(i, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+        }
+        
     });
+}
+
+function getChildIDs(go) {
+    let toRet = [];
+    toRet.push(go.id);
+    if (go.children && go.children.length) {
+        go.children.forEach((child) => {
+            let res = getChildIDs(child);
+            res.forEach(item => toRet.push(item));
+        });
+    }
+    return toRet;
 }
 
 
@@ -87,5 +138,12 @@ function main() {
     processGameObjectScripts(gameObjects);
 
     // Do GameObject Physics
+
+    // @TODO Remove this
+    if (gameObjects.length > 10000) {
+        console.log("Over 10 Thousand Objects");
+    } else if (gameObjects.length > 100000) {
+        console.log("Over 100 Thousand Objects");
+    }
 
 }
