@@ -34,13 +34,12 @@ export default class GameObject {
         scr.init();
     }
 
-    // // Queue this GameObject for deletion
-    // destroy() {
-
-    // }
-
-    // // Add a script during runtime, and enroll in the engine
-    // addScript() {
-
-    // }
+    // Called before this GameObject is deleted
+    beforeDestroy() {
+        if (this.scripts && this.scripts.length) {
+            this.scripts.forEach((script) => {
+                script.onDestroy();
+            });
+        }
+    }
 }

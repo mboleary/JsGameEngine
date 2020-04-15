@@ -66,6 +66,7 @@ export function deleteGameObject(go) {
             let item = gameObjects[i];
             if (item.id === go.id) {
                 toDel = gameObjects[i];
+                toDel.beforeDestroy();
                 gameObjects.splice(i, 1);
                 break;
             }
@@ -78,6 +79,7 @@ export function deleteGameObject(go) {
             for (let i = 0; i < toDel.parent.children.length; i++) {
                 let item = toDel.parent.children[i];
                 if (item.id === go.id) {
+                    item.beforeDestroy();
                     toDel.parent.children.splice(i, 1);
                     break;
                 }
@@ -94,6 +96,7 @@ export function deleteGameObject(go) {
             for (let i = 0; i < gameObjects.length && idsToFind.length > 0; i++) {
                 for (let j = 0; j < idsToFind.length; j++) {
                     if (gameObjects[i].id === idsToFind[j]) {
+                        gameObjects[i].beforeDestroy();
                         idsToFind.splice(j, 1);
                         gameObjects.splice(i, 1);
                         i--;

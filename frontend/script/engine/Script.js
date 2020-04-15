@@ -21,6 +21,11 @@ export default class Script {
     physicsLoop() {
 
     }
+
+    // Called before the object is destroyed
+    onDestroy() {
+
+    }
 }
 
 export const AsyncScript = Base => class extends Base {
@@ -50,6 +55,7 @@ export const GameObjectWithScript = Base => class extends Base {
         this.internalScript.init = this.init.bind(this);
         this.internalScript.loop = this.loop.bind(this);
         this.internalScript.physicsLoop = this.physicsLoop.bind(this);
+        this.internalScript.onDestroy = this.onDestroy.bind(this);
         this.scripts.push(this.internalScript);
         this.gameObject = this;
     }
@@ -59,4 +65,6 @@ export const GameObjectWithScript = Base => class extends Base {
     loop() { }
 
     physicsLoop() { }
+
+    onDestroy() { }
 }

@@ -14,6 +14,7 @@ import OPTIONS from '../asset/testOptions.js';
 import Test from './game/Test.js';
 
 function main() {
+    window.numGoombas = 0;
     initUI();
 
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);

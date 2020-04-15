@@ -7,7 +7,7 @@ import Animation from '../engine/Animation.js';
 
 import Transform from '../engine/Transform.js';
 
-const birth = 50; //500
+const birth = 75; //500
 
 const squish = 2000; //4000
 
@@ -74,5 +74,10 @@ export default class Test extends GameObjectWithScript(GameObject) {
         } else if (now - this.deathTimer > death) {
             deleteGameObject(this);
         }
+    }
+
+    onDestroy() {
+        // console.log("Destroyed");
+        window.numGoombas++;
     }
 }
