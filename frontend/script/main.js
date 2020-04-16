@@ -13,10 +13,23 @@ import OPTIONS from '../asset/testOptions.js';
 
 import Test from './game/Test.js';
 
+import ControllerTest from './game/ControllerTest.js';
+
+import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './engine/Input.js';
+
 function main() {
     window.numGoombas = 0;
     initUI();
 
+    window.debug = {};
+    window.debug.defineKey = defineKey;
+    window.debug.TYPE_DIGITAL = TYPE_DIGITAL;
+    window.debug.setKeyOnNextInput = setKeyOnNextInput;
+    window.debug.getAllKeys = getAllKeys;
+    window.debug.setKeybindings = setKeybindings;
+    
+    defineKey("test", TYPE_DIGITAL);
+    setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
     spriteSheet.importFromOptions(OPTIONS);
     spriteSheet.ready.then(() => {
@@ -48,9 +61,11 @@ function main() {
 
         let go = new Test();
         
-        console.log("New GameObject:", go);
-        
         scene.attachGameObject(go);
+
+        let ctest = new ControllerTest();
+
+        scene.attachGameObject(ctest);
         
         setCurrentScene(scene);
         

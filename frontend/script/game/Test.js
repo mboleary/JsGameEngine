@@ -7,7 +7,9 @@ import Animation from '../engine/Animation.js';
 
 import Transform from '../engine/Transform.js';
 
-const birth = 75; //500
+import { getKeyState } from '../engine/Input.js';
+
+const birth = 100; //500
 
 const squish = 2000; //4000
 
@@ -49,6 +51,9 @@ export default class Test extends GameObjectWithScript(GameObject) {
     }
 
     loop() {
+        if (getKeyState("test") === 1) {
+            this.direction = (this.direction + 1) % 2;
+        }
         let now = window.performance.now();
         if (now - this.squishedTimer > squish) {
             this.squished = true;
