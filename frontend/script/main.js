@@ -29,6 +29,10 @@ function main() {
     window.debug.setKeybindings = setKeybindings;
     
     defineKey("test", TYPE_DIGITAL);
+    defineKey("up", TYPE_DIGITAL);
+    defineKey("down", TYPE_DIGITAL);
+    defineKey("left", TYPE_DIGITAL);
+    defineKey("right", TYPE_DIGITAL);
     setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
     spriteSheet.importFromOptions(OPTIONS);

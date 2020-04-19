@@ -6,6 +6,8 @@ import { renderGameObjectsWith2dContext, initializeWith2dContext } from './Rende
 
 import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager.js';
 
+import { pollGamepads, initInput } from './Input.js';
+
 import SpriteSheet from './SpriteSheet.js';
 
 let gameLoopStarted = false;
@@ -25,6 +27,7 @@ export const spriteSheet = new SpriteSheet();
 // Starts the Game Loop
 export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
+    initInput();
     initializeWith2dContext();
     initGameObjectScripts(gameObjects);
 
@@ -136,6 +139,7 @@ function main() {
     renderGameObjectsWith2dContext(gameObjects);
 
     // Get Input
+    pollGamepads();
 
     // Run the GameObject Scripts
     processGameObjectScripts(gameObjects);
