@@ -69,11 +69,11 @@ function setKeyFromGamepad(name, deviceID, buttonID, axisID, axisPositive) {
                 // Axis -> Button
                 if (!keymap[deviceID][1][axisID] || Object.keys(keymap[deviceID][1][axisID]).length === 0) keymap[deviceID][1][axisID] = {};
                 if (axisPositive) {
-                    keymap[deviceID][1][axisID][1] = name;
-                    res.mapping = [deviceID, 1, buttonID, 1];
+                    keymap[deviceID][1][axisID]["pos"] = name;
+                    res.mapping = [deviceID, 1, buttonID, "pos"];
                 } else {
-                    keymap[deviceID][1][axisID][0] = name;
-                    res.mapping = [deviceID, 1, buttonID, 0];
+                    keymap[deviceID][1][axisID]["neg"] = name;
+                    res.mapping = [deviceID, 1, buttonID, "neg"];
                 }
                 res.mappingName = "Axis " + buttonID + (axisPositive ? "+" : "-");
                 console.log(keymap[deviceID])
@@ -296,24 +296,39 @@ export function pollGamepads() {
                     for (let j = 0; j < gp.axes.length; j++) {
                         let axis = gp.axes[j];
                         let axisSetting = keymap[gp.id][1][j]; // Either a keyname, or Object
-                        if (axisSetting && axis !== 0) {
-                            console.log("AXIS SETTINGS:", axisSetting);
-                            if (axisSetting.length > 0) {
-                                // This is an axis bound to a button
-                                if (axis > 0 && axisSetting[1]) {
-                                    keystate[axisSetting[1]] = 1;
-                                    if (axisSetting[0]) {
-                                        keystate[axisSetting[0]] = 0;
+                        if (axisSetting) {
+                            // @TODO Check Dead Zone
+                            if (axis === 0) {
+                                // Reset Buttons back to 0
+                                if (axisSetting.pos || axisSetting.neg) {
+                                    if (axisSetting.pos) {
+                                        keystate[axisSetting.pos] = 0;
                                     }
-                                } else if (axis < 0 && axisSetting[0]) {
-                                    keystate[axisSetting[0]] = 1;
-                                    if (axisSetting[1]) {
-                                        keystate[axisSetting[1]] = 0;
+                                    if (axisSetting.neg) {
+                                        keystate[axisSetting.neg] = 0;
                                     }
+                                } else {
+                                    keystate[axisSetting] = 0;
                                 }
                             } else {
-                                // Axis to Axis
-                                keystate[axisSetting] = axis;
+                                // Axis has a value
+                                if (axisSetting.pos || axisSetting.neg) {
+                                    // This is an axis bound to a button
+                                    if (axis > 0 && axisSetting.pos) {
+                                        keystate[axisSetting.pos] = 1;
+                                        if (axisSetting.neg) {
+                                            keystate[axisSetting.neg] = 0;
+                                        }
+                                    } else if (axis < 0 && axisSetting.neg) {
+                                        keystate[axisSetting.neg] = 1;
+                                        if (axisSetting.pos) {
+                                            keystate[axisSetting.pos] = 0;
+                                        }
+                                    }
+                                } else {
+                                    // Axis to Axis
+                                    keystate[axisSetting] = axis;
+                                }
                             }
                         }
                     }
