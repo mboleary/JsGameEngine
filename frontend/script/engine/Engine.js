@@ -10,6 +10,8 @@ import { pollGamepads, initInput } from './Input.js';
 
 import SpriteSheet from './SpriteSheet.js';
 
+import { pauseTime, unpauseTime, advanceTime, getTime } from './Time.js';
+
 let gameLoopStarted = false;
 let stopLoop = null; // Magic reference to stop the game Loop
 let currScene = null; // Current Scene to be rendering
@@ -29,7 +31,7 @@ export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
     initInput();
     initializeWith2dContext();
-    initGameObjectScripts(gameObjects);
+    // initGameObjectScripts(gameObjects); // This is done when the scene is imported
 
     gameLoopStarted = true;
     currTime = window.performance.now();
@@ -45,24 +47,45 @@ export function initDebug() {
     dbg.deleteGameObject = deleteGameObject;
     dbg.stopGameLoop = stopGameLoop;
     dbg.restartGameLoop = restartGameLoop;
+    dbg.stepGameLoop = stepGameLoop;
+    dbg.getTime = getTime;
+    dbg.TARGET_MILLIS_PER_FRAME = TARGET_MILLIS_PER_FRAME;
     window.debug.engine = dbg;
 }
 
 export function stopGameLoop() {
     window.cancelAnimationFrame(stopLoop);
+    pauseTime();
+}
+
+/**
+ * Run the GameLoop Once
+ * @param {Number} fakeDelta If provided, will set the deltaTime
+ */
+export function stepGameLoop(fakeDelta) {
+    setTimeout(() => {
+        if (fakeDelta || fakeDelta === 0) {
+            currTime = window.performance.now() - fakeDelta;
+        }
+        advanceTime(deltaTime);
+        main();
+        window.cancelAnimationFrame(stopLoop);
+    });
 }
 
 // Only use this if re-starting the game after the loop was stopped.
 export function restartGameLoop() {
     stopLoop = window.requestAnimationFrame(main);
+    unpauseTime();
 }
 
 export function setCurrentScene(scene) {
     currScene = scene;
-    let gos = scene.gameObjects;
-    gos.forEach((go) => {
-        enrollGameObject(go);
-    })
+    enrollGameObject(scene);
+    // let gos = scene.gameObjects;
+    // gos.forEach((go) => {
+    //     enrollGameObject(go);
+    // });
 }
 
 // @TODO Also enroll the Children too!
@@ -71,10 +94,29 @@ export function enrollGameObject(go) {
     // Check for ID
     if (gameObjectsIDs.has(go.id)) return;
     setTimeout(() => {
-        gameObjects.push(go);
-        gameObjectsIDs.add(go.id);
-        initGameObjectScripts([go]);
-    })
+        let toInitScripts = {arr:[]};
+        enrollGameObjectHelper(go, toInitScripts);
+        initGameObjectScripts(toInitScripts.arr);
+    });
+}
+
+/**
+ * Enrolls the Children, as well as the parent GameObject
+ * @param {GameObject} go GameObject to enroll
+ * @param {Object} refArr Reference Array encapsulated by an object to add all of the references to the added GOs to
+ */
+function enrollGameObjectHelper(go, refArr) {
+    if (!refArr || refArr.arr === undefined) return;
+    if (gameObjectsIDs.has(go.id)) return;
+    gameObjects.push(go);
+    refArr.arr.push(go);
+    gameObjectsIDs.add(go.id);
+    if (go.children && go.children.length > 0) {
+        go.children.forEach((child) => {
+            enrollGameObjectHelper(child, refArr);
+        });
+    }
+    return refArr;
 }
 
 export function deleteGameObject(go) {
@@ -112,16 +154,15 @@ export function deleteGameObject(go) {
 
         // Delete the Children from the Array
         if (toDel.children && toDel.children.length) {
-            let idsToFind = [];
+            let idsToFind = {arr:[]}; // Encapsulating in a Object to get Pass by reference
             for (let i = 0; i < toDel.children.length; i++) {
-                let ids = getChildIDs(toDel.children[i]);
-                ids.forEach((item) => idsToFind.push(item));
+                getChildIDs(toDel.children[i], idsToFind);
             }
-            for (let i = 0; i < gameObjects.length && idsToFind.length > 0; i++) {
-                for (let j = 0; j < idsToFind.length; j++) {
-                    if (gameObjects[i].id === idsToFind[j]) {
+            for (let i = 0; i < gameObjects.length && idsToFind.arr.length > 0; i++) {
+                for (let j = 0; j < idsToFind.arr.length; j++) {
+                    if (gameObjects[i].id === idsToFind.arr[j]) {
                         gameObjects[i].beforeDestroy();
-                        idsToFind.splice(j, 1);
+                        idsToFind.arr.splice(j, 1);
                         gameObjects.splice(i, 1);
                         i--;
                         break;
@@ -133,16 +174,21 @@ export function deleteGameObject(go) {
     });
 }
 
-function getChildIDs(go) {
-    let toRet = [];
-    toRet.push(go.id);
+/**
+ * Gets the IDs of all of the children
+ * @param {GameObject} go GameObject to get the IDs of
+ * @param {Object} idArr reference to an object encapsulating an array that the references will be added to
+ */
+function getChildIDs(go, idArr) {
+    if (!idArr || idArr.arr === undefined) return;
+    // let toRet = [];
+    idArr.arr.push(go.id);
     if (go.children && go.children.length) {
         go.children.forEach((child) => {
-            let res = getChildIDs(child);
-            res.forEach(item => toRet.push(item));
+            getChildIDs(child, idArr);
         });
     }
-    return toRet;
+    return idArr.arr;
 }
 
 

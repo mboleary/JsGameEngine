@@ -9,9 +9,11 @@ import Transform from '../engine/Transform.js';
 
 import { getKeyState } from '../engine/Input.js';
 
+import { getTime } from '../engine/Time.js';
+
 const birth = 100; //500
 
-const squish = 2000; //4000
+const squish = 1000; //4000
 
 const death = 1500; //3000
 
@@ -45,7 +47,7 @@ export default class Test extends GameObjectWithScript(GameObject) {
     set texture(a) {}
 
     init() {
-        let now = window.performance.now();
+        let now = getTime();
         this.birthTimer = now;
         this.squishedTimer = now;
         this.deathTimer = 0;
@@ -55,7 +57,7 @@ export default class Test extends GameObjectWithScript(GameObject) {
         if (getKeyState("test") === 1) {
             this.direction = (this.direction + 1) % 2;
         }
-        let now = window.performance.now();
+        let now = getTime();
         if (now - this.squishedTimer > squish) {
             this.squished = true;
         }

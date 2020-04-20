@@ -38,40 +38,16 @@ function main() {
         // Set the Scene
         let scene = new Scene();
         
-        // let go = new GameObject();
+        scene.attachGameObject(new Test());
 
-        // go.texture = spritesheet.sheet.get("goomba_1");
-
-        // go.transform.position.x = 5;
-        // go.transform.scale.x = 4;
-        // go.transform.scale.y = 4;
-
-        // let script = new Script();
-
-        // script.init = () => {
-        //     console.log("Script Initialized");
-        // }
-
-        // script.loop = function() {
-        //     let movementAmt = 5;
-        //     go.transform.position.x += movementAmt * (deltaTime/TARGET_MILLIS_PER_FRAME);
-        //     go.transform.rotation.z += 1 * (deltaTime/TARGET_MILLIS_PER_FRAME);
-        // }.bind(script)
-
-        // go.scripts.push(script);
-
-        let go = new Test();
-        
-        scene.attachGameObject(go);
-
-        let ctest = new ControllerTest();
-
-        scene.attachGameObject(ctest);
+        scene.attachGameObject(new ControllerTest());
         
         setCurrentScene(scene);
         
         // Initialize the Game Loop
         initGameLoop();
+        // TEMP: Testing strange behavior
+        // window.debug.engine.stopGameLoop();
     })
 }
 
