@@ -32,6 +32,7 @@ export default class Test extends GameObjectWithScript(GameObject) {
         this.birthTimer = 0;
         this.deathTimer = 0;
         this.selfReplicate = 3; // Sterilize them after a few generations so that we don't crash the browser
+        this.name = "Test";
     }
 
     get texture() {

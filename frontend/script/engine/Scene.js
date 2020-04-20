@@ -7,6 +7,7 @@ import GameObject from './GameObject.js';
 export default class Scene extends GameObject {
     constructor() {
         super();
+        this.name = "Scene";
     }
 
     // Get all GameObjects from this scene

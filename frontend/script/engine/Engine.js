@@ -36,6 +36,27 @@ export function initGameLoop() {
     main();
 }
 
+// Initializes Debug Interface
+export function initDebug() {
+    let dbg = {};
+    dbg.gameObjects = gameObjects;
+    dbg.setCurrentScene = setCurrentScene;
+    dbg.enrollGameObject = enrollGameObject;
+    dbg.deleteGameObject = deleteGameObject;
+    dbg.stopGameLoop = stopGameLoop;
+    dbg.restartGameLoop = restartGameLoop;
+    window.debug.engine = dbg;
+}
+
+export function stopGameLoop() {
+    window.cancelAnimationFrame(stopLoop);
+}
+
+// Only use this if re-starting the game after the loop was stopped.
+export function restartGameLoop() {
+    stopLoop = window.requestAnimationFrame(main);
+}
+
 export function setCurrentScene(scene) {
     currScene = scene;
     let gos = scene.gameObjects;

@@ -17,16 +17,13 @@ import ControllerTest from './game/ControllerTest.js';
 
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './engine/Input.js';
 
+import { initDebug } from './engine/Debug.js';
+
 function main() {
     window.numGoombas = 0;
     initUI();
 
-    window.debug = {};
-    window.debug.defineKey = defineKey;
-    window.debug.TYPE_DIGITAL = TYPE_DIGITAL;
-    window.debug.setKeyOnNextInput = setKeyOnNextInput;
-    window.debug.getAllKeys = getAllKeys;
-    window.debug.setKeybindings = setKeybindings;
+    initDebug();
     
     defineKey("test", TYPE_DIGITAL);
     defineKey("up", TYPE_DIGITAL);

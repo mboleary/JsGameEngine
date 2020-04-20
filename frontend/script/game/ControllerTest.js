@@ -20,6 +20,7 @@ export default class ControllerTest extends GameObjectWithScript(GameObject) {
         frames.push(spriteSheet.sheet.get("parakoopa_2"));
         this.ani = new Animation(frames, 15);
         this.texture = this.ani.currentFrame;
+        this.name = "Controller Test";
     }
 
     get texture() {
