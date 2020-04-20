@@ -119,6 +119,7 @@ function enrollGameObjectHelper(go, refArr) {
     return refArr;
 }
 
+// @TODO Fix this. It may call beforeDestroy many times. This is not intended!
 export function deleteGameObject(go) {
     if (!go) return;
     if (!gameObjectsIDs.has(go.id)) return;
@@ -132,6 +133,7 @@ export function deleteGameObject(go) {
             let item = gameObjects[i];
             if (item.id === go.id) {
                 toDel = gameObjects[i];
+                gameObjectsIDs.delete(toDel.id);
                 toDel.beforeDestroy();
                 gameObjects.splice(i, 1);
                 break;
@@ -177,7 +179,7 @@ export function deleteGameObject(go) {
 /**
  * Gets the IDs of all of the children
  * @param {GameObject} go GameObject to get the IDs of
- * @param {Object} idArr reference to an object encapsulating an array that the references will be added to
+ * @param {Object} idArr reference to an object encapsulating an array that the IDs will be added to
  */
 function getChildIDs(go, idArr) {
     if (!idArr || idArr.arr === undefined) return;
