@@ -12,6 +12,8 @@ import SpriteSheet from './SpriteSheet.js';
 
 import { pauseTime, unpauseTime, advanceTime, getTime } from './Time.js';
 
+import { calculateAbsoluteTransform } from './Physics.js';
+
 let gameLoopStarted = false;
 let stopLoop = null; // Magic reference to stop the game Loop
 let currScene = null; // Current Scene to be rendering
@@ -82,10 +84,6 @@ export function restartGameLoop() {
 export function setCurrentScene(scene) {
     currScene = scene;
     enrollGameObject(scene);
-    // let gos = scene.gameObjects;
-    // gos.forEach((go) => {
-    //     enrollGameObject(go);
-    // });
 }
 
 // @TODO Also enroll the Children too!
@@ -207,6 +205,9 @@ function main() {
     deltaTime = currTime - prevTime;
 
     stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
+
+    // Calculate the Absolute Transforms of each GameObject
+    calculateAbsoluteTransform(gameObjects);
 
     // Render the Game Field
     renderGameObjectsWith2dContext(gameObjects);

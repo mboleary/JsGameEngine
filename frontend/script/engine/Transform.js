@@ -28,4 +28,10 @@ export class Three {
         this.y = y;
         this.z = z;
     }
+
+    add(vec) {
+        this.x += vec.x;
+        this.y += vec.y;
+        this.z += vec.z;
+    }
 }

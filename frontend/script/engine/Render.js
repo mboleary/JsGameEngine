@@ -17,9 +17,11 @@ export function renderGameObjectsWith2dContext(gos) {
         if (go.texture) {
             let iw = go.texture.width;
             let ih = go.texture.height;
-            let pos = go.transform.position;
-            let scl = go.transform.scale;
-            let rot = go.transform.rotation;
+            // Use the Absolute Transform, if available
+            let transform = go.absTransform ? go.absTransform : go.transform;
+            let pos = transform.position;
+            let scl = transform.scale;
+            let rot = transform.rotation;
             
             context.drawImage(go.texture, pos.x, pos.y, iw * scl.x, ih * scl.y);
         }

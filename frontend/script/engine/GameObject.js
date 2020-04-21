@@ -11,7 +11,7 @@ export default class GameObject {
         this.scripts = [];
         this.colliders = []; // @TODO Figure out a good way to build colliders
         this.texture = null; // @TODO Add a texture here
-        this.transform = new Transform();
+        this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
         this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
         this.name = ""; // Name of the GameObject
 
