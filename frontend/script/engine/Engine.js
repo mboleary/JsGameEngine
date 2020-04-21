@@ -95,6 +95,10 @@ export function enrollGameObject(go) {
     if (gameObjectsIDs.has(go.id)) return;
     setTimeout(() => {
         let toInitScripts = {arr:[]};
+        // Attach to the current Scene, unless we are attaching the scene itself!
+        if (go.id !== currScene.id) {
+            currScene.attachGameObject(go);
+        }
         enrollGameObjectHelper(go, toInitScripts);
         initGameObjectScripts(toInitScripts.arr);
     });
