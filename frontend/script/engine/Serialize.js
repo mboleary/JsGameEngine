@@ -9,36 +9,73 @@ export const GAMEOBJECT_BLACKLIST = ["texture"];
 export const SCRIPT_BLACKLIST = ["init", "loop"];
 
 // Default Serializer function
-export function defaultSerializer(keys) {
+/**
+ * Default Serializer function
+ * 
+ * The Default Serializer will not perform 'Deep Serialization', where keys that are Arrays/Objects/etc. would be serialized. 
+ * If this functionality is needed, consider writing a custom serializer.
+ * @param {Array} keys Keys of the object to save
+ * @returns {Function} Serializer function
+ */
+export function defaultSerializer(keys, serializeChildren) {
+    /**
+     * Serializer function
+     * @param {Object} Object to Serialize
+     * @param {Boolean} serializeChildren True if the children should be serialized
+     * @returns {Object} Serialized Object
+     */
     return (obj) => {
-        let json = {};
+        let toRet = {};
+        let data = {};
+        let serKeys = {};
+        toRet.type = obj.constructor.name;
         if (obj && keys && keys.length > 0) {
             keys.forEach((key) => {
                 
                 let value = Reflect.get(obj, key);
 
+                // Don't overwrite functions
+                if (value instanceof Function) {
+                    return;
+                }
+
                 if (value && value.constructor && value.constructor.name) {
                     let name = value.constructor.name;
                     console.log("Name:", name);
-                    if (serialTypes[name]) {
-                        json[key] = serialTypes[name].serializer(value);
+                    // Note: This only serializes the value if it is not in an Array/Object/etc.
+                    if (serializeChildren && serialTypes[name]) {
+                        data[key] = serialTypes[name].serializer(value);
                     } else {
-                        json[key] = value;
+                        data[key] = value;
                     }
                 } else {
-                    json[key] = value;
+                    data[key] = value;
                 }
             });
         }
-        return json;
+        return toRet;
     }
 }
 
-// Default De-Serializer Function
+/**
+ * Default De-Serializer Function
+ * @param {Array} keys Keys to use in deserialization
+ * @param {Class} classRef Reference to the class constructor
+ * @returns {Function} Function used to deserialize an object
+ */
 export function defaultDeserializer(keys, classRef) {
+    /**
+     * Deserializes an Object, given the serial data
+     * @param {Object} json Serial Data
+     * @returns {Object} Deserialized object
+     */
     return (json) => {
         let obj = new classRef(); // Hopefully the contructor does not need parameters
         // @TODO Fix handling of functions (don't allow them to be overwritten), and NULL or undefined fields coming in
+        Object.keys(json).forEach((key) => {
+            if (!json[key]) delete json[key];
+        })
+
         updateClassState(obj, json, keys);
         return obj;
     }

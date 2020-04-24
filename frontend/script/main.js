@@ -24,6 +24,20 @@ function main() {
     initUI();
 
     initDebug();
+
+    window.dev = {};
+    window.dev.test = () => {
+        let a = window.debug.engine.gameObjects[1];
+        let blacklist = ["children", "ani", "parent", "gameObject", "scripts"];
+        let k = window.debug.serialize.getKeys(a.constructor, blacklist);
+        console.log("Keys:", k);
+        let ser = debug.serialize.defaultSerializer(k);
+        let deser = debug.serialize.defaultDeserializer(k, a.constructor);
+        let json = JSON.parse(JSON.stringify(ser(a)));
+        console.log("Serialized:", json);
+        let b = deser(json);
+        console.log("Deserialized:", b);
+    }
     
     defineKey("test", TYPE_DIGITAL);
     defineKey("up", TYPE_DIGITAL);

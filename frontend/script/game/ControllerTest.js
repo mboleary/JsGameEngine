@@ -7,6 +7,8 @@ import Animation from '../engine/Animation.js';
 
 import Transform from '../engine/Transform.js';
 
+import { makeSerializable } from '../engine/Serialize.js';
+
 import { getKeyState } from '../engine/Input.js';
 
 export default class ControllerTest extends GameObjectWithScript(GameObject) {
@@ -51,3 +53,33 @@ export default class ControllerTest extends GameObjectWithScript(GameObject) {
 
     }
 }
+
+// Make the GameObject Serializable
+
+// Keys to copy over
+const keys = [
+    "movementAmt",
+    "transform",
+    "id",
+    "name"
+]
+
+function serializer(obj) {
+    console.log("Serialize ControllerTest");
+    let toRet = {};
+    keys.forEach((key) => {
+        toRet[key] = obj[key];
+    });
+    return toRet;
+}
+
+function deserializer(json) {
+    console.log("Deserialize ControllerTest");
+    let toRet = new ControllerTest();
+    keys.forEach((key) => {
+        if (json[key]) toRet[key] = json[key];
+    });
+    return toRet;
+}
+
+makeSerializable(ControllerTest, serializer, deserializer);

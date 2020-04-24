@@ -9,6 +9,8 @@ import Transform from '../engine/Transform.js';
 
 import { getKeyState } from '../engine/Input.js';
 
+import { makeSerializable } from '../engine/Serialize.js';
+
 import { getTime } from '../engine/Time.js';
 
 const birth = 100; //500
@@ -89,3 +91,36 @@ export default class Test extends GameObjectWithScript(GameObject) {
         window.numGoombas++;
     }
 }
+
+
+// Make the GameObject Serializable
+
+// Keys to copy over
+const keys = [
+    "movementAmt",
+    "transform",
+    "id",
+    "name",
+    "direction",
+    "selfReplicate"
+]
+
+function serializer(obj) {
+    console.log("Serialize Test");
+    let toRet = {};
+    keys.forEach((key) => {
+        toRet[key] = obj[key];
+    });
+    return toRet;
+}
+
+function deserializer(json) {
+    console.log("Deserialize Test");
+    let toRet = new Test();
+    keys.forEach((key) => {
+        if (json[key]) toRet[key] = json[key];
+    });
+    return toRet;
+}
+
+makeSerializable(Test, serializer, deserializer);
