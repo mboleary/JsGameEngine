@@ -84,11 +84,18 @@ export function defaultDeserializer(keys, classRef) {
 
 // Updates the state of an object
 export function updateClassState(obj, state, keys) {
-    Object.keys(state).forEach((key) => {
-        if (keys.indexOf(key) > -1) {
+    if (keys) {
+        Object.keys(state).forEach((key) => {
+            if (keys.indexOf(key) > -1) {
+                Reflect.set(obj, key, state[key]);
+            }
+        });
+    } else {
+        Object.keys(state).forEach((key) => {
+            console.log("Set Key:", key, state[key]);
             Reflect.set(obj, key, state[key]);
-        }
-    });
+        });
+    }
 }
 
 // Get Keys from a class
@@ -148,7 +155,7 @@ export function deserialize(json) {
     let toRet = null;
 
     if (!type) {
-        console.error("Cannot Deserialize: Not in List!", serObj);
+        console.error("Cannot Deserialize: Not in List!");
         throw new Error("Cannot Deserialize: Not in List");
     }
 
