@@ -91,7 +91,7 @@ function main() {
                     data: ser
                 };
                 ws.send(JSON.stringify(payload));
-            }, 5000);
+            }, 1000);
 
             puppets[a.id] = {
                 interval: interval,
