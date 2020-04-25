@@ -53,6 +53,7 @@ export function defaultSerializer(keys, serializeChildren) {
                 }
             });
         }
+        toRet.data = data;
         return toRet;
     }
 }
