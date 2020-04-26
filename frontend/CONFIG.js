@@ -5,5 +5,5 @@
 window.CONFIG = {
     "branch": "testing",
     "debug": true,
-    "backend": "localhost:8080"
+    "backend": "ws://localhost:8001"
 }

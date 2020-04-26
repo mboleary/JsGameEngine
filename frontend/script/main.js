@@ -13,7 +13,7 @@ import OPTIONS from '../asset/testOptions.js';
 
 import Test from './game/Test.js';
 
-import ControllerTest from './game/ControllerTest.js';
+import ControllerTest, { updateState } from './game/ControllerTest.js';
 
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './engine/Input.js';
 
@@ -66,11 +66,11 @@ function main() {
         initGameLoop();
         // TEMP: Testing strange behavior
         // window.debug.engine.stopGameLoop();
-        let ws = new WebSocket("ws://localhost:8001");
+        let ws = new WebSocket(window.CONFIG.backend);
         let interval = null;
         let puppets = {};
         window.dev.refreshws = () => {
-            ws = new WebSocket("ws://localhost:8001");
+            ws = new WebSocket(window.CONFIG.backend);
         }
         window.dev.clearUpdateInterval = () => {
             if (interval) {
@@ -100,8 +100,9 @@ function main() {
         }
 
         window.dev.testws2 = () => {
-            
+            "use strict" // Maybe this will fix my problem?
             ws.onmessage = (msg) => {
+                "use strict"
                 if (msg) {
                     let parsed = null;
                     try {
@@ -114,7 +115,7 @@ function main() {
                     if (parsed.data && parsed.data.data && parsed.data.data.id) {
                         if (puppets[parsed.data.data.id]) {
                             console.log("Updating Existing GameObject", parsed.data.data.id);
-                            updateClassState(puppets[parsed.data.data.id], parsed.data.data)
+                            updateState(puppets[parsed.data.data.id].gameObject, parsed.data.data)
                         } else {
                             console.log("Adding new GameObject");
                             let deser = deserialize(parsed.data);
@@ -125,7 +126,11 @@ function main() {
                             enrollGameObject(deser);
                             scene.attachGameObject(deser);
                         }
+                    } else {
+                        console.log("No Data");
                     }
+                } else {
+                    console.log("No MSG");
                 }
             }
         }

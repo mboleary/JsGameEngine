@@ -91,8 +91,8 @@ export function updateClassState(obj, state, keys) {
             }
         });
     } else {
+        console.log("No Keys:", state.transform, keys);
         Object.keys(state).forEach((key) => {
-            console.log("Set Key:", key, state[key]);
             Reflect.set(obj, key, state[key]);
         });
     }
