@@ -77,13 +77,13 @@ export function defaultDeserializer(keys, classRef) {
             if (!json[key]) delete json[key];
         })
 
-        updateClassState(obj, json, keys);
+        defaultStateUpdater(obj, json, keys);
         return obj;
     }
 }
 
 // Updates the state of an object
-export function updateClassState(obj, state, keys) {
+export function defaultStateUpdater(obj, state, keys) {
     if (keys) {
         Object.keys(state).forEach((key) => {
             if (keys.indexOf(key) > -1) {
@@ -91,11 +91,11 @@ export function updateClassState(obj, state, keys) {
             }
         });
     } else {
-        console.log("No Keys:", state.transform, keys);
         Object.keys(state).forEach((key) => {
             Reflect.set(obj, key, state[key]);
         });
     }
+    return obj;
 }
 
 // Get Keys from a class
@@ -120,20 +120,21 @@ export function getKeys(classRef, blacklist) {
 }
 
 // Makes a GameObject or Script Serializable
-export function makeSerializable(classRef, serializer, deserializer) {
+export function makeSerializable(classRef, serializer, deserializer, stateUpdater) {
     let name = classRef.name;
     if (!serialTypes[name]) {
         let toAdd = {};
         toAdd.classRef = classRef; // Reference to the Constructor
         toAdd.serializer = serializer;
         toAdd.deserializer = deserializer;
+        toAdd.stateUpdater = stateUpdater;
         serialTypes[name] = toAdd;
     }
 }
 
 // Serializes a GameObject or Script
-export function serialize(serObj, serializeChildren = true) {
-    let name = serObj.constructor.name;
+export function serialize(serObj, serializeChildren = true, typeName) {
+    let name = typeName || serObj.constructor.name;
     let type = serialTypes[name];
     let toRet = {};
 
@@ -149,8 +150,8 @@ export function serialize(serObj, serializeChildren = true) {
 }
 
 // Deserializes parsed JSON and returns all parsed GameObjects
-export function deserialize(json) {
-    let name = json.type;
+export function deserialize(json, typeName) {
+    let name = typeName || json.type;
     let type = serialTypes[name];
     let toRet = null;
 
@@ -162,4 +163,21 @@ export function deserialize(json) {
     toRet = type.deserializer(json.data);
 
     return toRet;
+}
+
+// Updates a GameObject with a given state (Like Deserialize, but the object is not instanciated)
+export function update(obj, state, typeName) {
+    let name = typeName || state.type;
+    let type = serialTypes[name];
+
+    if (!type) {
+        console.error("Cannot Update State: Not in List!");
+        throw new Error("Cannot Update State: Not in List");
+    }
+
+    return type.stateUpdater(obj, state);
+}
+
+export function getConstructor(type) {
+    return serialTypes[type] && serialTypes[type].classRef;
 }

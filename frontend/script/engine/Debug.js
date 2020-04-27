@@ -4,7 +4,7 @@
 
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './Input.js';
 
-import { defaultSerializer, defaultDeserializer, updateClassState, getKeys, makeSerializable, serialize, deserialize } from './Serialize.js';
+import { defaultSerializer, defaultDeserializer, defaultStateUpdater, getKeys, makeSerializable, serialize, deserialize } from './Serialize.js';
 
 import { initDebug as engineDebug } from './Engine.js';
 
@@ -23,7 +23,7 @@ export function initDebug() {
     let ser = {};
     ser.defaultSerializer = defaultSerializer;
     ser.defaultDeserializer = defaultDeserializer;
-    ser.updateClassState = updateClassState;
+    ser.defaultStateUpdater = defaultStateUpdater;
     ser.getKeys = getKeys;
     ser.makeSerializable = makeSerializable;
     ser.serialize = serialize;

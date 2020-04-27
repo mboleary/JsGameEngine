@@ -123,4 +123,12 @@ function deserializer(json) {
     return toRet;
 }
 
-makeSerializable(Test, serializer, deserializer);
+function stateUpdater(obj, json) {
+    console.log("State Updater");
+    keys.forEach((key) => {
+        if (json[key]) obj[key] = json[key];
+    });
+    return obj
+}
+
+makeSerializable(Test, serializer, deserializer, stateUpdater);

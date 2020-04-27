@@ -14,6 +14,8 @@ import { pauseTime, unpauseTime, advanceTime, getTime } from './Time.js';
 
 import { calculateAbsoluteTransform } from './Physics.js';
 
+import { checkPuppets } from './Puppeteer.js';
+
 let gameLoopStarted = false;
 let stopLoop = null; // Magic reference to stop the game Loop
 let currScene = null; // Current Scene to be rendering
@@ -86,7 +88,7 @@ export function setCurrentScene(scene) {
     enrollGameObject(scene);
 }
 
-// @TODO Also enroll the Children too!
+// Enrolls GameObjects and their children, and initializes their scripts
 export function enrollGameObject(go) {
     if (!go) return;
     // Check for ID
@@ -214,6 +216,9 @@ function main() {
 
     // Get Input
     pollGamepads();
+
+    // Update Network State (if active)
+    checkPuppets();
 
     // Run the GameObject Scripts
     processGameObjectScripts(gameObjects);

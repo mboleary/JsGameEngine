@@ -2,7 +2,25 @@
  * Puppeteer is responsible for syncing the state of a GameObject across a network connection
  */
 
-let defaultUpdateFrames = 5; // Default frame delta to update everything
+import { serialize, deserialize, update, getConstructor } from './Serialize.js';
+
+import { enrollGameObject } from './Engine.js';
+
+let defaultUpdateFrames = 15; // Default frame delta to update everything. Will be set by Puppeteer when testing the connection
+
+const puppets = {};
+let puppeteerActive = false;
+let ws = null;
+
+// Keys to remove then converting back to an instance
+const puppetKeys = [
+    "isPuppet",
+    "master",
+    "loopsSinceLastUpdate",
+    "updateFrames",
+    "updateCounter",
+    "puppeteerDisabled"
+];
 
 /**
  * Defines a Puppet
@@ -12,58 +30,48 @@ let defaultUpdateFrames = 5; // Default frame delta to update everything
  */
 export const Puppet = (Base, master, updateFrames) => class extends Base {
     constructor(...params) {
-        super.constructor(...params);
+        super(...params);
 
         // Private
+        this.isPuppet = true; // Key for GameObjects to look at for checking whether or not it is a Puppet
         this.master = master || false; // If True, this the state will be sent from this Puppet to the remote ones
-        this.keysToUpdate = [];
         this.loopsSinceLastUpdate = 0; // Count the loops since the last update
         this.updateFrames = updateFrames || defaultUpdateFrames;
+        this.updateCounter = 0; // Number included with the update to distinguish updates from one another
+        this.puppeteerDisabled = false; // True if the puppeteer should not send or recieve updates for this GameObject
 
-        // Change GameObject Settings
+        // Change GameObject Settings, since it will inherit the state of a remote GameObject
         if (!this.master) {
             this.priority = 0;
             this.id = "";
         }
     }
 
-    // True when this Puppet needs an update
-    needsUpdate() {
-        return loopsSinceLastUpdate > updateFrames;
+    init() {
+        super.init();
+        enrollPuppet(this);
     }
 
-    // returns a list of keys to update when the Puppeteer provides a state update
-    initState() {
-        if (super.initState) {
-            return super.initState();
-        }
-        return Reflect.ownKeys(this);
+    // True when this Puppet needs an update
+    needsUpdate() {
+        return this.puppeteerDisabled && this.loopsSinceLastUpdate > this.updateFrames;
+    }
+
+    // Gets Update ID Number, and increments
+    getUpdateNumber() {
+        return this.updateCounter++;
     }
 
     // Get the current State of the Master Puppet
     getState() {
         this.loopsSinceLastUpdate = 0;
-        if (super.getState) {
-            return super.getState()
-        }
-        let toRet = {};
-        this.keysToUpdate.forEach((key) => {
-            toRet[key] = Reflect.get(this, key);
-        });
-        return toRet;
+        return serialize(this, false, super.constructor.name);
     }
 
     // Set the current state of the slave puppet
     updateState(state) {
         this.loopsSinceLastUpdate = 0;
-        if (super.updateState) {
-            return super.updateState(state);
-        }
-        Object.keys(state).forEach((key) => {
-            if (keysToUpdate.indexOf(key) > -1) {
-                Reflect.set(this, key, state[key]);
-            }
-        });
+        return update(this, state, super.constructor.name);
     }
 
     loop() {
@@ -72,23 +80,127 @@ export const Puppet = (Base, master, updateFrames) => class extends Base {
             super.loop();
         }
     }
+
+    onDestroy() {
+        removePuppet(this);
+        super.onDestroy();
+    }
 }
 
-// Converts an instance into a Puppet
+// Enrolls a puppet into Puppeteer
+function enrollPuppet(obj) {
+    if (obj.id) {
+        puppets[obj.id] = obj;
+        // Send an update
+        ws.send(JSON.stringify({
+            action: "update",
+            target: "*",
+            number: obj.getUpdateNumber(),
+            data: obj.getState()
+        }));
+    }
+}
+
+function removePuppet(obj) {
+    if (obj.id && puppets[obj.id]) {
+        delete puppets[obj.id];
+        // Send a Delete Event
+        ws.send(JSON.stringify({
+            action: "delete",
+            target: "*",
+            data: obj.id,
+            number: obj.getUpdateNumber()
+        }));
+    }
+}
+
+// Converts an instance into a Puppet, and enrolls it as a master object
 export function convertInstanceIntoPuppet(instance) {
     if (!instance) return null;
     if (instance instanceof Puppet) return instance;
     let prevState = Reflect.ownKeys(instance);
     let toRet = new Puppet(instance.constructor, true);
     Reflect.apply(toRet, prevState);
+    enrollPuppet(toRet);
     return toRet;
 }
 
+// Converts a Puppet back into its' original instance type, and removes it from the Puppeteer
+export function convertPuppetIntoInstance(puppet) {
+    if (!puppet) return null;
+    if (!puppet instanceof Puppet) return puppet;
+    let prevState = Reflect.ownKeys(puppet);
+    let toRet = new puppet.super.contructor();
+    Reflect.apply(toRet, prevState);
+    // Remove Puppeteer Keys
+    puppetKeys.forEach((key) => {
+        if (toRet[key]) {
+            delete toRet[key];
+        }
+    });
+    removePuppet(puppet);
+    return toRet;
+}
+
+// Disables the puppet from receiving updates from a remote instance, or prevents a master puppet from sending updates
 export function disablePuppetUpdates(instance) {
     if (!instance) return null;
     if (!instance instanceof Puppet) return instance;
-    instance.needsUpdate = () => {
-        return false;
+    instance.puppeteerDisabled = true;
+    return instance;
+}
+
+// Connect to a PubSub component to receive updates
+export function connect(url) {
+    ws = new WebSocket(url);
+    puppeteerActive = true;
+    ws.onmessage = (msg) => {
+        if (msg) {
+            let parsed = null;
+            try {
+                parsed = JSON.parse(msg.data);
+            } catch (e) {
+                console.log("NOT JSON:", msg.data);
+                return;
+            }
+            if (parsed.data && parsed.data.data && parsed.data.data.id) {
+                if (puppets[parsed.data.data.id]) {
+                    puppets[parsed.data.data.id].updateState(parsed.data.data);
+                } else {
+                    console.log("Adding new GameObject");
+                    let constructor = getConstructor(parsed.data.type);
+                    let deser = update(new Puppet(constructor, false), parsed.data);
+                    puppets[deser.id] = deser;
+                    enrollGameObject(deser);
+                }
+            } else {
+                console.log("No Data");
+            }
+        } else {
+            console.log("No MSG");
+        }
     }
-    return instance
+}
+
+// Close the Websocket
+export function disconnect() {
+    ws.close();
+    puppeteerActive = false;
+}
+
+// Called every frame to update the puppets
+export function checkPuppets() {
+    if (!puppeteerActive) {
+        return;
+    }
+    Object.keys(puppets).forEach((key) => {
+        if (puppets[key].master && puppets[key].needsUpdate()) {
+            ws.send(JSON.stringify({
+                action: "update",
+                target: "*",
+                number: puppets[key].getUpdateNumber(),
+                data: puppets[key].getState()
+            }));
+        }
+    })
 }

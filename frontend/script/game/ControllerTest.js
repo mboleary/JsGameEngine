@@ -82,13 +82,12 @@ function deserializer(json) {
     return toRet;
 }
 
-export function updateState(obj, json) {
-    console.log("Updated Transform:", json.transform.position.y);
-    Object.keys(json).forEach((key) => {
-        // obj[key] = JSON.parse(JSON.stringify(json[key]));
-        // Note: Reflect works fine in the console, but not here for some reason
-        Reflect.set(obj, key, json[key]);
-    })
+export function stateUpdater(obj, json) {
+    console.log("State Updater");
+    Object.keys(keys).forEach((key) => {
+        if (json[key]) Reflect.set(obj, key, json[key]);
+    });
+    return obj;
 }
 
-makeSerializable(ControllerTest, serializer, deserializer);
+makeSerializable(ControllerTest, serializer, deserializer, stateUpdater);
