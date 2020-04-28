@@ -48,13 +48,14 @@ export const Puppet = (Base, master, updateFrames) => class extends Base {
     }
 
     init() {
+        console.log("Puppet Init");
         super.init();
         enrollPuppet(this);
     }
 
     // True when this Puppet needs an update
     needsUpdate() {
-        return this.puppeteerDisabled && this.loopsSinceLastUpdate > this.updateFrames;
+        return !this.puppeteerDisabled && this.loopsSinceLastUpdate > this.updateFrames;
     }
 
     // Gets Update ID Number, and increments
@@ -152,6 +153,7 @@ export function disablePuppetUpdates(instance) {
 
 // Connect to a PubSub component to receive updates
 export function connect(url) {
+    console.log("Connecting");
     ws = new WebSocket(url);
     puppeteerActive = true;
     ws.onmessage = (msg) => {
@@ -165,11 +167,13 @@ export function connect(url) {
             }
             if (parsed.data && parsed.data.data && parsed.data.data.id) {
                 if (puppets[parsed.data.data.id]) {
-                    puppets[parsed.data.data.id].updateState(parsed.data.data);
+                    console.log("Update State");
+                    puppets[parsed.data.data.id].updateState(parsed.data);
                 } else {
-                    console.log("Adding new GameObject");
+                    console.log("Adding new GameObject", parsed.data);
                     let constructor = getConstructor(parsed.data.type);
-                    let deser = update(new Puppet(constructor, false), parsed.data);
+                    let instance = new (Puppet(constructor, false))();
+                    let deser = update(instance, parsed.data);
                     puppets[deser.id] = deser;
                     enrollGameObject(deser);
                 }

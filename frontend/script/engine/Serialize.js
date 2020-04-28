@@ -175,7 +175,7 @@ export function update(obj, state, typeName) {
         throw new Error("Cannot Update State: Not in List");
     }
 
-    return type.stateUpdater(obj, state);
+    return type.stateUpdater(obj, state.data);
 }
 
 export function getConstructor(type) {

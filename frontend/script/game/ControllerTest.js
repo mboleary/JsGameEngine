@@ -82,10 +82,9 @@ function deserializer(json) {
     return toRet;
 }
 
-export function stateUpdater(obj, json) {
-    console.log("State Updater");
-    Object.keys(keys).forEach((key) => {
-        if (json[key]) Reflect.set(obj, key, json[key]);
+export function stateUpdater(obj, state) {
+    keys.forEach((key) => {
+        if (state[key]) Reflect.set(obj, key, state[key]);
     });
     return obj;
 }

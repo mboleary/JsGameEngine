@@ -14,7 +14,7 @@ import { pauseTime, unpauseTime, advanceTime, getTime } from './Time.js';
 
 import { calculateAbsoluteTransform } from './Physics.js';
 
-import { checkPuppets } from './Puppeteer.js';
+import { checkPuppets, disconnect } from './Puppeteer.js';
 
 let gameLoopStarted = false;
 let stopLoop = null; // Magic reference to stop the game Loop
@@ -59,6 +59,7 @@ export function initDebug() {
 
 export function stopGameLoop() {
     window.cancelAnimationFrame(stopLoop);
+    disconnect();
     pauseTime();
 }
 

@@ -55,8 +55,8 @@ function main() {
 
         // Set the Scene
         let scene = new Scene();
-        scene.attachGameObject(new Test());
-        scene.attachGameObject(new ControllerTest());
+        // scene.attachGameObject(new Test());
+        // scene.attachGameObject(new ControllerTest());
         
         setCurrentScene(scene);
         
