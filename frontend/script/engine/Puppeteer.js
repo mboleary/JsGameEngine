@@ -6,7 +6,9 @@ import { serialize, deserialize, update, getConstructor } from './Serialize.js';
 
 import { enrollGameObject } from './Engine.js';
 
-let defaultUpdateFrames = 15; // Default frame delta to update everything. Will be set by Puppeteer when testing the connection
+const minFrames = 2;
+const defaultFrames = 15;
+let defaultUpdateFrames = 5; // Default frame delta to update everything. Will be set by Puppeteer when testing the connection
 
 const puppets = {};
 let puppeteerActive = false;
@@ -165,6 +167,7 @@ export function connect(url) {
                 console.log("NOT JSON:", msg.data);
                 return;
             }
+            // @TODO Check for Message type (update, delete, etc.)
             if (parsed.data && parsed.data.data && parsed.data.data.id) {
                 if (puppets[parsed.data.data.id]) {
                     console.log("Update State");

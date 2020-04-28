@@ -13,7 +13,7 @@ import OPTIONS from '../asset/testOptions.js';
 
 import Test from './game/Test.js';
 
-import ControllerTest from './game/ControllerTest.js';
+import ControllerTest2 from './game/ControllerTest2.js';
 
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './engine/Input.js';
 
@@ -48,7 +48,7 @@ function main() {
     defineKey("down", TYPE_DIGITAL);
     defineKey("left", TYPE_DIGITAL);
     defineKey("right", TYPE_DIGITAL);
-    setKeyOnNextInput("test");
+    // setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
     spriteSheet.importFromOptions(OPTIONS);
     spriteSheet.ready.then(() => {
@@ -56,7 +56,7 @@ function main() {
         // Set the Scene
         let scene = new Scene();
         // scene.attachGameObject(new Test());
-        // scene.attachGameObject(new ControllerTest());
+        // scene.attachGameObject(new ControllerTest2());
         
         setCurrentScene(scene);
         
@@ -72,7 +72,7 @@ function main() {
             connect(window.CONFIG.pubsub);
         }
         window.dev.testws = () => {
-            let a = new (Puppet(ControllerTest, true))();
+            let a = new (Puppet(ControllerTest2, true))();
             a.transform.position.x = 50;
             enrollGameObject(a);
             scene.attachGameObject(a);
