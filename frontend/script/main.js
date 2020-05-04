@@ -22,6 +22,8 @@ import { initDebug } from './engine/Debug.js';
 import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.js';
 
 import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from './engine/Puppeteer.js';
+import { Camera } from './engine/Camera/Camera.js';
+import DrawsThings from './game/DrawsThings.js';
 
 function main() {
     window.numGoombas = 0;
@@ -55,8 +57,10 @@ function main() {
 
         // Set the Scene
         let scene = new Scene();
-        // scene.attachGameObject(new Test());
-        // scene.attachGameObject(new ControllerTest2());
+        scene.attachGameObject(new DrawsThings());
+        scene.attachGameObject(new Test());
+        scene.attachGameObject(new ControllerTest2());
+        scene.attachGameObject(new Camera());
         
         setCurrentScene(scene);
         
@@ -64,7 +68,7 @@ function main() {
         initGameLoop();
 
         // TEMP: Testing puppeteer
-        connect(window.CONFIG.pubsub);
+        // connect(window.CONFIG.pubsub); // @TODO Find a better way to handle a failed connection
         window.dev.disconnect = () => {
             disconnect();
         }

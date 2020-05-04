@@ -23,15 +23,37 @@ export default class GameObject {
         this.deleteFlag = false; // True if the GameObject should be destroyed.
     }
 
+    // Attaches a GameObject to this GameObject
     attachGameObject(go) {
         go.parent = this;
         this.children.push(go);
     }
 
+    // Attaches a Script to this GameObject
     attachScript(scr) {
         scr.gameObject = this;
         this.scripts.push(scr);
+        scr.scriptIndex = this.scripts.length - 1; // Scripts should not be rearranged like children will be
         scr.init();
+    }
+
+    // Removes a Script already attached to this GameObject
+    detachScript(scr) {
+        if (scr.scriptIndex >= 0) {
+            this.scripts.splice(scr.scriptIndex, 1);
+            scr.onDestroy();
+        }
+    }
+
+    // Detaches a GameObject attached to this GameObject. Warning: This will make the child GameObject an orphan!
+    detachGameObject(go) {
+        go.parent = null;
+        for (let i = 0; i < this.children.length; i++) {
+            if (go.id === this.children[i].id) {
+                this.children.splice(i, 1);
+                return;
+            }
+        }
     }
 
     // Called before this GameObject is deleted

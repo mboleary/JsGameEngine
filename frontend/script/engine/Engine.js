@@ -35,7 +35,6 @@ export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
     initInput();
     initializeWith2dContext();
-    // initGameObjectScripts(gameObjects); // This is done when the scene is imported
 
     gameLoopStarted = true;
     currTime = window.performance.now();

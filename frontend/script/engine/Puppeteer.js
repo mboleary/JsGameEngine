@@ -156,8 +156,15 @@ export function disablePuppetUpdates(instance) {
 // Connect to a PubSub component to receive updates
 export function connect(url) {
     console.log("Connecting");
-    ws = new WebSocket(url);
-    puppeteerActive = true;
+    try {
+        ws = new WebSocket(url);
+        console.log("Connected to " + url + " Successfully!");
+        puppeteerActive = true;
+    } catch (error) {
+        puppeteerActive = false;
+        console.error("Error:", error);
+        return;
+    }
     ws.onmessage = (msg) => {
         if (msg) {
             let parsed = null;
