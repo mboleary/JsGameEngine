@@ -21,7 +21,7 @@ export function renderGameObjectsWith2dContext(gos) {
         if (go.renderScripts) {
             // Check if this is a Renderable G.O
             go.renderScripts.forEach((rs) => {
-                rs.render(context);
+                rs.render(context, canvas.clientWidth, canvas.clientHeight);
             })
         } else if (go.texture) {
             // Use the texture as normal
@@ -50,6 +50,7 @@ export const Renderable = (Base) => class extends Base {
 
     attachScript(scr) {
         super.attachScript(scr);
+        console.log("Attach Script:", scr.constructor.name);
         if (scr instanceof RenderScript) {
             this.renderScripts.push(scr);
             scr.renderScriptIndex = this.renderScripts.length - 1;
@@ -58,6 +59,7 @@ export const Renderable = (Base) => class extends Base {
 
     detachScript(scr) {
         super.detachScript(scr);
+        console.log("Detach Script:", scr.constructor.name);
         if (scr instanceof RenderScript && scr.renderScriptIndex >= 0) {
             this.renderScripts.splice(scr.renderScriptIndex, 1);
         }

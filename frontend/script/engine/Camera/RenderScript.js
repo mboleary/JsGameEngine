@@ -6,7 +6,7 @@ import Script from '../Script.js';
 
 export default class RenderScript extends Script {
     // Override this to render things directly to the canvas
-    render(context) {
+    render(context, width, height) {
 
     }
 }

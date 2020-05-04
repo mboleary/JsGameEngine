@@ -9,6 +9,7 @@ import DrawsThingsBehavior from "./DrawsThingsBehavior.js";
 export default class DrawsThings extends Renderable(GameObject) {
     constructor() {
         super();
-        this.scripts.push(new DrawsThingsBehavior());
+        this.name = "Draws Things using the Canvas";
+        this.attachScript(new DrawsThingsBehavior());
     }
 }
