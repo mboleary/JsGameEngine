@@ -23,6 +23,10 @@ let currScene = null; // Current Scene to be rendering
 let gameObjects = []; // Game Objects to process each loop
 let gameObjectsIDs = new Set(); // Contains all GameObject IDs onscreen
 
+let gameObjectsByID = {}; // Stores GameObjects by ID (Unique)
+let gameObjectsByName = {}; // Stores GameObjects by Name (Array)
+let gameObjectsByGroup = {}; // Stores GameObjects by Group Name (Array)
+
 export let deltaTime = 0; // Number of Milliseconds the previous frame took to render
 export const TARGET_MILLIS_PER_FRAME = 16; // 60fps -> ~16 milliseconds
 let prevTime = 0;
@@ -52,6 +56,9 @@ export function initDebug() {
     dbg.restartGameLoop = restartGameLoop;
     dbg.stepGameLoop = stepGameLoop;
     dbg.getTime = getTime;
+    dbg.getGameObjectByID = getGameObjectByID;
+    dbg.getGameObjectByName = getGameObjectByName;
+    dbg.getGameObjectByGroup = getGameObjectByGroup;
     dbg.TARGET_MILLIS_PER_FRAME = TARGET_MILLIS_PER_FRAME;
     window.debug.engine = dbg;
 }
@@ -112,9 +119,22 @@ export function enrollGameObject(go) {
 function enrollGameObjectHelper(go, refArr) {
     if (!refArr || refArr.arr === undefined) return;
     if (gameObjectsIDs.has(go.id)) return;
+    refArr.arr.push(go); // Reference Array of things to Initialize
+    gameObjectsIDs.add(go.id); // Enforce that each GameObject is only added once
     gameObjects.push(go);
-    refArr.arr.push(go);
-    gameObjectsIDs.add(go.id);
+    // Add to Group Name List
+    if (!gameObjectsByGroup[go.group]) {
+        gameObjectsByGroup[go.group] = [];
+    }
+    gameObjectsByGroup[go.group].push(go);
+    // Add ID
+    gameObjectsByID[go.id] = go;
+    // Add to GameObject Name List
+    if (!gameObjectsByName[go.name]) {
+        gameObjectsByName[go.name] = [];
+    }
+    gameObjectsByName[go.name].push(go);
+    // Add the children
     if (go.children && go.children.length > 0) {
         go.children.forEach((child) => {
             enrollGameObjectHelper(child, refArr);
@@ -138,6 +158,21 @@ export function deleteGameObject(go) {
             if (item.id === go.id) {
                 toDel = gameObjects[i];
                 gameObjectsIDs.delete(toDel.id);
+                delete gameObjectsByID[go.id];
+                // Remove from GameObject Name Array
+                for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
+                    if (gameObjectsByName[go.name][j].id === go.id) {
+                        gameObjectsByName[go.name].splice(j, 1);
+                        break;
+                    }
+                }
+                // Remove from GameObject Group Array
+                for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
+                    if (gameObjectsByGroup[go.group][j].id === go.id) {
+                        gameObjectsByGroup[go.group].splice(j, 1);
+                        break;
+                    }
+                }
                 toDel.beforeDestroy();
                 gameObjects.splice(i, 1);
                 break;
@@ -164,9 +199,30 @@ export function deleteGameObject(go) {
             for (let i = 0; i < toDel.children.length; i++) {
                 getChildIDs(toDel.children[i], idsToFind);
             }
+            // Remove Children from the ID Set, and other things
+            for (let i = 0; i < idsToFind.arr.length; i++) {
+                let go = idsToFind[i];
+                gameObjectsIDs.delete(go.id);
+                delete gameObjectsByID[go.id];
+                // Remove from GameObject Name Array
+                for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
+                    if (gameObjectsByName[go.name][j].id === go.id) {
+                        gameObjectsByName[go.name].splice(j, 1);
+                        break;
+                    }
+                }
+                // Remove from GameObject Group Array
+                for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
+                    if (gameObjectsByGroup[go.group][j].id === go.id) {
+                        gameObjectsByGroup[go.group].splice(j, 1);
+                        break;
+                    }
+                }
+            }
+            // Find in the GameObject Array and remove
             for (let i = 0; i < gameObjects.length && idsToFind.arr.length > 0; i++) {
                 for (let j = 0; j < idsToFind.arr.length; j++) {
-                    if (gameObjects[i].id === idsToFind.arr[j]) {
+                    if (gameObjects[i].id === idsToFind.arr[j].id) {
                         gameObjects[i].beforeDestroy();
                         idsToFind.arr.splice(j, 1);
                         gameObjects.splice(i, 1);
@@ -188,7 +244,7 @@ export function deleteGameObject(go) {
 function getChildIDs(go, idArr) {
     if (!idArr || idArr.arr === undefined) return;
     // let toRet = [];
-    idArr.arr.push(go.id);
+    idArr.arr.push(go);
     if (go.children && go.children.length) {
         go.children.forEach((child) => {
             getChildIDs(child, idArr);
@@ -197,7 +253,29 @@ function getChildIDs(go, idArr) {
     return idArr.arr;
 }
 
+// Returns a reference to the GameObject by ID
+export function getGameObjectByID(id) {
+    if (gameObjectsByID[id]) {
+        return gameObjectsByID[id];
+    }
+    return null;
+}
 
+// Return Gameobjects by name
+export function getGameObjectByName(name) {
+    if (gameObjectsByName[name]) {
+        return gameObjectsByName[name];
+    }
+    return null;
+}
+
+// Return Gameobjects by group name
+export function getGameObjectByGroup(group) {
+    if (gameObjectsByGroup[group]) {
+        return gameObjectsByGroup[group];
+    }
+    return null;
+}
 
 // Game Loop
 function main() {

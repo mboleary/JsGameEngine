@@ -14,6 +14,7 @@ export default class GameObject {
         this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
         this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
         this.name = ""; // Name of the GameObject
+        this.group = ""; // Name of the Group the GameObject belongs to
 
         // Private @TODO find a way to trim out these variables from scripts
         this.id = uuid(); // This should be unique, as this is how the gameObject will be serialized
