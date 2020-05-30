@@ -7,6 +7,8 @@ import RenderScript from './Camera/RenderScript.js';
 
 let context = null; // This is the context that will be used to render the game.
 
+// Legacy 2d context
+
 export function initializeWith2dContext() {
     context = canvas.getContext('2d');
     context.imageSmoothingEnabled = false;
@@ -37,6 +39,26 @@ export function renderGameObjectsWith2dContext(gos) {
         }
     })
 }
+
+// END Legacy
+
+// new WebGL Context stuff
+
+export function initializeWithWebGL() {
+    context = canvas.getContext('webgl');
+    if (!context) {
+        console.error("Browser Doesn't support WebGL!");
+    }
+    // Clear the Screen
+    context.clearColor(0, 0, 0, 1);
+    context.clear(context.COLOR_BUFFER_BIT);
+}
+
+export function renderGameObjectsWithWebGL(gos) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context
+}
+
+// Misc. Functions and Class definitions
 
 export function deg2rad(deg) {
     return (deg / 180) * Math.PI;

@@ -19,3 +19,6 @@ https://gist.github.com/jed/982883
 
 https://github.com/websockets/ws
     Might be good for a WebSocket Server for the backend
+
+https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
+    WebGL for 2D things
