@@ -2,7 +2,7 @@
  * Engine contains the basic framework for the game engine
  */
 
-import { renderGameObjectsWith2dContext, initializeWith2dContext } from './Render.js';
+import { renderGameObjectsWith2dContext, initializeWith2dContext, initializeWithWebGL, renderGameObjectsWithWebGL } from './Render.js';
 
 import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager.js';
 
@@ -38,7 +38,8 @@ export const spriteSheet = new SpriteSheet();
 export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
     initInput();
-    initializeWith2dContext();
+    // initializeWith2dContext();
+    initializeWithWebGL();
 
     gameLoopStarted = true;
     currTime = window.performance.now();
@@ -290,7 +291,8 @@ function main() {
     calculateAbsoluteTransform(gameObjects);
 
     // Render the Game Field
-    renderGameObjectsWith2dContext(gameObjects);
+    // renderGameObjectsWith2dContext(gameObjects);
+    renderGameObjectsWithWebGL(gameObjects)
 
     // Get Input
     pollGamepads();

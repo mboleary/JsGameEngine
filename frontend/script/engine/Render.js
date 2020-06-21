@@ -47,7 +47,9 @@ export function renderGameObjectsWith2dContext(gos) {
 export function initializeWithWebGL() {
     context = canvas.getContext('webgl');
     if (!context) {
-        console.error("Browser Doesn't support WebGL!");
+        let msg = "Browser Doesn't support WebGL!";
+        console.error(msg);
+        throw new Error(msg)
     }
     // Clear the Screen
     context.clearColor(0, 0, 0, 1);
