@@ -4,6 +4,7 @@
 
 import { canvas } from '../ui.js';
 import RenderScript from './Camera/RenderScript.js';
+import { init } from './Render/WebGLHelper.js';
 
 let context = null; // This is the context that will be used to render the game.
 
@@ -11,6 +12,11 @@ let context = null; // This is the context that will be used to render the game.
 
 export function initializeWith2dContext() {
     context = canvas.getContext('2d');
+    if (!context) {
+        let msg = "Error Initializing the 2d context!";
+        console.error(msg);
+        throw new Error(msg)
+    }
     context.imageSmoothingEnabled = false;
 }
 
@@ -51,9 +57,7 @@ export function initializeWithWebGL() {
         console.error(msg);
         throw new Error(msg)
     }
-    // Clear the Screen
-    context.clearColor(0, 0, 0, 1);
-    context.clear(context.COLOR_BUFFER_BIT);
+    init(context);
 }
 
 export function renderGameObjectsWithWebGL(gos) {
