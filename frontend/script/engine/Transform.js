@@ -34,4 +34,9 @@ export class Three {
         this.y += vec.y;
         this.z += vec.z;
     }
+
+    // Returns an Array that can be used with WebGL
+    getArr() {
+        return [this.x, this.y, this.z];
+    }
 }
