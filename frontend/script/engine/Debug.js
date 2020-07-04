@@ -29,4 +29,10 @@ export function initDebug() {
     ser.serialize = serialize;
     ser.deserialize = deserialize;
     window.debug.serialize = ser;
+
+    window.debug.interface = {};
+    window.debug.interface.start = () => {
+        let ret = window.open("/debug.html");
+        window.debug.interface.ref = ret;
+    }
 }
