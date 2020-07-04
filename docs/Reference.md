@@ -19,3 +19,6 @@ https://gist.github.com/jed/982883
 
 https://github.com/websockets/ws
     Might be good for a WebSocket Server for the backend
+
+https://developer.mozilla.org/en-US/docs/Web/API/Window/open
+    Opens a Popup window
