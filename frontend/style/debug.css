@@ -1,6 +1,11 @@
 /**
- *
+ * Debug UI Styling
  */
+
+#header {
+    border-bottom: 5px #333 solid
+}
+
 table th {
     border-bottom: 1px black solid
 }
@@ -12,4 +17,8 @@ table tr.selected {
 #table {
     overflow-x: auto;
     overflow-y: auto;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0
 }
