@@ -39,6 +39,7 @@ function getColumns(arr) {
 
     Object.keys(columns).sort().forEach((col) => {
         toRet.push({
+            primaryKey: false, // Primary Key Designation
             path: col, // Object Key
             title: col, // Title of Column
             transform: null, // Will transform the data content
@@ -63,12 +64,17 @@ function getRow(item, cols) {
 
     cols.forEach((col) => {
         let td = document.createElement('td');
-        let content = td.innerText = item[col.path] || "";
+        let content = item[col.path] || "";
         if (col.transform) {
-            content = col.transform(content);
+            td.innerHTML = col.transform(content);
+        } else {
+            td.innerText = content;
         }
         if (col.style) {
             td.style = col.style(content);
+        }
+        if (col.primaryKey) {
+            tr.id = content;
         }
         tr.appendChild(td);
     });

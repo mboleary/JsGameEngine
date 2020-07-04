@@ -2,66 +2,76 @@
 
 import genTable from './engine/DebugUI/genTable.js';
 
+const table = document.getElementById('table');
+const view = document.getElementById('view');
+
+const cols = [
+    {
+        path: "id",
+        title: "ID",
+        primaryKey: true,
+        style: (data) => {
+            return "color: gray";
+        }
+    },
+    {
+        path: "name",
+        title: "Name"
+    },
+    {
+        path: "group",
+        title: "Group"
+    },
+    {
+        path: "transform",
+        title: "Transform: Position",
+        transform: (data) => {
+            return `x:${data.position.x} y:${data.position.y} z:${data.position.z}`
+        }
+    },
+    {
+        path: "children",
+        title: "Number of Children",
+        transform: (data) => {
+            return data.length
+        }
+    },
+    {
+        path: "parent",
+        title: "Parent",
+        transform: (data) => {
+            if (data) {
+                return `<a href="#${data.id}">${data.id}</a>`;
+            }
+            return "";
+        }
+    },
+];
+
+const handleClick = (item) => e => {
+    console.log(item);
+};
+
 function main() {
-    let arr = [
-        {
-            a: "a",
-            b: "b",
-            c: "c"
-        },
-        {
-            a: "1",
-            b: "1",
-            c: "1"
-        },
-        {
-            a: "2",
-            b: "2",
-            c: "2"
-        },
-        {
-            a: "3",
-            b: "3",
-            c: "3"
+    if (!window.opener) {
+        table.innerText = "Cannot access main game window!";
+        return;
+    }
+    
+    refreshTable();
+    
+    if (window.location.hash) {
+        console.log(window.location.hash);
+        const selected = document.getElementById(window.location.hash.substring(1)); // Removes leading #
+        if (selected) {
+            selected.classList.add("selected");
         }
-    ];
-    let cols = [
-        {
-            path: "a",
-            title: "Column A",
-            transform: (data) => {
-                return "Transformed: " + data
-            },
-            style: (data) => {
-                return "color: blue";
-            }
-        },
-        {
-            path: "b",
-            title: "Column B",
-            transform: (data) => {
-                return "Transformed: " + data
-            },
-            style: (data) => {
-                return "color: red";
-            }
-        },
-        {
-            path: "c",
-            title: "Column C",
-            transform: (data) => {
-                return "Transformed: " + data
-            },
-            style: (data) => {
-                return "color: green";
-            }
-        }
-    ];
-    const handleClick = (item) => e => {
-        console.log(item);
-    };
-    let tbl = genTable(arr, handleClick, cols);
-    document.getElementById('table').appendChild(tbl);
+    }
+}
+
+function refreshTable() {
+    let tbl = genTable(window.opener.debug.engine.gameObjects, handleClick, cols);
+    table.appendChild(tbl);
 }
 
 main();

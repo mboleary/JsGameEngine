@@ -1,0 +1,15 @@
+/**
+ *
+ */
+table th {
+    border-bottom: 1px black solid
+}
+
+table tr.selected {
+    background-color: yellow
+}
+
+#table {
+    overflow-x: auto;
+    overflow-y: auto;
+}
