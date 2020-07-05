@@ -2,6 +2,8 @@
 
 import genTable from './engine/DebugUI/genTable.js';
 
+import genScreen from './engine/DebugUI/editorInterface.js';
+
 const table = document.getElementById('table');
 const view = document.getElementById('view');
 
@@ -49,7 +51,8 @@ const cols = [
 ];
 
 const handleClick = (item) => e => {
-    console.log(item);
+    console.log(item, Reflect.ownKeys(item));
+    refreshView(item);
 };
 
 function main() {
@@ -62,11 +65,17 @@ function main() {
     refreshTable();
     
     if (window.location.hash) {
-        console.log(window.location.hash);
-        const selected = document.getElementById(window.location.hash.substring(1)); // Removes leading #
-        if (selected) {
-            selected.classList.add("selected");
-        }
+        handleHashChange();
+    }
+
+    window.addEventListener('hashchange', handleHashChange);
+}
+
+function handleHashChange() {
+    console.log(window.location.hash);
+    const selected = document.getElementById(window.location.hash.substring(1)); // Removes leading #
+    if (selected) {
+        selected.classList.add("selected");
     }
 }
 
@@ -122,6 +131,13 @@ function refreshButtons() {
 function refreshTable() {
     let tbl = genTable(window.opener.debug.engine.gameObjects, handleClick, cols);
     table.appendChild(tbl);
+}
+
+function refreshView(item) {
+    while (view.firstChild) {
+        view.removeChild(view.firstChild);
+    }
+    view.appendChild(genScreen(item));
 }
 
 main();

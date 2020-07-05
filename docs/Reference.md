@@ -22,3 +22,6 @@ https://github.com/websockets/ws
 
 https://developer.mozilla.org/en-US/docs/Web/API/Window/open
     Opens a Popup window
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+    Might be useful for the debugger or Puppeteer

@@ -29,7 +29,6 @@ export default class Test extends GameObjectWithScript(GameObject) {
         frames.push(spriteSheet.sheet.get("goomba_1"));
         frames.push(spriteSheet.sheet.get("goomba_2"));
         this.ani = new Animation(frames, 15);
-        this.texture = this.ani.currentFrame;
         this.squished = false;
         this.squishedTimer = 0;
         this.direction = 0;

@@ -76,17 +76,17 @@ export function stopGameLoop() {
 export function stepGameLoop(fakeDelta) {
     setTimeout(() => {
         if (fakeDelta || fakeDelta === 0) {
-            currTime = window.performance.now() - fakeDelta;
+            advanceTime(fakeDelta);
+        } else {
+            advanceTime(TARGET_MILLIS_PER_FRAME);
         }
-        advanceTime(deltaTime);
-        main();
-        window.cancelAnimationFrame(stopLoop);
+        loop();
     });
 }
 
 // Only use this if re-starting the game after the loop was stopped.
 export function restartGameLoop() {
-    stopLoop = window.requestAnimationFrame(main);
+    main();
     unpauseTime();
 }
 
@@ -277,14 +277,18 @@ export function getGameObjectByGroup(group) {
     return null;
 }
 
-// Game Loop
 function main() {
+    stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
+    loop();
+}
+
+// Game Loop
+function loop() {
     // Update Delta Time
     prevTime = currTime;
-    currTime = window.performance.now();
+    // currTime = window.performance.now();
+    currTime = getTime();
     deltaTime = currTime - prevTime;
-
-    stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
 
     // Calculate the Absolute Transforms of each GameObject
     calculateAbsoluteTransform(gameObjects);

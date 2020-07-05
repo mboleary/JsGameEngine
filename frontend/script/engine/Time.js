@@ -31,6 +31,6 @@ export function advanceTime(amt) {
 export function unpauseTime() {
     if (!isPaused) return;
     isPaused = false;
-    timeDiff = window.performance.now() - timePaused;
+    timeDiff += window.performance.now() - timePaused;
     timePaused = 0;
 }
