@@ -127,6 +127,7 @@ function initBuffers(gl) {
 
     // Now create an array of positions for the square.
 
+    // Note: This is where we define the coordinates for all on-screen objects
     const positions = [
         -1.0, 1.0,
         1.0, 1.0,
