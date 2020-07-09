@@ -1,5 +1,8 @@
 // Provides an interface to the editor for the Debug UI
 
+// import config from "./editorWidgets/config.js";
+import {genDisabledInput, genNumberInput, genTextInput, genCheckboxInput} from './editorWidgets/inputs.js';
+
 export default function genScreen(go) {
     let toRet = document.createElement('div');
 
@@ -32,7 +35,7 @@ function genHeader(go) {
     return toRet;
 }
 
-function genUI(obj, allowObject = true) {
+function genUI(obj, allowObject = 3) {
     let toRet = document.createElement("div");
 
     // @TODO Add Display for Canvas
@@ -51,7 +54,7 @@ function genUI(obj, allowObject = true) {
             toRet.appendChild(genTextInput(obj, key, key));
         } else if (typeof obj[key] === "boolean") {
             toRet.appendChild(genCheckboxInput(obj, key, key));
-        } else if (allowObject && typeof obj[key] === "object") {
+        } else if (allowObject > 0 && typeof obj[key] === "object") {
             try {
                 let div = document.createElement('div');
                 
@@ -59,7 +62,7 @@ function genUI(obj, allowObject = true) {
                 label.innerText = `(Object) ${key}:`;
                 div.appendChild(label);
 
-                let div2 = genUI(obj[key], false);
+                let div2 = genUI(obj[key], (allowObject - 1));
                 div2.classList.add('subInput');
                 div.appendChild(div2);
                 
@@ -71,96 +74,8 @@ function genUI(obj, allowObject = true) {
         } else {
             toRet.appendChild(genDisabledInput(obj, key, key));
         }
+
     });
-
-    return toRet;
-}
-
-// Generate a Disabled Input
-function genDisabledInput(obj, path, labelText) {
-    let toRet = document.createElement('div');
-    toRet.classList.add("inputSeperator");
-
-    let label = document.createElement('label');
-    label.innerText = labelText;
-    toRet.appendChild(label);
-
-    toRet.appendChild(document.createElement('br'));
-
-    let input = document.createElement('input');
-    input.type = "text";
-    input.disabled = true;
-    input.value = obj[path];
-    toRet.appendChild(input);
-
-    return toRet;
-}
-
-// Generate a Numeric Input
-function genNumberInput(obj, path, labelText) {
-    let toRet = document.createElement('div');
-    toRet.classList.add("inputSeperator");
-
-    let label = document.createElement('label');
-    label.innerText = labelText;
-    toRet.appendChild(label);
-
-    toRet.appendChild(document.createElement('br'));
-
-    let input = document.createElement('input');
-    input.type = "number";
-    input.value = obj[path];
-    // Update when element loses focus
-    input.onblur = (e) => {
-        obj[path] = e.target.value;
-    };
-    toRet.appendChild(input);
-
-    return toRet;
-}
-
-// Generate a Text Input
-function genTextInput(obj, path, labelText) {
-    let toRet = document.createElement('div');
-    toRet.classList.add("inputSeperator");
-
-    let label = document.createElement('label');
-    label.innerText = labelText;
-    toRet.appendChild(label);
-
-    toRet.appendChild(document.createElement('br'));
-
-    let input = document.createElement('input');
-    input.type = "text";
-    input.value = obj[path];
-    // Update when element loses focus
-    input.onblur = (e) => {
-        obj[path] = e.target.value;
-    };
-    toRet.appendChild(input);
-
-    return toRet;
-}
-
-// Generate a Checkbox Input
-function genCheckboxInput(obj, path, labelText) {
-    let toRet = document.createElement('div');
-    toRet.classList.add("inputSeperator");
-
-    let label = document.createElement('label');
-    label.innerText = labelText;
-    toRet.appendChild(label);
-
-    toRet.appendChild(document.createElement('br'));
-
-    let input = document.createElement('input');
-    input.type = "checkbox";
-    input.checked = obj[path];
-    // Update when element loses focus
-    input.onblur = (e) => {
-        obj[path] = e.target.checked;
-    };
-    toRet.appendChild(input);
 
     return toRet;
 }
