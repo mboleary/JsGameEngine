@@ -68,7 +68,7 @@ function main() {
         initGameLoop();
 
         // TEMP: Testing puppeteer
-        // connect(window.CONFIG.pubsub); // @TODO Find a better way to handle a failed connection
+        connect(window.CONFIG.pubsub); // @TODO Find a better way to handle a failed connection
         window.dev.disconnect = () => {
             disconnect();
         }
@@ -76,7 +76,7 @@ function main() {
             connect(window.CONFIG.pubsub);
         }
         window.dev.testws = () => {
-            let a = new (Puppet(ControllerTest2, true))();
+            let a = new (Puppet(ControllerTest2, true, 60))();
             a.transform.position.x = 50;
             enrollGameObject(a);
             scene.attachGameObject(a);
