@@ -66,10 +66,23 @@ function main() {
         type: "csv",
         groups: []
     });
+    load({
+        name: "TEST_SPRITESHEET_1",
+        path: "/asset/test.png",
+        type: "spritesheet",
+        options: {
+            width: 32,
+            height: 32
+        },
+        groups: []
+    });
     asset("TEST_JSON_1").then((item) => {
         console.log(item);
     });
     asset("TEST_CSV_1").then((item) => {
+        console.log(item);
+    });
+    asset("TEST_SPRITESHEET_1").then((item) => {
         console.log(item);
     });
     spriteSheet.importFromOptions(OPTIONS);
