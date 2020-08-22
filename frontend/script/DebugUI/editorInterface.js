@@ -2,6 +2,7 @@
 
 // import config from "./editorWidgets/config.js";
 import {genDisabledInput, genNumberInput, genTextInput, genCheckboxInput} from './editorWidgets/inputs.js';
+import genTable from './genTable.js';
 
 export default function genScreen(go) {
     let toRet = document.createElement('div');
@@ -35,7 +36,7 @@ function genHeader(go) {
     return toRet;
 }
 
-function genUI(obj, allowObject = 3) {
+function genUI(obj) {
     let toRet = document.createElement("div");
 
     // @TODO Add Display for Canvas
@@ -54,28 +55,49 @@ function genUI(obj, allowObject = 3) {
             toRet.appendChild(genTextInput(obj, key, key));
         } else if (typeof obj[key] === "boolean") {
             toRet.appendChild(genCheckboxInput(obj, key, key));
-        } else if (allowObject > 0 && typeof obj[key] === "object") {
-            try {
-                let div = document.createElement('div');
-                
-                let label = document.createElement('label');
-                label.innerText = `(Object) ${key}:`;
-                div.appendChild(label);
+        } else if (typeof obj[key] === "object") {
+            toRet.appendChild(preventInfLoop(obj, key, key, () => {
+                try {
+                    let div = document.createElement('div');
+                    
+                    let label = document.createElement('label');
+                    label.innerText = `(Object) ${key}:`;
+                    div.appendChild(label);
 
-                let div2 = genUI(obj[key], (allowObject - 1));
-                div2.classList.add('subInput');
-                div.appendChild(div2);
-                
-                toRet.appendChild(div);
-            } catch (err) {
-                toRet.appendChild(document.createComment("Cannot include Object " + key + " from " + obj));
-            }
-            
+                    let div2 = genUI(obj[key]);
+                    div2.classList.add('subInput');
+                    div.appendChild(div2);
+                    
+                    return div
+                } catch (err) {
+                    return document.createComment("Cannot include Object " + key + " from " + obj);
+                }
+            }));
         } else {
             toRet.appendChild(genDisabledInput(obj, key, key));
         }
-
     });
 
     return toRet;
+}
+
+function preventInfLoop(obj, key, labelText, genElem) {
+    let div = document.createElement("div");
+    let label = document.createElement('label');
+    label.innerText = `(Object) ${key}:`;
+    div.appendChild(label);
+    let btn = document.createElement('button');
+    btn.innerText = "Generate UI";
+    btn.onclick = () => {
+        console.log("CLICK");
+        // Clear div
+        while (div.firstElementChild) {
+            div.removeChild(div.firstElementChild);
+        }
+
+        // Generate the UI
+        div.appendChild(genElem());
+    }
+    div.appendChild(btn);
+    return div;
 }

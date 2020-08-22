@@ -34,3 +34,7 @@ export function unpauseTime() {
     timeDiff += window.performance.now() - timePaused;
     timePaused = 0;
 }
+
+export function isTimePaused() {
+    return isPaused;
+}

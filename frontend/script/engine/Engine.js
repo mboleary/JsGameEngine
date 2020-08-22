@@ -10,7 +10,7 @@ import { pollGamepads, initInput } from './Input.js';
 
 import SpriteSheet from './SpriteSheet.js';
 
-import { pauseTime, unpauseTime, advanceTime, getTime } from './Time.js';
+import { pauseTime, unpauseTime, advanceTime, getTime, isTimePaused } from './Time.js';
 
 import { calculateAbsoluteTransform } from './Physics.js';
 
@@ -86,8 +86,10 @@ export function stepGameLoop(fakeDelta) {
 
 // Only use this if re-starting the game after the loop was stopped.
 export function restartGameLoop() {
-    main();
-    unpauseTime();
+    if (isTimePaused()) {
+        main();
+        unpauseTime();
+    }
 }
 
 export function setCurrentScene(scene) {

@@ -1,8 +1,8 @@
 // Contains scripting for the Debug UI
 
-import genTable from './engine/DebugUI/genTable.js';
+import genTable from './DebugUI/genTable.js';
 
-import genScreen from './engine/DebugUI/editorInterface.js';
+import genScreen from './DebugUI/editorInterface.js';
 
 const table = document.getElementById('table');
 const view = document.getElementById('view');
