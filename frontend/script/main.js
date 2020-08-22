@@ -25,6 +25,8 @@ import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePu
 import { Camera } from './engine/Camera/Camera.js';
 import DrawsThings from './game/DrawsThings.js';
 
+import { load, asset } from './engine/Asset/AssetLoader.js';
+
 function main() {
     window.numGoombas = 0;
     initUI();
@@ -52,6 +54,24 @@ function main() {
     defineKey("right", TYPE_DIGITAL);
     // setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
+    load({
+        name: "TEST_JSON_1",
+        path: "/asset/test.json",
+        type: "json",
+        groups: []
+    });
+    load({
+        name: "TEST_CSV_1",
+        path: "/asset/test.csv",
+        type: "csv",
+        groups: []
+    });
+    asset("TEST_JSON_1").then((item) => {
+        console.log(item);
+    });
+    asset("TEST_CSV_1").then((item) => {
+        console.log(item);
+    });
     spriteSheet.importFromOptions(OPTIONS);
     spriteSheet.ready.then(() => {
 
