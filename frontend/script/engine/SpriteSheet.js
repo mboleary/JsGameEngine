@@ -2,9 +2,6 @@
  * Contains Sprites
  */
 
-let resolve = null;
-let reject = null;
-
 export default class SpriteSheet {
     
     constructor() {
@@ -13,38 +10,41 @@ export default class SpriteSheet {
     }
 
     // Use this if all of the sprites are the same dimensions
-    importFromPath(fpath, width, height) {
-        if (fpath && width && height) {
-            this.image.src = fpath;
-            this.spriteWidth = width;
-            this.spriteHeight = height;
-            this.ready = new Promise((res, rej) => {
-                resolve = res;
-                reject = rej;
-                this.image.onload = generateSpriteSheet.bind(this);
+    async importFromPath(fpath, width, height) {
+        let p = new Promise((res, rej) => {
+            if (fpath && width && height) {
+                this.image.src = fpath;
+                this.spriteWidth = width;
+                this.spriteHeight = height;
+                this.image.onload = generateSpriteSheet.bind(this, res, rej);
                 this.image.onerror = rej;
-            });
-            return this.ready;
-        }
+            } else {
+                rej("Invalid parameters");
+            }
+        });
+        this.ready = p;
+        return p;
     }
 
     // Alternate (more powerful) way to create the Sprite Sheet
-    importFromOptions(options) {
-        if (options && options.path && options.contains && options.contains.length) {
-            this.image.src = options.path;
-            this.contains = options.contains;
-            this.ready = new Promise((res, rej) => {
-                resolve = res;
-                reject = rej;
-                this.image.onload = generateSpriteSheetWithOptions.bind(this);
+    async importFromOptions(options) {
+        let p = new Promise((res, rej) => {
+            if (options && options.path && options.contains && options.contains.length) {
+                this.image.src = options.path;
+                this.contains = options.contains;
+                this.image.onload = generateSpriteSheetWithOptions.bind(this, res, rej);
                 this.image.onerror = rej;
+                return this.ready;
+            } else {
+                rej("Invalid Options");
+            }
             });
-            return this.ready;
-        }
+        this.ready = p;
+        return p;
     }
 }
 
-function generateSpriteSheet() {
+function generateSpriteSheet(resolve, reject) {
     let width = this.image.width;
     let height = this.image.height;
     let promises = [];
@@ -61,7 +61,7 @@ function generateSpriteSheet() {
     });
 }
 
-function generateSpriteSheetWithOptions() {
+function generateSpriteSheetWithOptions(resolve, reject) {
     if (this.contains) {
         let width = this.image.width;
         let height = this.image.height;
