@@ -25,7 +25,7 @@ import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePu
 import { Camera } from './engine/Camera/Camera.js';
 import DrawsThings from './game/DrawsThings.js';
 
-import { load, asset } from './engine/Asset/AssetLoader.js';
+import { load, asset, loadGroup } from './engine/Asset/AssetLoader.js';
 
 function main() {
     window.numGoombas = 0;
@@ -60,7 +60,7 @@ function main() {
         type: "spritesheet-options",
         groups: ["main"]
     });
-    asset("MARIO_SPRITESHEET").then(() => {
+    loadGroup("main").then(() => {
         // Set the Scene
         let scene = new Scene();
         scene.attachGameObject(new DrawsThings());
