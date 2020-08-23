@@ -1,7 +1,7 @@
 import GameObject from '../engine/GameObject.js';
 import { GameObjectWithScript } from '../engine/Script.js';
 
-import { enrollGameObject, deleteGameObject, spriteSheet, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
+import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
 
 import Animation from '../engine/Animation.js';
 
@@ -12,6 +12,10 @@ import { getKeyState } from '../engine/Input.js';
 import { makeSerializable } from '../engine/Serialize.js';
 
 import { getTime } from '../engine/Time.js';
+
+import { asset } from '../engine/Asset/AssetLoader.js';
+
+let mainSpriteSheet = null;
 
 const birth = 100; //500
 
@@ -25,11 +29,14 @@ export default class Test extends GameObjectWithScript(GameObject) {
         this.movementAmt = 5;
         this.transform.scale.x = 4;
         this.transform.scale.y = 4;
-        let frames = [];
-        frames.push(spriteSheet.sheet.get("goomba_1"));
-        frames.push(spriteSheet.sheet.get("goomba_2"));
-        this.ani = new Animation(frames, 15);
-        this.texture = this.ani.currentFrame;
+        asset("MARIO_SPRITESHEET").then((spriteSheet) => {
+            mainSpriteSheet = spriteSheet;
+            let frames = [];
+            frames.push(spriteSheet.sheet.get("goomba_1"));
+            frames.push(spriteSheet.sheet.get("goomba_2"));
+            this.ani = new Animation(frames, 15);
+            this.texture = this.ani.currentFrame;
+        })
         this.squished = false;
         this.squishedTimer = 0;
         this.direction = 0;
@@ -41,7 +48,7 @@ export default class Test extends GameObjectWithScript(GameObject) {
 
     get texture() {
         if (this.squished) {
-            return spriteSheet.sheet.get("goomba_squish");
+            return mainSpriteSheet.sheet.get("goomba_squish");
         }
         return this.ani.currentFrame;
     }

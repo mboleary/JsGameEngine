@@ -1,6 +1,6 @@
 import { canvas, initUI, toggleOverlay } from './ui.js';
 
-import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, spriteSheet, enrollGameObject } from './engine/Engine.js';
+import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enrollGameObject } from './engine/Engine.js';
 
 import Scene from './engine/Scene.js';
 
@@ -9,7 +9,7 @@ import GameObject from './engine/GameObject.js';
 import Script from './engine/Script.js';
 
 // TEST
-import OPTIONS from '../asset/testOptions.js';
+// import OPTIONS from '../asset/testOptions.js';
 
 import Test from './game/Test.js';
 
@@ -55,39 +55,12 @@ function main() {
     // setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
     load({
-        name: "TEST_JSON_1",
-        path: "/asset/test.json",
-        type: "json",
-        groups: []
+        name: "MARIO_SPRITESHEET",
+        path: "/asset/marioSpritesheetOptions.json",
+        type: "spritesheet-options",
+        groups: ["main"]
     });
-    load({
-        name: "TEST_CSV_1",
-        path: "/asset/test.csv",
-        type: "csv",
-        groups: []
-    });
-    load({
-        name: "TEST_SPRITESHEET_1",
-        path: "/asset/test.png",
-        type: "spritesheet",
-        options: {
-            width: 32,
-            height: 32
-        },
-        groups: []
-    });
-    asset("TEST_JSON_1").then((item) => {
-        console.log(item);
-    });
-    asset("TEST_CSV_1").then((item) => {
-        console.log(item);
-    });
-    asset("TEST_SPRITESHEET_1").then((item) => {
-        console.log(item);
-    });
-    spriteSheet.importFromOptions(OPTIONS);
-    spriteSheet.ready.then(() => {
-
+    asset("MARIO_SPRITESHEET").then(() => {
         // Set the Scene
         let scene = new Scene();
         scene.attachGameObject(new DrawsThings());

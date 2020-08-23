@@ -16,9 +16,11 @@ const loaders = {
         options.loaded = true;
     },
     "spritesheet-options": async (options) => {
-        let json = await fetch(options.path)
+        let resp = await fetch(options.path)
         let s = new SpriteSheet();
-        s.importFromOptions(JSON.parse(json));
+        let json = await resp.json();
+        console.log(json);
+        s.importFromOptions(json);
         await s.ready;
         options.data = s;
         options.loaded = true;
