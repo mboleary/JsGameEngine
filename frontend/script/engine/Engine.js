@@ -91,6 +91,10 @@ export function setCurrentScene(scene) {
     enrollGameObject(scene);
 }
 
+export function getCurrentScene() {
+    return currScene;
+}
+
 // Enrolls GameObjects and their children, and initializes their scripts
 export function enrollGameObject(go) {
     if (!go) return;
