@@ -4,6 +4,8 @@ import genTable from './DebugUI/genTable.js';
 
 import genScreen from './DebugUI/editorInterface.js';
 
+import {getData} from './DebugUI/libdebug.js';
+
 const table = document.getElementById('table');
 const view = document.getElementById('view');
 
@@ -60,15 +62,24 @@ function main() {
         table.innerText = "Cannot access main game window!";
         return;
     }
-    
-    refreshHeader();
-    refreshTable();
-    
-    if (window.location.hash) {
-        handleHashChange();
-    }
 
-    window.addEventListener('hashchange', handleHashChange);
+    window.getData = getData;
+    
+    // refreshHeader();
+    // refreshTable();
+    
+    // if (window.location.hash) {
+    //     handleHashChange();
+    // }
+
+    // window.addEventListener('hashchange', handleHashChange);
+
+    window.addEventListener("message", (e) => {
+        console.log("Received message", e.data);
+        window.opener.postMessage("received:" + e.data, "*");
+        // if (e.origin.startsWith('localhost')) {
+        // }
+    }, false);
 }
 
 function handleHashChange() {
