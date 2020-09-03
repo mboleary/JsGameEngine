@@ -47,6 +47,7 @@ function initDebugInterface() {
             console.log(e);
             console.log(e.data);
             let res = handleMessage(e.data);
+            console.log("Returned data:", res);
             if (res) {
                 let msgToSend = {
                     number: e.data.number || undefined,
@@ -65,8 +66,14 @@ function handleMessage(data) {
     if (data.type === "GET") {
         let pathSplit = data.data.var;
         let rootObj = null;
+        let blacklist = data.data.blacklist || null;
+        let maxDepth = data.data.maxDepth || -1;
         if (data.data.from === "gameObject") {
             rootObj = window.debug.engine.getGameObjectByID(data.data.select);
+            // Add a default blacklist
+            if (pathSplit.length === 0) {
+                blacklist = ["parent"];
+            }
         } else {
             rootObj = window.debug[data.data.from];
         }
@@ -76,7 +83,7 @@ function handleMessage(data) {
                 result = rootObj[item];
             });
             console.log("Got:", result);
-            return result;
+            return serializeForDebug(result, blacklist, maxDepth);
         }
     } else if (data.type === "SET") {
         let pathSplit = data.data.var;
@@ -96,7 +103,7 @@ function handleMessage(data) {
             let newData = data.data.data;
             // Use the asset loader to load something in
             if (data.data.asset) {
-                
+                // @TODO Implement Asset Loading here
             }
             if (data.data.type === "push") {
                 result[lastIndex].push(newData);
@@ -137,13 +144,15 @@ function handleMessage(data) {
 }
 
 // MAkes a GameObject or whatever serializable. Also can blacklist keys in an object
-function serializeForDebug(source, blacklist = []) {
+export function serializeForDebug(source, blacklist = [], maxDepth = -1) {
     let visited = [];
     let visitedKeys = []; // Stores the keys of the visited Objects
     let extra = [];
-    function helper(root, pathArr) {
-
+    function helper(root, pathArr, depth) {
         console.log("helper:", root, pathArr);
+        // Check Max Depth
+        if (maxDepth >= 0 && depth > maxDepth) return;
+        // Check Blacklist
         if (blacklist && pathArr.length === 1 && blacklist.indexOf(pathArr[0]) >= 0) {
             return;
         }
@@ -156,16 +165,23 @@ function serializeForDebug(source, blacklist = []) {
                 let keys = Reflect.ownKeys(root);
                 keys.forEach((key) => {
                     let value = root[key];
-                    newObj[key] = helper(value, pathArr.concat([key]));
+                    newObj[key] = helper(value, pathArr.concat([key]), depth + 1);
                 });
                 return newObj;
             } else {
-                console.log("This is a ref to another object");
+                let idx = visited.indexOf(root);
+                let key = visitedKeys[idx];
+                extra.push({
+                    key: pathArr,
+                    type: "ref",
+                    to: key
+                });
+                return;
             }
         } else if (typeof root === "object" && Array.isArray(root)) {
             let newObj = [];
             root.forEach((item, index) => {
-                newObj.push(helper(item, pathArr.concat([index])));
+                newObj.push(helper(item, pathArr.concat([index]), depth + 1));
             });
             return newObj;
         } else if (typeof root === "function") {
@@ -178,7 +194,14 @@ function serializeForDebug(source, blacklist = []) {
             return root;
         }
     }
-    let data = helper(source, []);
+    let data = helper(source, [], 0);
+    if (source.constructor && source.constructor.name) {
+        return {
+            constructor: source.constructor.name,
+            data: data,
+            extra: extra
+        };
+    }
     return {
         data: data,
         extra: extra

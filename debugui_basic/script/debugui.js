@@ -4,7 +4,7 @@ import genTable from './DebugUI/genTable.js';
 
 import genScreen from './DebugUI/editorInterface.js';
 
-import {getData} from './DebugUI/libdebug.js';
+import {getData, setValue} from './DebugUI/libdebug.js';
 
 const table = document.getElementById('table');
 const view = document.getElementById('view');
@@ -64,6 +64,7 @@ function main() {
     }
 
     window.getData = getData;
+    window.setValue = setValue;
     
     // refreshHeader();
     // refreshTable();
