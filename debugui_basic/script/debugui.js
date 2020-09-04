@@ -4,7 +4,7 @@ import genTable from './DebugUI/genTable.js';
 
 import genScreen from './DebugUI/editorInterface.js';
 
-import {getData, setValue} from './DebugUI/libdebug.js';
+import {getData, setValue, callFunction} from './DebugUI/libdebug.js';
 
 const table = document.getElementById('table');
 const view = document.getElementById('view');
@@ -65,6 +65,7 @@ function main() {
 
     window.getData = getData;
     window.setValue = setValue;
+    window.callFunction = callFunction;
     
     // refreshHeader();
     // refreshTable();
@@ -74,13 +75,6 @@ function main() {
     // }
 
     // window.addEventListener('hashchange', handleHashChange);
-
-    window.addEventListener("message", (e) => {
-        console.log("Received message", e.data);
-        window.opener.postMessage("received:" + e.data, "*");
-        // if (e.origin.startsWith('localhost')) {
-        // }
-    }, false);
 }
 
 function handleHashChange() {

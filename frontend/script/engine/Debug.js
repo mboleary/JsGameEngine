@@ -80,7 +80,7 @@ function handleMessage(data) {
         if (rootObj) {
             let result = rootObj;
             pathSplit.forEach((item) => {
-                result = rootObj[item];
+                result = result[item];
             });
             console.log("Got:", result);
             return serializeForDebug(result, blacklist, maxDepth);
@@ -98,7 +98,7 @@ function handleMessage(data) {
             // Take the last Index, since it could be an Array
             let lastIndex = pathSplit.pop();
             pathSplit.forEach((item) => {
-                result = rootObj[item];
+                result = result[item];
             });
             let newData = data.data.data;
             // Use the asset loader to load something in
@@ -132,10 +132,14 @@ function handleMessage(data) {
         if (rootObj) {
             let result = rootObj;
             pathSplit.forEach((item) => {
-                result = rootObj[item];
+                result = result[item];
             });
+            console.log("Result:", typeof result, result);
             if (typeof result === "function") {
-                return result(...data.params);
+                if (data.data.params) {
+                    return result(...data.data.params);
+                }
+                return result();
             }
         }
     } else if (data.type === "PING") {
@@ -195,7 +199,7 @@ export function serializeForDebug(source, blacklist = [], maxDepth = -1) {
         }
     }
     let data = helper(source, [], 0);
-    if (source.constructor && source.constructor.name) {
+    if (source && source.constructor && source.constructor.name) {
         return {
             constructor: source.constructor.name,
             data: data,
