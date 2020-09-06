@@ -53,8 +53,10 @@ const cols = [
 ];
 
 const handleClick = (item) => e => {
-    console.log(item, Reflect.ownKeys(item));
-    refreshView(item);
+    // console.log(item, Reflect.ownKeys(item));
+    getData(item.id, true, [], ["parent"]).then(data => {
+        refreshView(data);
+    })
 };
 
 function main() {
@@ -67,14 +69,14 @@ function main() {
     window.setValue = setValue;
     window.callFunction = callFunction;
     
-    // refreshHeader();
-    // refreshTable();
+    refreshHeader();
+    refreshTable();
     
-    // if (window.location.hash) {
-    //     handleHashChange();
-    // }
+    if (window.location.hash) {
+        handleHashChange();
+    }
 
-    // window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleHashChange);
 }
 
 function handleHashChange() {
@@ -93,13 +95,18 @@ function refreshHeader() {
     header.appendChild(h1);
 
     let code = document.createElement('code');
-    code.innerText = window.opener.location.href;
+    // code.innerText = window.opener.location.href;
+    getData("location", false, []).then((location) => {
+        code.innerText = location;
+    })
     header.appendChild(code);
 
     let time = document.createElement('p');
     time.innerText = "time";
     setInterval(() => {
-        time.innerText = "Game Time: " + window.opener.debug.engine.getTime();
+        callFunction("engine", false, ["getTime"]).then((value) => {
+            time.innerText = "Game Time: " + value;
+        })
     }, 1000);
 
     header.appendChild(refreshButtons());
@@ -112,21 +119,21 @@ function refreshButtons() {
     
     let stopTimeBtn = document.createElement('button');
     stopTimeBtn.onclick = e => {
-        window.opener.debug.engine.stopGameLoop();
+        callFunction("engine", false, ["stopGameLoop"]);
     }
     stopTimeBtn.innerText = "Stop Game Time";
     div.appendChild(stopTimeBtn);
 
     let stepTimeBtn = document.createElement('button');
     stepTimeBtn.onclick = e => {
-        window.opener.debug.engine.stepGameLoop();
+        callFunction("engine", false, ["stepGameLoop"]);
     }
     stepTimeBtn.innerText = "Step Game Time";
     div.appendChild(stepTimeBtn);
 
     let startTimeBtn = document.createElement('button');
     startTimeBtn.onclick = e => {
-        window.opener.debug.engine.restartGameLoop();
+        callFunction("engine", false, ["restartGameLoop"]);
     }
     startTimeBtn.innerText = "Restart Game Time";
     div.appendChild(startTimeBtn);
@@ -135,8 +142,10 @@ function refreshButtons() {
 }
 
 function refreshTable() {
-    let tbl = genTable(window.opener.debug.engine.gameObjects, handleClick, cols);
-    table.appendChild(tbl);
+    getData("engine", false, ["gameObjects"]).then((data) => {
+        let tbl = genTable(data, handleClick, cols);
+        table.appendChild(tbl);
+    });
 }
 
 function refreshView(item) {

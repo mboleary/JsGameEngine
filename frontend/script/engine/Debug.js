@@ -38,6 +38,8 @@ export function initDebug() {
         window.debug.interface.ref = ret;
     }
     initDebugInterface();
+
+    window.debug.location = window.location.href;
 }
 
 // Handles communication between the debug window and the Game Engine
@@ -137,9 +139,9 @@ function handleMessage(data) {
             console.log("Result:", typeof result, result);
             if (typeof result === "function") {
                 if (data.data.params) {
-                    return result(...data.data.params);
+                    return serializeForDebug(result(...data.data.params));
                 }
-                return result();
+                return serializeForDebug(result());
             }
         }
     } else if (data.type === "PING") {
@@ -157,8 +159,28 @@ export function serializeForDebug(source, blacklist = [], maxDepth = -1) {
         // Check Max Depth
         if (maxDepth >= 0 && depth > maxDepth) return;
         // Check Blacklist
-        if (blacklist && pathArr.length === 1 && blacklist.indexOf(pathArr[0]) >= 0) {
-            return;
+        // if (blacklist && pathArr.length === 1 && blacklist.indexOf(pathArr[0]) >= 0) {
+        //     return;
+        // }
+        if (blacklist) {
+            // Block all instances of a key
+            if (!blacklist.length && blacklist.indexOf(pathArr[0]) >= 0) {
+                return;
+            }
+            if (blacklist.length && blacklist.length === pathArr.length) {
+                let match = false;
+                for (let i = 0; i < blacklist.length && i < pathArr.length; i++) {
+                    if (pathArr[i] === blacklist[i]) {
+                        match = true;
+                    } else {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) {
+                    return;
+                }
+            }
         }
         if (!root && root !== 0) return;
         if (typeof root === "object" && !Array.isArray(root)) {

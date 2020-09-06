@@ -25,7 +25,16 @@ export function getData(from, isGameObject, pathArr, blacklist = [], maxDepth = 
         window.opener.postMessage(msgToSend, "*"); // @TODO specify origin
         currNum++;
         return new Promise((resolve) => {
-            messages[messageNumber] = resolve;
+            messages[messageNumber] = {
+                resolve: resolve,
+                params: {
+                    from,
+                    isGameObject,
+                    pathArr,
+                    blacklist,
+                    maxDepth
+                }
+            }
         })
     }
 }
@@ -50,7 +59,16 @@ export function setValue(from, isGameObject, pathArr, value, method) {
         window.opener.postMessage(msgToSend, "*"); // @TODO specify origin
         currNum++;
         return new Promise((resolve) => {
-            messages[messageNumber] = resolve;
+            messages[messageNumber] = {
+                resolve: resolve,
+                params: {
+                    from,
+                    isGameObject,
+                    pathArr,
+                    value,
+                    method
+                }
+            }
         })
     }
 }
@@ -74,7 +92,15 @@ export function callFunction(from, isGameObject, pathArr, params) {
         window.opener.postMessage(msgToSend, "*"); // @TODO specify origin
         currNum++;
         return new Promise((resolve) => {
-            messages[messageNumber] = resolve;
+            messages[messageNumber] = {
+                resolve: resolve,
+                params: {
+                    from,
+                    isGameObject,
+                    pathArr,
+                    params
+                }
+            }
         })
     }
 }
@@ -86,7 +112,9 @@ function handleMessage(e) {
     console.log("Received Message:", e);
     if (e.data && e.data.number) {
         // @TODO Properly rebuild the data being sent here
-        messages[e.data.number](e.data.data.data);
+        let resData = deserializeDebugData(e.data.data);
+        console.log("Data:", resData);
+        messages[e.data.number].resolve(resData);
         setTimeout(() => {
             delete messages[e.data.number];
         }, 100)
@@ -94,13 +122,42 @@ function handleMessage(e) {
 }
 
 // Constructs a proper object from the data sent from the Debug Messages
-function deserializeDebugData(data) {
+function deserializeDebugData(data, msgParams) {
     if (!data.extra.length) {
         return data.data;
     }
 
     let toRet = {};
+    if (data.constructor === "Array") {
+        toRet = [];
+    }
+    Object.assign(toRet, data.data);
     data.extra.forEach((item) => {
-
-    })
+        if (item.type === "ref") {
+            let keyRef = toRet;
+            let last = item.key.pop();
+            item.key.forEach((part) => {
+                keyRef = keyRef[part];
+            });
+            // Set the ref
+            let value = toRet;
+            item.to.forEach((part) => {
+                value = value[part];
+            });
+            keyRef[last] = value;
+        } else if (item.type === "function") {
+            let newFunc = (...params) => {
+                const callFctParams = {};
+                Object.assign(callFctParams, msgParams);
+                callFctParams.params = params;
+            };
+            let keyRef = toRet;
+            let last = item.key.pop();
+            item.key.forEach((part) => {
+                keyRef = keyRef[part];
+            });
+            keyRef[last] = newFunc;
+        }
+    });
+    return toRet;
 }
