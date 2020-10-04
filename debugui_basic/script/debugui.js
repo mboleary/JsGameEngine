@@ -103,11 +103,11 @@ function refreshHeader() {
 
     let time = document.createElement('p');
     time.innerText = "time";
-    setInterval(() => {
-        callFunction("engine", false, ["getTime"]).then((value) => {
-            time.innerText = "Game Time: " + value;
-        })
-    }, 1000);
+    // setInterval(() => {
+    //     callFunction("engine", false, ["getTime"]).then((value) => {
+    //         time.innerText = "Game Time: " + value;
+    //     })
+    // }, 1000);
 
     header.appendChild(refreshButtons());
 
