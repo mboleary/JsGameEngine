@@ -4,13 +4,6 @@ import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enro
 
 import Scene from './engine/Scene.js';
 
-import GameObject from './engine/GameObject.js';
-
-import Script from './engine/Script.js';
-
-// TEST
-// import OPTIONS from '../asset/testOptions.js';
-
 import Test from './game/Test.js';
 
 import ControllerTest2 from './game/ControllerTest2.js';

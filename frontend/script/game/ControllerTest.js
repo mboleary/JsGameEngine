@@ -11,7 +11,7 @@ import { makeSerializable } from '../engine/Serialize.js';
 
 import { getKeyState } from '../engine/Input.js';
 
-import { asset } from '../engine/Asset/AssetLoader.js';
+import { asset, load } from '../engine/Asset/AssetLoader.js';
 
 export default class ControllerTest extends GameObjectWithScript(GameObject) {
     constructor() {
@@ -19,21 +19,28 @@ export default class ControllerTest extends GameObjectWithScript(GameObject) {
         this.movementAmt = 5;
         this.transform.scale.x = 4;
         this.transform.scale.y = 4;
-        asset("MARIO_SPRITESHEET").then((spriteSheet) => {
-            let frames = [];
-            frames.push(spriteSheet.sheet.get("parakoopa_1"));
-            frames.push(spriteSheet.sheet.get("parakoopa_2"));
-            this.ani = new Animation(frames, 15);
-            this.texture = this.ani.currentFrame;
+        load({
+            name: "PLAYER",
+            path: "/asset/fp/Player.png",
+            type: "image"
+        });
+        asset("PLAYER").then((img) => {
+            this.texture = img;
+            // `spritesheet` is the imported spritesheet
+            // let frames = [];
+            // frames.push(spriteSheet.sheet.get("parakoopa_1"));
+            // frames.push(spriteSheet.sheet.get("parakoopa_2"));
+            // this.ani = new Animation(frames, 15);
+            // this.texture = this.ani.currentFrame;
         });
         this.name = "Controller Test";
     }
 
-    get texture() {
-        return this.ani.currentFrame;
-    }
+    // get texture() {
+    //     return this.ani.currentFrame;
+    // }
 
-    set texture(a) {}
+    // set texture(a) {}
 
     init() {
     }
