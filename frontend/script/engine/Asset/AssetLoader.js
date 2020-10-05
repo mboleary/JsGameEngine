@@ -31,7 +31,7 @@ const loaders = {
             i.src = options.path;
             i.onload = () => res(i);
             i.onerror = (e) => rej(e);
-        })
+        });
         options.data = await p;
         options.loaded = true;
     },
@@ -143,5 +143,3 @@ export function unload(assetName) {
 }
 
 // Load Immediately
-
-// Force reload

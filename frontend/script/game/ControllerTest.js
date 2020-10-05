@@ -17,8 +17,8 @@ export default class ControllerTest extends GameObjectWithScript(GameObject) {
     constructor() {
         super();
         this.movementAmt = 5;
-        this.transform.scale.x = 4;
-        this.transform.scale.y = 4;
+        this.transform.scale.x = 2;
+        this.transform.scale.y = 2;
         load({
             name: "PLAYER",
             path: "/asset/fp/Player.png",

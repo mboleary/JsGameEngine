@@ -47,10 +47,28 @@ function main() {
     defineKey("right", TYPE_DIGITAL);
     // setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
+    // load({
+    //     name: "MARIO_SPRITESHEET",
+    //     path: "/asset/marioSpritesheetOptions.json",
+    //     type: "spritesheet-options",
+    //     groups: ["main"]
+    // });
     load({
-        name: "MARIO_SPRITESHEET",
-        path: "/asset/marioSpritesheetOptions.json",
-        type: "spritesheet-options",
+        name: "0",
+        path: "/asset/fp/0.png",
+        type: "image",
+        groups: ["main"]
+    });
+    load({
+        name: "1",
+        path: "/asset/fp/1.png",
+        type: "image",
+        groups: ["main"]
+    });
+    load({
+        name: "2",
+        path: "/asset/fp/2.png",
+        type: "image",
         groups: ["main"]
     });
     loadGroup("main").then(() => {
