@@ -8,8 +8,6 @@ import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager
 
 import { pollGamepads, initInput } from './Input.js';
 
-import SpriteSheet from './SpriteSheet.js';
-
 import { pauseTime, unpauseTime, advanceTime, getTime } from './Time.js';
 
 import { calculateAbsoluteTransform } from './Physics.js';
@@ -31,8 +29,6 @@ export let deltaTime = 0; // Number of Milliseconds the previous frame took to r
 export const TARGET_MILLIS_PER_FRAME = 16; // 60fps -> ~16 milliseconds
 let prevTime = 0;
 let currTime = 0;
-
-export const spriteSheet = new SpriteSheet();
 
 // Starts the Game Loop
 export function initGameLoop() {

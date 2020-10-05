@@ -1,7 +1,7 @@
 import GameObject from '../engine/GameObject.js';
 import { GameObjectWithScript } from '../engine/Script.js';
 
-import { enrollGameObject, deleteGameObject, spriteSheet, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
+import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
 
 import Animation from '../engine/Animation.js';
 
@@ -13,6 +13,10 @@ import { makeSerializable } from '../engine/Serialize.js';
 
 import { getTime } from '../engine/Time.js';
 
+import { asset, load } from '../engine/Asset/AssetLoader.js';
+
+let mainSpriteSheet = null;
+
 const birth = 100; //500
 
 const squish = 1000; //4000
@@ -23,13 +27,30 @@ export default class Test extends GameObjectWithScript(GameObject) {
     constructor() {
         super();
         this.movementAmt = 5;
-        this.transform.scale.x = 4;
-        this.transform.scale.y = 4;
-        let frames = [];
-        frames.push(spriteSheet.sheet.get("goomba_1"));
-        frames.push(spriteSheet.sheet.get("goomba_2"));
-        this.ani = new Animation(frames, 15);
-        this.texture = this.ani.currentFrame;
+        this.transform.scale.x = 2;
+        this.transform.scale.y = 2;
+        // asset("MARIO_SPRITESHEET").then((spriteSheet) => {
+        //     mainSpriteSheet = spriteSheet;
+        //     let frames = [];
+        //     frames.push(spriteSheet.sheet.get("goomba_1"));
+        //     frames.push(spriteSheet.sheet.get("goomba_2"));
+        //     this.ani = new Animation(frames, 15);
+        //     this.texture = this.ani.currentFrame;
+        // })
+        load({
+            name: "TEST",
+            path: "/asset/fp/S_B_1.png",
+            type: "image"
+        });
+        asset("TEST").then((img) => {
+            this.texture = img;
+            // `spritesheet` is the imported spritesheet
+            // let frames = [];
+            // frames.push(spriteSheet.sheet.get("parakoopa_1"));
+            // frames.push(spriteSheet.sheet.get("parakoopa_2"));
+            // this.ani = new Animation(frames, 15);
+            // this.texture = this.ani.currentFrame;
+        });
         this.squished = false;
         this.squishedTimer = 0;
         this.direction = 0;
@@ -39,14 +60,14 @@ export default class Test extends GameObjectWithScript(GameObject) {
         this.name = "Test";
     }
 
-    get texture() {
-        if (this.squished) {
-            return spriteSheet.sheet.get("goomba_squish");
-        }
-        return this.ani.currentFrame;
-    }
+    // get texture() {
+    //     if (this.squished) {
+    //         return mainSpriteSheet.sheet.get("goomba_squish");
+    //     }
+    //     return this.ani.currentFrame;
+    // }
 
-    set texture(a) {}
+    // set texture(a) {}
 
     init() {
         let now = getTime();

@@ -1,15 +1,8 @@
 import { canvas, initUI, toggleOverlay } from './ui.js';
 
-import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, spriteSheet, enrollGameObject } from './engine/Engine.js';
+import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enrollGameObject } from './engine/Engine.js';
 
 import Scene from './engine/Scene.js';
-
-import GameObject from './engine/GameObject.js';
-
-import Script from './engine/Script.js';
-
-// TEST
-import OPTIONS from '../asset/testOptions.js';
 
 import Test from './game/Test.js';
 
@@ -24,6 +17,8 @@ import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.
 import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from './engine/Puppeteer.js';
 import { Camera } from './engine/Camera/Camera.js';
 import DrawsThings from './game/DrawsThings.js';
+
+import { load, asset, loadGroup } from './engine/Asset/AssetLoader.js';
 
 function main() {
     window.numGoombas = 0;
@@ -52,9 +47,31 @@ function main() {
     defineKey("right", TYPE_DIGITAL);
     // setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
-    spriteSheet.importFromOptions(OPTIONS);
-    spriteSheet.ready.then(() => {
-
+    // load({
+    //     name: "MARIO_SPRITESHEET",
+    //     path: "/asset/marioSpritesheetOptions.json",
+    //     type: "spritesheet-options",
+    //     groups: ["main"]
+    // });
+    load({
+        name: "0",
+        path: "/asset/fp/0.png",
+        type: "image",
+        groups: ["main"]
+    });
+    load({
+        name: "1",
+        path: "/asset/fp/1.png",
+        type: "image",
+        groups: ["main"]
+    });
+    load({
+        name: "2",
+        path: "/asset/fp/2.png",
+        type: "image",
+        groups: ["main"]
+    });
+    loadGroup("main").then(() => {
         // Set the Scene
         let scene = new Scene();
         scene.attachGameObject(new DrawsThings());
