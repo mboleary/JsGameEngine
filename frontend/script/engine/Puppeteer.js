@@ -218,3 +218,8 @@ export function checkPuppets() {
         }
     })
 }
+
+export const jmod = {
+    name: "Puppeteer",
+    loop: () => checkPuppets()
+}

@@ -4,6 +4,11 @@
 
 import Transform from './Transform.js';
 
+export const jmod = {
+    name: "Physics",
+    loop: (internals) => calculateAbsoluteTransform(internals.gameObjects)
+}
+
 // Calculates Absolute Transform object from Relative Transforms
 export function calculateAbsoluteTransform(gos) {
     gos.forEach((go) => {

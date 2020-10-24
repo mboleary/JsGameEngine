@@ -5,9 +5,25 @@
 import { canvas } from '../ui.js';
 import RenderScript from './Camera/RenderScript.js';
 
+// let canvas = null;
 let context = null; // This is the context that will be used to render the game.
 
+export const jmod = {
+    name: "Render",
+    // init: initializeWith2dContext,
+    loop: (internals) => {
+        renderGameObjectsWith2dContext(internals.gameObjects);
+    }
+}
+
+export function setCanvas(node) {
+    // canvas = node;
+}
+
 export function initializeWith2dContext() {
+    if (!canvas) {
+        throw new Error("Error: Canvas must be set before initializing Render!");
+    }
     context = canvas.getContext('2d');
     context.imageSmoothingEnabled = false;
 }

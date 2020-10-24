@@ -30,11 +30,45 @@ export const TARGET_MILLIS_PER_FRAME = 16; // 60fps -> ~16 milliseconds
 let prevTime = 0;
 let currTime = 0;
 
+// Keeps Track of Function that need to be run on each Event
+let allowModuleLoading = true;
+let initFuncs = []; // Initialization Functions
+let loopFuncs = []; // Functions run on each Game Loop
+let debugFuncs = []; // Functions run on Debug Events
+
+// References passed to the JMods
+const engineInternals = {
+    gameObjects,
+    currTime,
+    TARGET_MILLIS_PER_FRAME
+};
+
+export function addJMod(jmod) {
+    if (!allowModuleLoading) {
+        throw new Error("Error: Attempted to load module after initialization!");
+    }
+    console.log(`Loading Module [${jmod.name || (jmod.constructor && jmod.constructor.name)}]...`);
+    if (jmod.init) {
+        initFuncs.push(jmod.init);
+    }
+    if (jmod.loop) {
+        loopFuncs.push(jmod.loop);
+    }
+}
+
 // Starts the Game Loop
 export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
-    initInput();
-    initializeWith2dContext();
+    allowModuleLoading = false;
+
+    // Initialize
+    for (let i = 0; i < initFuncs.length; i++) {
+        const f = initFuncs[i];
+        f(engineInternals);
+    }
+
+    // initInput();
+    // initializeWith2dContext();
 
     gameLoopStarted = true;
     currTime = window.performance.now();
@@ -283,21 +317,27 @@ function main() {
     stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
 
     // Calculate the Absolute Transforms of each GameObject
-    calculateAbsoluteTransform(gameObjects);
+    // calculateAbsoluteTransform(gameObjects);
 
     // Render the Game Field
-    renderGameObjectsWith2dContext(gameObjects);
+    // renderGameObjectsWith2dContext(gameObjects);
 
     // Get Input
-    pollGamepads();
+    // pollGamepads();
 
     // Update Network State (if active)
-    checkPuppets();
+    // checkPuppets();
 
     // Run the GameObject Scripts
     processGameObjectScripts(gameObjects);
 
     // Do GameObject Physics
+
+    // Run loop functions
+    for (let i = 0; i < loopFuncs.length; i++) {
+        const f = loopFuncs[i];
+        f(engineInternals);
+    }
 
     // @TODO Remove this
     if (gameObjects.length > 10000) {

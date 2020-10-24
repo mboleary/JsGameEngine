@@ -1,6 +1,6 @@
 import { canvas, initUI, toggleOverlay } from './ui.js';
 
-import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enrollGameObject } from './engine/Engine.js';
+import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enrollGameObject, addJMod } from './engine/Engine.js';
 
 import Scene from './engine/Scene.js';
 
@@ -12,7 +12,7 @@ import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings 
 
 import { initDebug } from './engine/Debug.js';
 
-import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.js';
+// import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.js';
 
 import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from './engine/Puppeteer.js';
 import { Camera } from './engine/Camera/Camera.js';
@@ -20,9 +20,23 @@ import DrawsThings from './game/DrawsThings.js';
 
 import { load, asset, loadGroup } from './engine/Asset/AssetLoader.js';
 
+import {jmod as inputJmod} from "./engine/Input.js";
+import {jmod as phyJmod} from "./engine/Physics.js";
+import {jmod as rendJmod} from "./engine/Render.js";
+import {jmod as pJmod} from "./engine/Puppeteer.js";
+
+function initEngine() {
+    addJMod(inputJmod);
+    addJMod(phyJmod);
+    addJMod(rendJmod);
+    addJMod(pJmod);
+}
+
 function main() {
     window.numGoombas = 0;
     initUI();
+
+    initEngine();
 
     initDebug();
 
