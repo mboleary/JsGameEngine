@@ -10,7 +10,7 @@ const overlay = document.getElementById('overlay');
 let overlayVisible = false;
 
 export function initUI() {
-    // setCanvas(canvas);
+    setCanvas(canvas);
     resizeScreen();
     window.addEventListener("resize", resizeScreen);
     overlay.setAttribute("hidden", overlayVisible);

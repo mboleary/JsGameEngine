@@ -2,10 +2,10 @@
  * Renders the GameObjects from the Engine
  */
 
-import { canvas } from '../ui.js';
+// import { canvas } from '../ui.js';
 import RenderScript from './Camera/RenderScript.js';
 
-// let canvas = null;
+let canvas = null;
 let context = null; // This is the context that will be used to render the game.
 
 export const jmod = {
@@ -17,7 +17,7 @@ export const jmod = {
 }
 
 export function setCanvas(node) {
-    // canvas = node;
+    canvas = node;
 }
 
 export function initializeWith2dContext() {
