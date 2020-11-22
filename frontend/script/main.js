@@ -28,8 +28,8 @@ import {jmod as pJmod} from "./engine/Puppeteer.js";
 function initEngine() {
     addJMod(inputJmod);
     addJMod(phyJmod);
-    addJMod(rendJmod);
     addJMod(pJmod);
+    addJMod(rendJmod);
 }
 
 function main() {

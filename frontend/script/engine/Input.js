@@ -19,6 +19,7 @@ let gamePadsBound = []; // Stores indicies of all gamepads bound. This is done f
 
 export const jmod = {
     name: "Input",
+    version: 0,
     init: initInput,
     loop: () => pollGamepads()
 }

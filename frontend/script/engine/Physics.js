@@ -6,6 +6,7 @@ import Transform from './Transform.js';
 
 export const jmod = {
     name: "Physics",
+    version: 0,
     loop: (internals) => calculateAbsoluteTransform(internals.gameObjects)
 }
 

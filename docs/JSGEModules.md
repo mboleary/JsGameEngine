@@ -32,7 +32,7 @@ Jmod Functions:
 
 Jmod Variables:
 - name: Module Name
-- ver: Module Version
+- version: Module Version
 
 Parameters passed to the functions
 - Event Details
@@ -46,3 +46,9 @@ The Modules can ONLY be loaded before the engine is initialized. Modules will be
 Functions:
 - addJmod(jmod): Adds a Jmod to the engine. Call this before initializing the engine
 - initGameLoop() [Already Implemented]: Initialize the Game Engine. Disallow jmods from being loaded afterwards
+
+Modules will be run in the order that they are added, which is why we cannot allow modules to be loaded after the Engine is started.
+
+## Conventions and Best Practices
+
+Rendering should always be done last, after everything else has run.

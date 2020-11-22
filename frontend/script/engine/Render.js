@@ -10,6 +10,7 @@ let context = null; // This is the context that will be used to render the game.
 
 export const jmod = {
     name: "Render",
+    version: 0,
     // init: initializeWith2dContext,
     loop: (internals) => {
         renderGameObjectsWith2dContext(internals.gameObjects);

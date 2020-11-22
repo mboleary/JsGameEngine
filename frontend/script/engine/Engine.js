@@ -47,7 +47,7 @@ export function addJMod(jmod) {
     if (!allowModuleLoading) {
         throw new Error("Error: Attempted to load module after initialization!");
     }
-    console.log(`Loading Module [${jmod.name || (jmod.constructor && jmod.constructor.name)}]...`);
+    console.log(`Loading Module [${jmod.name || (jmod.constructor && jmod.constructor.name)}${(jmod.version || jmod.version === 0) ? " @ " + jmod.version : ""}]...`);
     if (jmod.init) {
         initFuncs.push(jmod.init);
     }
