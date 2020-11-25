@@ -10,7 +10,7 @@ import ControllerTest2 from './game/ControllerTest2.js';
 
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './engine/Input.js';
 
-import { initDebug } from './engine/Debug.js';
+
 
 // import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.js';
 
@@ -24,8 +24,10 @@ import {jmod as inputJmod} from "./engine/Input.js";
 import {jmod as phyJmod} from "./engine/Physics.js";
 import {jmod as rendJmod} from "./engine/Render.js";
 import {jmod as pJmod} from "./engine/Puppeteer.js";
+import {jmod as dbgJmod} from './engine/Debug.js';
 
 function initEngine() {
+    addJMod(dbgJmod);
     addJMod(inputJmod);
     addJMod(phyJmod);
     addJMod(pJmod);
@@ -38,7 +40,7 @@ function main() {
 
     initEngine();
 
-    initDebug();
+    // initDebug();
 
     window.dev = {};
     window.dev.test = () => {

@@ -8,6 +8,12 @@ import { defaultSerializer, defaultDeserializer, defaultStateUpdater, getKeys, m
 
 import { initDebug as engineDebug } from './Engine.js';
 
+export const jmod = {
+    name: "Debug Interface",
+    version: 0,
+    init: () => initDebug()
+};
+
 export function initDebug() {
     window.debug = {};
     // Controller
