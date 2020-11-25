@@ -220,3 +220,9 @@ export function checkPuppets() {
         }
     })
 }
+
+export const jmod = {
+    name: "Puppeteer",
+    version: 0,
+    loop: () => checkPuppets()
+}
