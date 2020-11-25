@@ -12,15 +12,17 @@ Write the Websocket client to communicate with the remote server
 
 Finish the Base requirements of the Engine
 
-- Delta Time
+- [x] Delta Time
 
-- Ability to run scripts from GameObjects
+- [x] Ability to run scripts from GameObjects
 
-- Ability to add and remove GameObjects from the playfield
+- [~] Ability to add and remove GameObjects from the playfield
+    - Fix GameObject ordering to prevent positioning glitches (Tracked in most recent list)
 
-- Input System to capture the state of the controller every frame
+- [~] Input System to capture the state of the controller every frame
+    - Needs fixing (Tracked in most recent list)
 
-- Provide API to make adding scripts to a GameObject through extending the GameObject class easier
+- [x] Provide API to make adding scripts to a GameObject through extending the GameObject class easier
 
 ## Level System
 
