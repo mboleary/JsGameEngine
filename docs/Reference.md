@@ -25,3 +25,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/Window/open
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
     Might be useful for the debugger or Puppeteer
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#Dynamic_Imports
+    Dynamic imports

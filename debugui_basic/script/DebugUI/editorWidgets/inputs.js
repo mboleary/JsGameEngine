@@ -86,3 +86,7 @@ export function genCheckboxInput(obj, path, labelText) {
 
     return toRet;
 }
+
+export function genArrayInput(obj, path, labelText) {
+    
+}
