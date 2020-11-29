@@ -41,16 +41,22 @@ export function renderGameObjectsWith2dContext(gos) {
                 rs.render(context, canvas.clientWidth, canvas.clientHeight);
             })
         } else if (go.texture) {
+            let tex = null;
+            if (typeof go.texture === "function") {
+                tex = go.texture();
+            } else {
+                tex = go.texture;
+            }
             // Use the texture as normal
-            let iw = go.texture.width;
-            let ih = go.texture.height;
+            let iw = tex.width;
+            let ih = tex.height;
             // Use the Absolute Transform, if available
             let transform = go.absTransform ? go.absTransform : go.transform;
             let pos = transform.position;
             let scl = transform.scale;
             let rot = transform.rotation;
             
-            context.drawImage(go.texture, pos.x, pos.y, iw * scl.x, ih * scl.y);
+            context.drawImage(tex, pos.x, pos.y, iw * scl.x, ih * scl.y);
         }
     })
 }
