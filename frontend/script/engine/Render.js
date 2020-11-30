@@ -42,6 +42,7 @@ export function renderGameObjectsWith2dContext(gos) {
             })
         } else if (go.texture) {
             let tex = null;
+            // Sometimes texture is a function
             if (typeof go.texture === "function") {
                 tex = go.texture();
             } else {
