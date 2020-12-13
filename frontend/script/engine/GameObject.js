@@ -34,15 +34,20 @@ export default class GameObject {
     attachScript(scr) {
         scr.gameObject = this;
         this.scripts.push(scr);
-        scr.scriptIndex = this.scripts.length - 1; // Scripts should not be rearranged like children will be
         scr.init();
     }
 
     // Removes a Script already attached to this GameObject
     detachScript(scr) {
-        if (scr.scriptIndex >= 0) {
-            this.scripts.splice(scr.scriptIndex, 1);
-            scr.onDestroy();
+        if (scr.id) {
+            for (let i = 0; i < this.scripts.length; i++) {
+                let script = this.scripts[i];
+                if (script.id === scr.id) {
+                    this.scripts.splice(i, 1);
+                    script.onDestroy();
+                    return;
+                }
+            }
         }
     }
 

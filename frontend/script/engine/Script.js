@@ -2,9 +2,12 @@
  * Interface for providing script functionality to GameObjects
  */
 
+import uuid from './UUID.js';
+
 export default class Script {
     constructor(gameObject) {
         this.gameObject = gameObject; // Reference to the GameObject that this script is attached to
+        this.id = uuid();
     }
 
     // Override this to initialize a script
