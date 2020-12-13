@@ -4,13 +4,6 @@ import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enro
 
 import Scene from './engine/Scene.js';
 
-import GameObject from './engine/GameObject.js';
-
-import Script from './engine/Script.js';
-
-// TEST
-// import OPTIONS from '../asset/testOptions.js';
-
 import Test from './game/Test.js';
 
 import ControllerTest2 from './game/ControllerTest2.js';
@@ -54,10 +47,28 @@ function main() {
     defineKey("right", TYPE_DIGITAL);
     // setKeyOnNextInput("test");
     // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
+    // load({
+    //     name: "MARIO_SPRITESHEET",
+    //     path: "/asset/marioSpritesheetOptions.json",
+    //     type: "spritesheet-options",
+    //     groups: ["main"]
+    // });
     load({
-        name: "MARIO_SPRITESHEET",
-        path: "/asset/marioSpritesheetOptions.json",
-        type: "spritesheet-options",
+        name: "0",
+        path: "/asset/fp/0.png",
+        type: "image",
+        groups: ["main"]
+    });
+    load({
+        name: "1",
+        path: "/asset/fp/1.png",
+        type: "image",
+        groups: ["main"]
+    });
+    load({
+        name: "2",
+        path: "/asset/fp/2.png",
+        type: "image",
         groups: ["main"]
     });
     loadGroup("main").then(() => {

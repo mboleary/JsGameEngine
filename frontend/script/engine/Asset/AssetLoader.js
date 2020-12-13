@@ -25,6 +25,16 @@ const loaders = {
         options.data = s;
         options.loaded = true;
     },
+    "image": async (options) => {
+        let p = new Promise((res, rej) => {
+            let i = new Image();
+            i.src = options.path;
+            i.onload = () => res(i);
+            i.onerror = (e) => rej(e);
+        });
+        options.data = await p;
+        options.loaded = true;
+    },
     "json": async (options) => {
         let resp = await fetch(options.path);
         options.data = resp.json();
@@ -87,13 +97,13 @@ export function load(assetOpts) {
 }
 
 // Access an asset (will automatically load if not already loaded)
-export async function asset(assetName) {
+export async function asset(assetName, forceReload=false) {
     if (!loadedContent[assetName]) {
         let err = "Asset not defined!";
         console.error(err);
         throw new Error(err);
     }
-    if (loadedContent[assetName].loaded) {
+    if (!forceReload && loadedContent[assetName].loaded) {
         return loadedContent[assetName].data;
     } else {
         let type = loadedContent[assetName].type;
@@ -131,3 +141,5 @@ export function unload(assetName) {
         delete loadedContent[assetName].data;
     }
 }
+
+// Load Immediately
