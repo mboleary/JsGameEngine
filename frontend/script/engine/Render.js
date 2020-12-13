@@ -2,15 +2,41 @@
  * Renders the GameObjects from the Engine
  */
 
-import { canvas } from '../ui.js';
+// import { canvas } from '../ui.js';
 import RenderScript from './Camera/RenderScript.js';
 import { init } from './Render/WebGLHelper.js';
 
+let canvas = null;
 let context = null; // This is the context that will be used to render the game.
 
-// Legacy 2d context
+export const jmod = {
+    name: "Render",
+    version: 0,
+    init: initializeWith2dContext,
+    loop: (internals) => {
+        renderGameObjectsWith2dContext(internals.gameObjects);
+    }
+}
+
+export const jmodWebGL = {
+    name: "RenderWebGL",
+    version: 0,
+    init: initializeWithWebGL,
+    loop: (internals) => {
+        renderGameObjectsWithWebGL(internals.gameObjects);
+    }
+}
+
+export function setCanvas(node) {
+    canvas = node;
+}
+
+// 2d context stuff
 
 export function initializeWith2dContext() {
+    if (!canvas) {
+        throw new Error("Error: Canvas must be set before initializing Render!");
+    }
     context = canvas.getContext('2d');
     if (!context) {
         let msg = "Error Initializing the 2d context!";
