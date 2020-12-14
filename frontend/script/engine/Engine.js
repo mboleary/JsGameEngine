@@ -321,7 +321,7 @@ function main() {
     stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
 
     // Calculate the Absolute Transforms of each GameObject
-    // calculateAbsoluteTransform(gameObjects);
+    calculateAbsoluteTransform(gameObjects);
 
     // Render the Game Field
     // renderGameObjectsWith2dContext(gameObjects);

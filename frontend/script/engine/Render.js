@@ -48,6 +48,7 @@ export function renderGameObjectsWith2dContext(gos) {
             let transform = go.absTransform ? go.absTransform : go.transform;
             let pos = transform.position;
             let scl = transform.scale;
+            // @TODO Do rotation
             let rot = transform.rotation;
             
             context.drawImage(go.texture, pos.x, pos.y, iw * scl.x, ih * scl.y);

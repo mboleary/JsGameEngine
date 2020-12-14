@@ -59,14 +59,8 @@ function main() {
     defineKey("down", TYPE_DIGITAL);
     defineKey("left", TYPE_DIGITAL);
     defineKey("right", TYPE_DIGITAL);
-    // setKeyOnNextInput("test");
-    // let spritesheet = new SpriteSheet("/asset/test.png", 32, 32);
-    // load({
-    //     name: "MARIO_SPRITESHEET",
-    //     path: "/asset/marioSpritesheetOptions.json",
-    //     type: "spritesheet-options",
-    //     groups: ["main"]
-    // });
+    // Set Defulat Keymappings
+    setKeybindings({"test":{"state":0,"mapping":["k",32],"mappingName":" ","type":1},"up":{"state":0,"mapping":["k",38],"mappingName":"ArrowUp","type":1},"down":{"state":0,"mapping":["k",40],"mappingName":"ArrowDown","type":1},"left":{"state":0,"mapping":["k",37],"mappingName":"ArrowLeft","type":1},"right":{"state":0,"mapping":["k",39],"mappingName":"ArrowRight","type":1}});
     load({
         name: "0",
         path: "/asset/fp/0.png",
