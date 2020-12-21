@@ -1,3 +1,5 @@
+# Reference Links
+
 https://developer.mozilla.org/en-US/docs/Games/Anatomy
 
 https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context
@@ -19,3 +21,13 @@ https://gist.github.com/jed/982883
 
 https://github.com/websockets/ws
     Might be good for a WebSocket Server for the backend
+
+## Audio
+
+https://en.wikipedia.org/wiki/Head-related_transfer_function
+
+https://en.wikipedia.org/wiki/3D_sound_reconstruction
+
+https://en.wikipedia.org/wiki/Convolution
+
+https://en.wikipedia.org/wiki/Tomographic_reconstruction

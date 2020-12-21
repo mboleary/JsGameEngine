@@ -86,6 +86,15 @@ export default class EffectsContainer {
         }
     }
 
+    getEffectIndexByID = (id) => {
+        for (let i = 0; i < this.effectsArray.length; i++) {
+            const e = this.effectsArray[i];
+            if (e.id === id) {
+                return i;
+            }
+        }
+    }
+
     remove = (effect) => {
         for (let i = 0; i < this.effectsArray.length; i++) {
             const e = this.effectsArray[i];

@@ -28,8 +28,6 @@ export default class AudioPlayer {
             this.playing = false;
         }
 
-        
-
         if (!this.playing) {
             this.playing = true;
             if (loop) {

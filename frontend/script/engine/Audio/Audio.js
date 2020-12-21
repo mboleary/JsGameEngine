@@ -1,5 +1,5 @@
 /**
- * Audio Module
+ * Audio Module. Contains jmod, and some demos
  */
 
  import { BaseEffect } from './EffectsContainer.js';
@@ -38,5 +38,11 @@ function devDemo2(ap) {
     ap.effects.add(eff);
 }
 
+function devDemo3() {
+    let ap = new AudioPlayer("/asset/test.wav");
+    return ap;
+}
+
 window.devDemo = devDemo;
 window.devDemo2 = devDemo2;
+window.devDemo3 = devDemo3;
