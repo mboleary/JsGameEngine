@@ -3,6 +3,7 @@
  */
 
 import { getAudioContext } from './Audio.js';
+import EffectsContainer from './EffectsContainer.js';
 
 export default class AudioPlayer {
 
@@ -10,11 +11,12 @@ export default class AudioPlayer {
         const audioContext = getAudioContext();
         this.audio = new Audio(fname);
         this.track = audioContext.createMediaElementSource(this.audio);
-        this.track.connect(audioContext.destination);
+        this.effects = new EffectsContainer(this.track, audioContext.destination);
+        // this.track.connect(audioContext.destination);
         this.playing = false;
     }
 
-    play = (loop) => {
+    play = (rate, loop) => {
         const audioContext = getAudioContext();
 
         // Fixes audio not playing when page loads due to permissions
@@ -26,10 +28,15 @@ export default class AudioPlayer {
             this.playing = false;
         }
 
+        
+
         if (!this.playing) {
             this.playing = true;
             if (loop) {
                 this.audio.loop = true;
+            }
+            if (rate) {
+                this.audio.playbackRate = rate;
             }
             this.audio.play();
         } else {
@@ -60,6 +67,10 @@ export default class AudioPlayer {
         return this.audio.duration;
     }
 
+    getPlaybackRate = () => {
+        return this.audio.playbackRate;
+    }
+
     isMuted = () => {
         this.audio.muted;
     }
@@ -80,7 +91,7 @@ export default class AudioPlayer {
         return this.audio.currentTime = time;
     }
 
-    
-
-    setLoop
+    setPlaybackRate = (rate) => {
+        this.audio.playbackRate = rate;
+    }
 }

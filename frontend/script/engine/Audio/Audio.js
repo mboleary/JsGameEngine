@@ -2,7 +2,8 @@
  * Audio Module
  */
 
- import AudioPlayer from './Player.js';
+ import { BaseEffect } from './EffectsContainer.js';
+import AudioPlayer from './Player.js';
 
 export default {
     name: "Audio",
@@ -32,4 +33,10 @@ function devDemo () {
     return ap;
 }
 
+function devDemo2(ap) {
+    const eff = new BaseEffect(audioContext.createGain());
+    ap.effects.add(eff);
+}
+
 window.devDemo = devDemo;
+window.devDemo2 = devDemo2;
