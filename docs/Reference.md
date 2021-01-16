@@ -31,3 +31,13 @@ https://en.wikipedia.org/wiki/3D_sound_reconstruction
 https://en.wikipedia.org/wiki/Convolution
 
 https://en.wikipedia.org/wiki/Tomographic_reconstruction
+
+https://www.izotope.com/en/learn/the-basics-of-convolution-in-audio-production.html
+
+https://www.analog.com/en/design-center/landing-pages/001/beginners-guide-to-dsp.html#
+
+https://www.musicdsp.org/en/latest/
+
+https://www.dspguide.com/ch1/3.htm
+
+https://theaudioprogrammer.com/how-to-learn-dsp-a-guide-for-audio-programmers/
