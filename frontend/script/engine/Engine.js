@@ -234,7 +234,7 @@ export function deleteGameObject(go) {
             }
             // Remove Children from the ID Set, and other things
             for (let i = 0; i < idsToFind.arr.length; i++) {
-                let go = idsToFind[i];
+                let go = idsToFind.arr[i];
                 gameObjectsIDs.delete(go.id);
                 delete gameObjectsByID[go.id];
                 // Remove from GameObject Name Array
