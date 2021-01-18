@@ -13,6 +13,8 @@ import DrawsThings from './game/DrawsThings.js';
 
 import TileMap from "./game/tilemap/TileMap.js";
 
+import { asset } from './engine/Asset/AssetLoader.js';
+
 /**
  * Constructs the Space Scene that has the starfield and FighterPilot Ship
  */
@@ -32,5 +34,9 @@ export function tileScene() {
     scene.name = "Tile Scene";
     let tm = new TileMap();
     scene.attachGameObject(tm);
+    const f = async () => {
+        tm.setTileset(await asset("tilesheet"))
+    }
+    f();
     return scene;
 }
