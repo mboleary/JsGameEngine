@@ -120,9 +120,12 @@ export function restartGameLoop() {
     unpauseTime();
 }
 
+// Sets the current scene, and deletes the old one
 export function setCurrentScene(scene) {
+    let oldScn = currScene;
     currScene = scene;
     enrollGameObject(scene);
+    deleteGameObject(oldScn);
 }
 
 // Enrolls GameObjects and their children, and initializes their scripts
