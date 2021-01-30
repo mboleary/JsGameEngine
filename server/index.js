@@ -2,7 +2,23 @@
  * PubSub Component
  */
 
+console.log(process.env.PORT);
+
+const PORT = process.env.PORT || 8001;
+
 const WebSocket = require('ws');
+const http = require('http');
+
+const app = require('./http');
+const wshandler = require('./wshandler');
+
+const server = http.createServer();
+
+// Define HTTP Server
+
+server.on('request', app);
+
+// Define Websocket Server
 
 function noop() { }
 
@@ -10,35 +26,9 @@ function heartbeat() {
     this.isAlive = true;
 }
 
-const wss = new WebSocket.Server({ port: 8001 });
+const wss = new WebSocket.Server({ server: server });
 
-wss.on('connection', function connection(ws, req) {
-    console.log("Connection:", req.socket.remoteAddress);
-    ws.isAlive = true;
-    ws.on('pong', heartbeat);
-    ws.on('message', (msg) => {
-        console.log("Message:", msg);
-        if (!msg) return;
-        let json = null;
-        try {
-            json = JSON.parse(msg);
-        } catch (e) {
-            ws.send("{err: \"Not Valid JSON\"");
-            return;
-        }
-        console.log("Action:", json.action, "Target:", json.target);
-        if (json.action === "update") {
-            if (json.target === "*") {
-                wss.clients.forEach((wsr) => {
-                    if (wsr !== ws) {
-                        wsr.send(JSON.stringify(json));
-                    }
-                });
-            }
-        }
-    });
-    ws.send('TEST');
-});
+wss.on('connection', wshandler);
 
 const interval = setInterval(function ping() {
     wss.clients.forEach(function each(ws) {
@@ -51,3 +41,7 @@ const interval = setInterval(function ping() {
 wss.on('close', function close() {
     clearInterval(interval);
 });
+
+server.listen(PORT, () => {
+    console.log("Server started on port " + PORT);
+})
