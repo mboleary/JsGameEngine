@@ -21,8 +21,9 @@ function createRoom(opts) {
         id: uuid(),
         name: opts.name || "",
         gameObjects: [],
-        users: 0,
-        limit: opts.limit || 20
+        users: [],
+        limit: opts.limit || 20,
+        private: opts.private || false,
     };
 
     rooms.push(toAdd);
@@ -30,9 +31,33 @@ function createRoom(opts) {
     roomsByID[toAdd.id] = toAdd;
 }
 
+function addUser(roomID, userObj) {
+    if (!roomsByID[roomID]) {
+        throw new Error("Invalid Room ID!");
+    }
+
+    const room  = roomsByID[roomID];
+    room.users.push({
+        id: uuid(),
+        ipAddr: userObj.ipAddr || "",
+        port: userObj.port || "",
+
+    })
+}
+
+/**
+ * Updates some properties of a room. Includes things like the room name, private / public, etc.
+ * @param {*} id ID of room to update
+ * @param {*} opts Options
+ */
+function updateRoom(id, opts) {
+
+}
+
 // function updateGameObject
 
 module.exports = {
     getRooms,
-    createRoom
+    createRoom,
+    addUser
 }

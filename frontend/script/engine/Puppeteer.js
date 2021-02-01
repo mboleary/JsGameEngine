@@ -4,7 +4,7 @@
 
 import { serialize, deserialize, update, getConstructor } from './Serialize.js';
 
-import { enrollGameObject } from './Engine.js';
+import { enrollGameObject, deleteGameObject } from './Engine.js';
 
 const minFrames = 2;
 const defaultFrames = 15;
@@ -198,8 +198,18 @@ export function connect(url) {
 
 // Close the Websocket
 export function disconnect() {
+    if (!ws) return;
     ws.close();
     puppeteerActive = false;
+    // Destroy all non-master puppets
+    Object.keys(puppets).forEach((key) => {
+        if (puppets[key] && puppets[key].master) {
+            // This is a master state and needs to be downgraded
+        } else {
+            // This is remotely controlled and should be deleted
+            deleteGameObject(puppets[key]);
+        }
+    })
 }
 
 // Called every frame to update the puppets
