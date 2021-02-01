@@ -3,6 +3,7 @@
  */
 
 const WebSocket = require('ws');
+const Layer = require("express/lib/router/layer");
 
 function noop() { }
 
@@ -23,6 +24,17 @@ function initWebsocket(server) {
         // URL should be a GET request and look like this: /ws/:room-id
 
         console.log("req.url:", req.url);
+
+        let lyr = Layer("/ws/:id", {},  function a() {});
+
+        let match = lyr.match(req.url);
+
+        let params = lyr.params;
+
+        console.log("Upgrading:", match, params);
+
+        // if (req.url.match(/\/ws\//))
+
 
         // if (req.url)
 
