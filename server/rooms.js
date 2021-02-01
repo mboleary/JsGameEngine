@@ -12,6 +12,10 @@ function getRooms() {
     return rooms;
 }
 
+function getRoom(id) {
+    return roomsByID[id];
+}
+
 function createRoom(opts) {
     if (roomsByName[opts.name]) {
         throw new Error("Room already created!");
@@ -58,6 +62,7 @@ function updateRoom(id, opts) {
 
 module.exports = {
     getRooms,
+    getRoom,
     createRoom,
     addUser
 }

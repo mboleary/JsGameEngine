@@ -5,6 +5,8 @@
 const WebSocket = require('ws');
 const Layer = require("express/lib/router/layer");
 
+const Rooms = require("./rooms");
+
 function noop() { }
 
 function heartbeat() {
@@ -33,10 +35,13 @@ function initWebsocket(server) {
 
         console.log("Upgrading:", match, params);
 
-        // if (req.url.match(/\/ws\//))
+        // Check for room
 
-
-        // if (req.url)
+        if (!match || !params.id || !Rooms.getRoom(params.id)) {
+            console.log("Room not created:", params);
+            sock.destroy();
+            return;
+        }
 
         wss.handleUpgrade(req, sock, head, function(ws) {
             wss.emit("connection", ws, req, args);
