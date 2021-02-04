@@ -2,15 +2,15 @@
  * Contains the behavior for the Camera
  */
 
-import Script from '../Script.js';
+import RenderScript from './RenderScript.js';
 import Transform from '../Transform.js';
 
 import { canvas } from '../../ui.js';
 import { deg2rad } from '../Render.js';
 
-const context = canvas.getContext('2d');
+// const context = canvas.getContext('2d');
 
-export default class CameraBehavior extends Script {
+export default class CameraBehavior extends RenderScript {
     constructor(gameObject) {
         super(gameObject);
         this.prevTransform = new Transform();
@@ -18,7 +18,7 @@ export default class CameraBehavior extends Script {
 
     init() { }
 
-    loop() {
+    render(context, width, height) {
         let delta = new Transform();
         delta.position.x = this.gameObject.transform.position.x - this.prevTransform.position.x;
         delta.position.y = this.gameObject.transform.position.y - this.prevTransform.position.y;
