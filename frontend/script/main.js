@@ -20,6 +20,8 @@ import DrawsThings from './game/DrawsThings.js';
 
 import { load, asset, loadGroup } from './engine/Asset/AssetLoader.js';
 
+import { createRoom } from './engine/Network/RoomController.js';
+
 import {jmod as inputJmod} from "./engine/Input.js";
 import {jmod as phyJmod} from "./engine/Physics.js";
 import {jmod as rendJmod} from "./engine/Render.js";
@@ -92,10 +94,22 @@ function main() {
         // Initialize the Game Loop
         initGameLoop();
 
+        window.dev.toggleOverlay = () => {
+            toggleOverlay();
+        }
+
         // TEMP: Testing puppeteer
         // connect(window.CONFIG.pubsub); // @TODO Find a better way to handle a failed connection
         window.dev.disconnect = () => {
             disconnect();
+        }
+        window.dev.createRoom = async () => {
+            let room = await createRoom(window.CONFIG.rooms_api, {
+                name: "JSGE Test Room",
+                private: false
+            });
+            console.log("Room created:", room);
+            
         }
         window.dev.reconnect = () => {
             connect(window.CONFIG.pubsub);

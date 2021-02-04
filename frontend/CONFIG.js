@@ -5,5 +5,6 @@
 window.CONFIG = {
     "branch": "testing",
     "debug": true,
-    "pubsub": "ws://localhost:8001/ws/abc123"
+    "pubsub": "ws://localhost:8001/ws/abc123",
+    "rooms_api": "http://localhost:8001"
 }

@@ -33,6 +33,8 @@ function createRoom(opts) {
     rooms.push(toAdd);
     roomsByName[opts.name] = toAdd;
     roomsByID[toAdd.id] = toAdd;
+
+    return toAdd;
 }
 
 function addUser(roomID, userObj) {
@@ -45,7 +47,8 @@ function addUser(roomID, userObj) {
         id: uuid(),
         ipAddr: userObj.ipAddr || "",
         port: userObj.port || "",
-
+        name: userObj.name || "",
+        masterOf: [] // GameObjects that this user has the master state for
     })
 }
 

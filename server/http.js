@@ -21,7 +21,7 @@ app.get('/api/rooms/:id', function(req, res) {
     let room = Rooms.getRoom(req.params.id);
     if (!room) {
         res.status(404).json({
-            code: "room.notfound",
+            code: "room.not_found",
             error: "404 - Room not found"
         });
         return;
@@ -30,9 +30,15 @@ app.get('/api/rooms/:id', function(req, res) {
 });
 
 app.post('/api/rooms', function(req, res) {
-    res.json({
-        test: true
-    });
+    if (!req.body) {
+        res.status(400).json({
+            code: "room.no_body",
+            error: "400 - No Body"
+        });
+        return;
+    }
+    let toRet = Rooms.createRoom(req.body);
+    res.json(toRet);
 });
 
 app.put('/api/rooms', function(req, res) {
