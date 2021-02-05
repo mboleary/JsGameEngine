@@ -3,9 +3,10 @@
  */
 
 export async function createRoom(baseURL, payload) {
+    console.log(payload)
     const resp = await fetch(`${baseURL}/api/rooms`, {
         method: "POST",
-        mode: "no-cors",
+        mode: "cors",
         headers: {
             'Content-Type': "application/json"
         },
@@ -17,10 +18,17 @@ export async function createRoom(baseURL, payload) {
 export async function getRooms(baseURL) {
     const resp = await fetch(`${baseURL}/api/rooms`, {
         method: "GET",
+        mode: "cors",
         headers: {
             'Content-Type': "application/json"
-        },
-        body: JSON.stringify(payload)
+        }
     });
-    return resp.json();
+    console.log(resp.body);
+    let json = await resp.json();
+
+    if (json.dataset) {
+        return json.dataset;
+    } else {
+        return json;
+    }
 }

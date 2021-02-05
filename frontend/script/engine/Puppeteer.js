@@ -224,6 +224,7 @@ export function checkPuppets() {
                 target: "*",
                 number: puppets[key].getUpdateNumber(),
                 data: puppets[key].getState()
+                // @TODO Add owner options here
             }));
         }
     })

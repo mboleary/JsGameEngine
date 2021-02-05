@@ -20,7 +20,7 @@ import DrawsThings from './game/DrawsThings.js';
 
 import { load, asset, loadGroup } from './engine/Asset/AssetLoader.js';
 
-import { createRoom } from './engine/Network/RoomController.js';
+import { createRoom, getRooms } from './engine/Network/RoomController.js';
 
 import {jmod as inputJmod} from "./engine/Input.js";
 import {jmod as phyJmod} from "./engine/Physics.js";
@@ -109,16 +109,40 @@ function main() {
                 private: false
             });
             console.log("Room created:", room);
-            
         }
-        window.dev.reconnect = () => {
-            connect(window.CONFIG.pubsub);
+
+        window.dev.getRooms = async () => {
+            let rooms = await getRooms(window.CONFIG.rooms_api);
+            console.log("Got rooms:", rooms);
+        }
+        window.dev.reconnect = (roomID) => {
+            connect(window.CONFIG.pubsub + "/" + roomID);
         }
         window.dev.testws = () => {
             let a = new (Puppet(ControllerTest2, true))();
             a.transform.position.x = 50;
             enrollGameObject(a);
             scene.attachGameObject(a);
+        }
+        window.dev.a = async () => {
+            console.log("Creating Room...");
+            let room = await createRoom(window.CONFIG.rooms_api, {
+                name: "JSGE Test Room",
+                private: false
+            });
+            console.log("Joining Room:", room);
+            connect(window.CONFIG.pubsub + "/" + room.id);
+        }
+
+        window.dev.b = async () => {
+            console.log("Joining First room...");
+            let rooms = await getRooms(window.CONFIG.rooms_api);
+            if (rooms && rooms.length > 0) {
+                console.log("Joining Room:", rooms[0]);
+                connect(window.CONFIG.pubsub + "/" + rooms[0].id);
+            } else {
+                console.log("No Room!");
+            }
         }
     })
 }

@@ -25,22 +25,30 @@ function initWebsocket(server) {
 
         // URL should be a GET request and look like this: /ws/:room-id
 
-        console.log("req.url:", req.url);
-
         let lyr = Layer("/ws/:id", {},  function a() {});
 
         let match = lyr.match(req.url);
 
         let params = lyr.params;
 
-        console.log("Upgrading:", match, params);
-
         // Check for room
 
-        if (!match || !params.id || !Rooms.getRoom(params.id)) {
+        const room = Rooms.getRoom(params.id)
+
+        if (!match || !params.id || !room) {
             console.log("Room not created:", params);
             sock.destroy();
             return;
+        }
+
+        args.room = room;
+
+        // Parse URL
+
+        const url = new URL(req.url, `ws://${req.headers.host}`);
+
+        if (url.searchParams) {
+            args.name = url.searchParams.name;
         }
 
         wss.handleUpgrade(req, sock, head, function(ws) {
@@ -50,8 +58,15 @@ function initWebsocket(server) {
 
     wss.on('connection', function(ws, req, args) {
         console.log("URL:", req.url);
-        console.log("Connection:", req.socket.remoteAddress);
+        console.log("Connection:", req.socket.remoteAddress, req.socket.remotePort);
         console.log("ARGS:", args);
+        // Add the new client to the room
+        Rooms.addClient(args.room.id, {
+            ws: ws,
+            ipAddr: req.socket.remoteAddress,
+            port: req.socket.remotePort,
+            name: args.name
+        })
         ws.isAlive = true;
         ws.on('pong', heartbeat);
         ws.on('message', (msg) => {
@@ -64,7 +79,9 @@ function initWebsocket(server) {
                 ws.send("{err: \"Not Valid JSON\"}");
                 return;
             }
+            console.log("Message Room:", args.room);
             console.log("Action:", json.action, "Target:", json.target);
+            // @TODO Add new Actions, Targets. Make sure that messages are only being sent to room participants
             if (json.action === "update") {
                 if (json.target === "*") {
                     wss.clients.forEach((wsr) => {
@@ -72,6 +89,7 @@ function initWebsocket(server) {
                             wsr.send(JSON.stringify(json));
                         }
                     });
+
                 }
             }
         });
