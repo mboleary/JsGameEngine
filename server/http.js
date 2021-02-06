@@ -72,17 +72,57 @@ app.post('/api/rooms', function(req, res) {
 });
 
 app.put('/api/rooms/:id', function(req, res) {
-    console.log("PUT rooms");
-    res.json({
-        test: true
-    });
+    try {
+        console.log("PUT rooms", req.params.id, req.body);
+        let room = Rooms.getRoom(req.params.id);
+        if (!room) {
+            res.status(404).json({
+                code: "room.put.not_found",
+                error: "404 - Room not found"
+            });
+            return;
+        }
+        if (!req.body) {
+            console.log("Returning 400 - no body");
+            res.status(400).json({
+                code: "room.put.no_body",
+                error: "400 - No Body"
+            });
+            return;
+        }
+        Rooms.updateRoom(req.params.id, req.body);
+        let toRet = {success:true};
+        res.json(toRet);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            code: "room.put.err",
+            error: "500 - Internal server error:" + err.toString()
+        });
+    }
 });
 
 app.delete('/api/rooms/:id', function(req, res) {
-    console.log("DELETE rooms");
-    res.json({
-        test: true
-    });
+    try {
+        console.log("DELETE rooms", req.params.id);
+        let room = Rooms.getRoom(req.params.id);
+        if (!room) {
+            res.status(404).json({
+                code: "room.delete.not_found",
+                error: "404 - Room not found"
+            });
+            return;
+        }
+        Rooms.deleteRoom(req.params.id);
+        let toRet = {success:true};
+        res.json(toRet);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            code: "room.put.err",
+            error: "500 - Internal server error:" + err.toString()
+        });
+    }
 });
 
 module.exports = app;

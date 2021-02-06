@@ -33,9 +33,9 @@ function getRoomsByName(name) {
 }
 
 function createRoom(opts) {
-    if (roomsByName[opts.name]) {
-        throw new Error("Room already created!");
-    }
+    // if (roomsByName[opts.name]) {
+    //     throw new Error("Room already created!");
+    // }
 
     const toAdd = {
         id: uuid(),

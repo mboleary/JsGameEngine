@@ -7,6 +7,8 @@ const Layer = require("express/lib/router/layer");
 
 const Rooms = require("./rooms");
 
+const SERVER_TARGET = "server";
+
 function noop() { }
 
 function heartbeat() {
@@ -76,20 +78,80 @@ function initWebsocket(server) {
             try {
                 json = JSON.parse(msg);
             } catch (e) {
-                ws.send("{err: \"Not Valid JSON\"}");
+                ws.send(JSON.stringify({err: "Not valid JSON"}));
                 return;
             }
             console.log("Message Room:", args.room);
             console.log("Action:", json.action, "Target:", json.target);
-            // @TODO Add new Actions, Targets. Make sure that messages are only being sent to room participants
-            if (json.action === "update") {
-                if (json.target === "*") {
-                    wss.clients.forEach((wsr) => {
-                        if (wsr !== ws) {
-                            wsr.send(JSON.stringify(json));
-                        }
-                    });
 
+            if (!json.action || !json.target) {
+                console.log("Malformed request:", json);
+                ws.send(JSON.stringify({err: "Not a valid request"}));
+                return;
+            }
+
+            let doesBroadcast = false; // Send to clients if true
+
+            // @TODO Add new Actions, Targets. Make sure that messages are only being sent to room participants
+            if (json.action === "create" || json.action === "update") {
+                doesBroadcast = true;
+                // @TODO check update number
+                Rooms.createOrUpdateGameObject(args.room.id, json.data);
+            }
+
+            if (json.action === "get") {
+                if (json.target === SERVER_TARGET) {
+                    let room = Rooms.getRoom(args.room.id);
+                    for (const go of room.gameObjects) {
+                        if (go.id === json.data.id) {
+                            ws.send(go);
+                            return;
+                        }
+                    }
+                } else {
+                    doesBroadcast = true;
+                }
+            }
+
+            if (json.action === "delete") {
+                doesBroadcast = true;
+                Rooms.deleteGameObject(args.room.id, json.data.id);
+            }
+
+            if (json.action === "message") {
+                if (json.target === SERVER_TARGET) {
+                    // This is for PubSub Server administration
+                    console.log("Placeholder for server command:", json.data);
+                    ws.send(JSON.stringify({success: true}));
+                    return;
+                } else {
+                    // Send a message directly to a client
+                    doesBroadcast = true;
+                }
+            }
+
+            if (doesBroadcast) {
+                let room = Rooms.getRoom(args.room.id);
+                // Figure out the target
+                if (json.target === "*") {
+                    // All connected clients in room
+                    // wss.clients.forEach((wsr) => {
+                    //     if (wsr !== ws) {
+                    //         wsr.send(JSON.stringify(json));
+                    //     }
+                    // });
+                    room.clients.forEach((client) => {
+                        if (client.ws !== ws) {
+                            client.ws.send(JSON.stringify(json));
+                        }
+                    })
+                } else {
+                    // Send to a specific target
+                    room.clients.forEach((client) => {
+                        if (client.id === json.target) {
+                            client.ws.send(JSON.stringify(json));
+                        }
+                    })
                 }
             }
         });
