@@ -63,13 +63,15 @@ function addClient(roomID, clientObj) {
     }
 
     const room  = roomsByID[roomID];
-    room.clients.push({
+    const client = {
         id: uuid(),
         ipAddr: clientObj.ipAddr || "",
         port: clientObj.port || "",
         name: clientObj.name || "",
         ws: clientObj.ws,
-    })
+    };
+    room.clients.push(client);
+    return client;
 }
 
 /**
@@ -95,29 +97,33 @@ function updateRoom(id, opts) {
 /**
  * Creates or Updates a GameObject
  * @param {String} id Room ID
+ * @param {String} gameObjectID GameOBject ID
  * @param {Object} gameObject New GameObject Data
  * @param {Object} owner Owner of the G.O.
  */
-function createOrUpdateGameObject(id, gameObject, owner) {
+function createOrUpdateGameObject(id, gameObjectID, data, owner) {
     let room = roomsByID[id];
 
     if (!room) {
         throw new Error("Room not found");
     }
 
+
     let found = false;
     for (let i = 0; i < room.gameObjects.length; i++) {
-        if (room.gameObjects[i].id === id) {
-            room.gameObjects[i].data = gameObject;
+        if (room.gameObjects[i].id === gameObjectID) {
+            room.gameObjects[i].data = data;
             room.gameObjects[i].owner = owner;
             found = true;
             break;
         }
     }
     if (!found) {
+        console.log("NOT FOUND");
         room.gameObjects.push({
+            id: gameObjectID,
             owner: owner || null,
-            data: gameObject
+            data: data
         });
     }
 }

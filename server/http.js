@@ -39,7 +39,15 @@ app.get('/api/rooms/:id', function(req, res) {
             });
             return;
         }
-        res.json(room);
+        let toRet = {};
+        const blacklist = ["gameObjects", "clients"];
+        for (const key of Object.keys(opts)) {
+            if (blacklist.indexOf(key) === -1) {
+                toRet[key] = room[key];
+            }
+        }
+
+        res.json(toRet);
     } catch (err) {
         console.error(err);
         res.status(500).json({

@@ -62,13 +62,6 @@ function initWebsocket(server) {
         console.log("URL:", req.url);
         console.log("Connection:", req.socket.remoteAddress, req.socket.remotePort);
         console.log("ARGS:", args);
-        // Add the new client to the room
-        Rooms.addClient(args.room.id, {
-            ws: ws,
-            ipAddr: req.socket.remoteAddress,
-            port: req.socket.remotePort,
-            name: args.name
-        })
         ws.isAlive = true;
         ws.on('pong', heartbeat);
         ws.on('message', (msg) => {
@@ -96,7 +89,7 @@ function initWebsocket(server) {
             if (json.action === "create" || json.action === "update") {
                 doesBroadcast = true;
                 // @TODO check update number
-                Rooms.createOrUpdateGameObject(args.room.id, json.data);
+                Rooms.createOrUpdateGameObject(args.room.id, json.id, json.data);
             }
 
             if (json.action === "get") {
@@ -147,15 +140,37 @@ function initWebsocket(server) {
                     })
                 } else {
                     // Send to a specific target
-                    room.clients.forEach((client) => {
+                    for (const client of room.clients) {
                         if (client.id === json.target) {
                             client.ws.send(JSON.stringify(json));
+                            return;
                         }
-                    })
+                    }
                 }
             }
         });
-        ws.send('TEST');
+
+        // Add the new client to the room
+        let newClient = Rooms.addClient(args.room.id, {
+            ws: ws,
+            ipAddr: req.socket.remoteAddress,
+            port: req.socket.remotePort,
+            name: args.name
+        });
+        newClient = Object.assign({}, newClient);
+        newClient.ws = undefined; // Remove websocket from payload we're going to send back
+
+        // Broadcast a join message to all clients in the room, even the one that is just joining
+        args.room.clients.forEach((client) => {
+            if (client.ws) {
+                const json = {
+                    action: "join",
+                    data: newClient
+                }
+                client.ws.send(JSON.stringify(json));
+            }
+        })
+        // ws.send('TEST');
     });
 
     const interval = setInterval(function ping() {
