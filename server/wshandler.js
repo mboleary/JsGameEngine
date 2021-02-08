@@ -15,6 +15,14 @@ function heartbeat() {
     this.isAlive = true;
 }
 
+function getClientIDs(clients) {
+    const toRet = [];
+    clients.forEach((client) => {
+        toRet.push(client.id);
+    })
+    return toRet;
+}
+
 function initWebsocket(server) {
     const wss = new WebSocket.Server({ noServer: true }); //was server: server
 
@@ -62,6 +70,15 @@ function initWebsocket(server) {
         console.log("URL:", req.url);
         console.log("Connection:", req.socket.remoteAddress, req.socket.remotePort);
         console.log("ARGS:", args);
+
+        // Add the new client to the room
+        const newClient = Rooms.addClient(args.room.id, {
+            ws: ws,
+            ipAddr: req.socket.remoteAddress,
+            port: req.socket.remotePort,
+            name: args.name
+        });
+
         ws.isAlive = true;
         ws.on('pong', heartbeat);
         ws.on('message', (msg) => {
@@ -87,9 +104,24 @@ function initWebsocket(server) {
 
             // @TODO Add new Actions, Targets. Make sure that messages are only being sent to room participants
             if (json.action === "create" || json.action === "update") {
+                // Check ownership
+                let room = Rooms.getRoom(args.room.id);
+                for (const go of room.gameObjects) {
+                    if (go.id === json.id) {
+                        if (go.owner !== newClient.id) {
+                            // Not owned by this client. Send an error
+                            ws.send(JSON.stringify({
+                                code: 403,
+                                err: "Forbidden - Owned by a different client!"
+                            }));
+                            return;
+                        }
+                        break;
+                    }
+                }
                 doesBroadcast = true;
                 // @TODO check update number
-                Rooms.createOrUpdateGameObject(args.room.id, json.id, json.data);
+                Rooms.createOrUpdateGameObject(args.room.id, json.id, json.data, newClient.id);
             }
 
             if (json.action === "get") {
@@ -149,28 +181,70 @@ function initWebsocket(server) {
                 }
             }
         });
+        ws.on('close', (code, reason) => {
+            console.log("Connection Closed:", code, reason);
+            // Remove the client from the room
+            Rooms.deleteClient(args.room.id, newClient.id);
+            // Broadcast the leave event
+            args.room.clients.forEach((client) => {
+                if (client.ws !== ws) {
+                    const json = {
+                        event: "leave",
+                        data: newClient.id
+                    }
+                    client.ws.send(JSON.stringify(json));
+                }
+            });
+            // Remove the GameObjects that the client used to own
+            for (let i = 0; i < args.room.gameObjects.length; i++) {
+                if (args.room.gameObjects[i].owner === newClient.id) {
+                    // This GameObject should be deleted
+                    const go = args.room.gameObjects[i];
+                    console.log("Deleting GameObject:", go.id);
+                    args.room.gameObjects.splice(i, 1);
+                    i--;
 
-        // Add the new client to the room
-        let newClient = Rooms.addClient(args.room.id, {
-            ws: ws,
-            ipAddr: req.socket.remoteAddress,
-            port: req.socket.remotePort,
-            name: args.name
-        });
-        newClient = Object.assign({}, newClient);
-        newClient.ws = undefined; // Remove websocket from payload we're going to send back
+                    // Broadcast the removal message
+                    args.room.clients.forEach((client) => {
+                        if (client.ws !== ws) {
+                            const json = {
+                                event: "delete",
+                                target: "*",
+                                id: go.id,
+                                data: null
+                                // @TODO Add update number
+                            }
+                            client.ws.send(JSON.stringify(json));
+                        }
+                    });
+                }
+            }
+        })
 
-        // Broadcast a join message to all clients in the room, even the one that is just joining
+        
+        let toSend = Object.assign({}, newClient);
+        toSend.ws = undefined; // Remove websocket from payload we're going to send back
+
+        // Broadcast a join message to all clients in the room except the one joining
         args.room.clients.forEach((client) => {
-            if (client.ws) {
+            if (client.ws !== ws) {
                 const json = {
-                    action: "join",
-                    data: newClient
+                    event: "join",
+                    data: toSend
                 }
                 client.ws.send(JSON.stringify(json));
             }
-        })
-        // ws.send('TEST');
+        });
+
+        // Send the init message to the newly-joined client
+        ws.send(JSON.stringify({
+            event: "init",
+            data: {
+                clientInfo: newClient.id,
+                clients: getClientIDs(args.room.clients),
+                gameObjects: args.room.gameObjects
+            }
+        }));
     });
 
     const interval = setInterval(function ping() {

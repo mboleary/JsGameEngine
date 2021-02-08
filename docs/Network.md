@@ -41,7 +41,7 @@ Let's break it down by part:
 
 For data, there are a few options when it comes to GameObjects:
 - create / update: The data should be the serialized state of the GameObject
-- get / delete: The data is just the ID string
+- get / delete: The data is not used. ID should be set to what GameOBject will be deleted
 - chown: The Owner ID to transfer ownership to
 - message: Can be anything. The API doesn't care.
 
@@ -107,3 +107,5 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState
 https://github.com/websockets/ws/blob/master/doc/ws.md#serverclients
 - Websocket Server Detailed Documentation
 https://github.com/websockets/ws#api-docs
+https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent
+- Websocket close event codes

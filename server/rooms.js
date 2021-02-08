@@ -74,6 +74,22 @@ function addClient(roomID, clientObj) {
     return client;
 }
 
+function deleteClient(roomID, clientID) {
+    if (!roomsByID[roomID]) {
+        throw new Error("Invalid Room ID!");
+    }
+
+    const room  = roomsByID[roomID];
+    for (let i = 0; i < room.clients.length; i++) {
+        if (room.clients[i].id === clientID) {
+            room.clients.splice(i, 1);
+            return;
+        }
+    }
+
+    throw new Error("Client not found");
+}
+
 /**
  * Updates some properties of a room. Includes things like the room name, private / public, etc.
  * @param {*} id ID of room to update
@@ -99,7 +115,7 @@ function updateRoom(id, opts) {
  * @param {String} id Room ID
  * @param {String} gameObjectID GameOBject ID
  * @param {Object} gameObject New GameObject Data
- * @param {Object} owner Owner of the G.O.
+ * @param {String} owner ID of the Owner of the G.O.
  */
 function createOrUpdateGameObject(id, gameObjectID, data, owner) {
     let room = roomsByID[id];
@@ -185,5 +201,6 @@ module.exports = {
     updateRoom,
     createOrUpdateGameObject,
     deleteGameObject,
+    deleteClient,
     deleteRoom
 }
