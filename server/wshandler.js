@@ -126,6 +126,7 @@ function initWebsocket(server) {
 
             if (json.action === "get") {
                 if (json.target === SERVER_TARGET) {
+                    // Get GameObject from cache
                     let room = Rooms.getRoom(args.room.id);
                     for (const go of room.gameObjects) {
                         if (go.id === json.data.id) {
