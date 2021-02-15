@@ -4,7 +4,7 @@
 
 import { serialize, deserialize, update, getConstructor } from './Serialize.js';
 
-import { enrollGameObject } from './Engine.js';
+import { enrollGameObject, deleteGameObject } from './Engine.js';
 
 const minFrames = 2;
 const defaultFrames = 15;
@@ -96,8 +96,9 @@ function enrollPuppet(obj) {
         puppets[obj.id] = obj;
         // Send an update
         ws.send(JSON.stringify({
-            action: "update",
+            action: "create",
             target: "*",
+            id: obj.id,
             number: obj.getUpdateNumber(),
             data: obj.getState()
         }));
@@ -111,6 +112,7 @@ function removePuppet(obj) {
         ws.send(JSON.stringify({
             action: "delete",
             target: "*",
+            id: obj.id,
             data: obj.id,
             number: obj.getUpdateNumber()
         }));
@@ -198,8 +200,19 @@ export function connect(url) {
 
 // Close the Websocket
 export function disconnect() {
+    if (!ws) return;
     ws.close();
     puppeteerActive = false;
+    // Destroy all non-master puppets
+    Object.keys(puppets).forEach((key) => {
+        if (puppets[key] && puppets[key].master) {
+            // This is a master state and needs to be downgraded
+            // @TODO Add a 'on-disconnect' event handler
+        } else {
+            // This is remotely controlled and should be deleted
+            deleteGameObject(puppets[key]);
+        }
+    })
 }
 
 // Called every frame to update the puppets
@@ -212,8 +225,10 @@ export function checkPuppets() {
             ws.send(JSON.stringify({
                 action: "update",
                 target: "*",
+                id: puppets[key].id,
                 number: puppets[key].getUpdateNumber(),
                 data: puppets[key].getState()
+                // @TODO Add owner options here
             }));
         }
     })
