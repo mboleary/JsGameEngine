@@ -6,6 +6,7 @@ let loadedContent = {};
 
 let loadGroups = {};
 
+// These are used to load an asset into a usable format
 const loaders = {
     "spritesheet": async (options) => {
         let s = new SpriteSheet();

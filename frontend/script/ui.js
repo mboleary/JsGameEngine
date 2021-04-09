@@ -13,7 +13,11 @@ export function initUI() {
     setCanvas(canvas);
     resizeScreen();
     window.addEventListener("resize", resizeScreen);
-    overlay.setAttribute("hidden", overlayVisible);
+    if (!overlayVisible) {
+        overlay.setAttribute("hidden", "");
+    } else {
+        overlay.removeAttribute("hidden");
+    }
     console.log("UI Initialized");
 }
 
@@ -28,5 +32,9 @@ function resizeScreen(e) {
 
 export function toggleOverlay() {
     overlayVisible = !overlayVisible;
-    overlay.setAttribute("hidden", overlayVisible);
+    if (!overlayVisible) {
+        overlay.setAttribute("hidden", "");
+    } else {
+        overlay.removeAttribute("hidden");
+    }
 }
