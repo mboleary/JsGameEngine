@@ -41,7 +41,7 @@ function genHeader(go) {
 function genUI(obj) {
     let toRet = document.createElement("div");
 
-    // @TODO Add Display for Canvas
+    
 
     // Take and Object and build a Value updater for it
 
@@ -159,6 +159,14 @@ function genDetailsForKey(obj, pathArr) {
 function genDetailsForObj(obj, pathArr = []) {
     let toRet = document.createElement('div');
     let objKeys = Reflect.ownKeys(obj);
+
+    // Adds a display for a texture, if there is one
+
+    if (obj.texture && obj.texture.constructor && obj.texture.constructor.name === "HTMLImageElement") {
+        // My stylesheets make images be 100% wide. We don't want that here
+        obj.texture.style.width = 'unset';
+        toRet.appendChild(obj.texture);
+    }
 
     objKeys.forEach((key) => {
         console.log(key, typeof obj[key]);

@@ -157,7 +157,28 @@ function deserializeDebugData(data, msgParams) {
                 keyRef = keyRef[part];
             });
             keyRef[last] = newFunc;
+        } else if (item.type === "constructed" && constructorTypes[item.constructor]) {
+            let newInstance = constructorTypes[item.constructor](item.data);
+            console.log("New Item:", newInstance);
+            let keyRef = toRet;
+            let last = item.key.pop();
+            item.key.forEach((part) => {
+                keyRef = keyRef[part];
+            });
+            keyRef[last] = newInstance;
         }
     });
     return toRet;
+}
+
+// Re-construct deconstructed classes
+const constructorTypes = {
+    HTMLImageElement: (data) => {
+        console.log("Image Constructor", data);
+        if (data.url) {
+            let i = new Image();
+            i.src = data.url;
+            return i;
+        }
+    }
 }

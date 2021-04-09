@@ -187,7 +187,16 @@ export function serializeForDebug(source, blacklist = [], maxDepth = -1) {
             }
         }
         if (!root && root !== 0) return;
-        if (typeof root === "object" && !Array.isArray(root)) {
+        // Check if this is a constructed object that we're handling separately
+        if (typeof root === "object" && root.constructor && constructorTypes[root.constructor.name]) {
+            extra.push({
+                key: pathArr,
+                type: "constructed",
+                constructor: root.constructor.name,
+                data: constructorTypes[root.constructor.name](root)
+            });
+            return;
+        } else if (typeof root === "object" && !Array.isArray(root)) {
             let newObj = {};
             if (visited.indexOf(root) === -1) {
                 visited.push(root);
@@ -236,6 +245,19 @@ export function serializeForDebug(source, blacklist = [], maxDepth = -1) {
         data: data,
         extra: extra
     };
+}
+
+// Handles serializing certain JS classes, such as Images
+
+const constructorTypes = {
+    HTMLImageElement: (data) => {
+        console.log("Image Deconstructor", data);
+        if (data.src) {
+            return {
+                url: data.src
+            }
+        }
+    }
 }
 
 window.serializeForDebug = serializeForDebug;
