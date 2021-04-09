@@ -1,0 +1,171 @@
+/* Styling for Footer and Copyright Bar */
+
+/* @TODO turn <footer> into a class, also re-implement as necessary */
+
+/* Note: This was revised from using a table to using divs */
+
+/* Footer Block */
+footer {
+  background-color: #002C3D;
+  box-shadow: 0px -5px 10px #555555;
+  color: gray;
+  margin: 10px 0px 0px 0px;
+}
+
+footer div#footer-top {
+  margin: 0px;
+  padding: 0%;
+  background-color: #00121a;
+}
+
+footer div#footer-top .container {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+@media only screen and (max-width: 767px) {
+  footer div#footer-top .container {
+    flex-direction: column;
+  }
+}
+
+footer div#footer-top .container dt {
+  font-family: bold;
+  font-size: 17px;
+  margin: 0px 0px 5px 0px;
+  padding: 1px 0px;
+}
+
+footer div#footer-top .container dl {
+  font-family: menu;
+  margin: 0px;
+  width: 100%;
+}
+
+footer div#footer-top dl {
+  height: 100%;
+  margin: 15px 0px;
+}
+
+footer div#footer-top dl dd {
+  margin: 1px 0px;
+  padding: 0px;
+}
+
+footer div#footer-top .container a:link, footer div#footer-top .container a:visited {
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  display: inline-block;
+}
+
+footer div#footer-top .container a:hover {
+  color: #111111;
+  background-color: white;
+}
+
+footer div#footer-top .container a:active {
+  color: white;
+}
+
+/* Colors for Links */
+
+footer div#footer-top .green {
+  color: #BBE524;
+}
+
+footer div#footer-top .green a:link, footer div#footer-top .green a:visited {
+  color: #BBE524;
+}
+
+footer div#footer-top .green a:hover {
+  background-color: #BBE524;
+  color: #111111;
+}
+
+footer div#footer-top dt.red {
+  color: #FF230F;
+}
+
+footer div#footer-top .red a:link, footer div#footer-top .red a:visited {
+  color: #FF230F;
+}
+
+footer div#footer-top .red a:hover {
+  background-color: #FF230F;
+  color: #111111;
+}
+
+footer div#footer-top dt.blue {
+  color: #2682A6;
+}
+
+footer div#footer-top .blue a:link, footer div#footer-top .blue a:visited {
+  color: #2682A6;
+}
+
+footer div#footer-top .blue a:hover {
+  background-color: #2682A6;
+  color: #111111;
+}
+
+/* NOTE: Experimental Orange Color */
+footer div#footer-top dt.orange {
+  color: #fb9902;
+}
+
+footer div#footer-top .orange a:link, footer div#footer-top .orange a:visited {
+  color: #fb9902;
+}
+
+footer div#footer-top .orange a:hover {
+  background-color: #fb9902;
+  color: #111111;
+}
+/* End Exp. Orange Color */
+
+footer div#footer-bottom {
+  font-family: ultralight;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+footer div#footer-bottom div {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+footer div#footer-bottom div.left {
+  text-align: left;
+}
+
+footer div#footer-bottom div.right {
+  text-align: right;
+}
+
+footer div#footer-bottom div img {
+  width: auto;
+  height: auto;
+  display: inline;
+  
+}
+
+footer div#footer-bottom div p {
+  margin: 0px;
+}
+
+footer div#footer-bottom div a.email {
+  background-image: url('/img/mail_light.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding-left: 1.5em;
+  
+}

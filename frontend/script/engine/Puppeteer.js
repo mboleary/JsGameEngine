@@ -198,8 +198,10 @@ export function connect(url) {
 
 // Close the Websocket
 export function disconnect() {
-    ws.close();
-    puppeteerActive = false;
+    if (puppeteerActive) {
+        ws.close();
+        puppeteerActive = false;
+    }
 }
 
 // Called every frame to update the puppets

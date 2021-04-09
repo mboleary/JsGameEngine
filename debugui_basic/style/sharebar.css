@@ -1,0 +1,88 @@
+/* Contains Styling for the Sharing Bar */
+
+/* @TODO Finish this */
+
+/*
+Standard Use:
+
+<div id="sharebar">
+  <div class="container">
+    <ul>
+      <li class="fb"><a href="https://facebook.com">Facebook</a></li>
+      <li><a href="https://twitter.com">Twitter</a></li>
+      <li><a href="https://reddit.com">Reddit</a></li>
+      <li><a href="https://instagram.com">Instagram</a></li>
+    </ul>
+  </div>
+</div>
+*/
+:root {
+  --num-logos: 4; /* Change this when adding new platforms */
+  --logo-size: calc(100% / var(--num-logos));
+  
+  /* Logo Info Goes Here */
+  --test-color: #abcdef;
+  --test-logo: url('/img/usctree.png');
+  --facebook-color: #000000;
+  --facebook-logo: url('/img/tmp');
+  --twitter-color: #000000;
+}
+
+div#sharebar {
+  background-color: #333;
+  display: block;
+  height: 5px;
+  color: transparent;
+}
+
+div#sharebar .container {
+  height: 100%;
+  color: transparent;
+}
+
+div#sharebar:hover {
+  height: 30px;
+}
+
+div#sharebar ul {
+  margin: 0;
+  list-style-type:none;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 100%;
+}
+
+div#sharebar ul li {
+  background-color: #333;
+  color: #eee;
+  width: var(--logo-size);
+  height: 100%;
+}
+
+/* START DEFINE FOR ALL SITES */
+
+div#sharebar ul li {
+  background-color: #fff;
+  background-image: url('/img/usctree.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  color: #111;
+  text-decoration: bold;
+  height: 100%;
+}
+
+div#sharebar ul li a {
+  text-decoration: bold;
+  color: inherit;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+div#sharebar ul li.fb {
+  background-color: #4267b2;
+  background-image: none;
+}

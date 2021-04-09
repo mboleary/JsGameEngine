@@ -1,0 +1,36 @@
+/*
+    Short Layout classes for commonly used things
+
+*/
+
+.flex {
+    display: flex;
+}
+
+.flex-grow {
+    flex: 1;
+}
+
+.flex-shrink {
+    flex: 0 1 auto;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}

@@ -1,0 +1,515 @@
+/* Contains Styling used on Titlecards and Flashcards */
+
+/* 
+    Cards Documentation:
+
+    Please note that Cards DO NOT CHANGE depending on the user's Dark Mode Preference. Any CSS Vars that mention Dark and Light are for setting the text classes of .light and .dark, as well as the default. Dark and Light here refer to the colors that the text will use (If the background is dark, then it may be a good idea to use the light class)
+
+*/
+
+/* @TODO use CSS Vars */
+
+/* These CSS Vars pertain only to Cards. */
+:root {
+    /* Default Background Color */
+    
+    --cards-backdrop-color: rgba(0, 0, 0, 0.5);
+    
+    /* Light and Dark here refer to the Text Content Classes, not the User's Dark Mode Preference */
+    --cards-default-bg-light: var(--dark-background, #111);
+    --cards-default-bg-dark: var(--light-background, white);
+    --cards-default-text-light: white;
+    --cards-default-text-light-shadow: #333;
+    --cards-default-text-dark: #333;
+    --cards-default-text-dark-shadow: black;
+
+    --cards-hr-color-light: white;
+    --cards-hr-color-dark: #333;
+}
+
+/* Left/Right Container */
+.lr-container {
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+}
+
+.lr-container > * {
+    width: 50%;
+}
+
+.backdrop {
+    background-color: var(--cards-backdrop-color);
+}
+
+/* Start Section-Specific Segments or Flashcards */
+.flashcard {
+    min-height: 100vh;
+    background: var(--cards-default-bg-light);
+    background-attachment: fixed;
+    color: var(--cards-default-text-light); /* Default to Light */
+    border-color: var(--cards-hr-color-light);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.flashcard *, .flashcard.light * {
+    color: var(--cards-default-text-light);
+    border-color: var(--cards-hr-color-light);
+}
+
+.flashcard.dark {
+    background: var(--cards-default-bg-dark);
+    color: var(--cards-default-text-dark);
+    border-color: var(--cards-hr-color-dark);
+}
+
+.flashcard.dark * {
+    color: var(--cards-default-text-dark);
+    border-color: var(--cards-hr-color-dark);
+}
+
+.flashcard.light.shadow *, .flashcard.img * {
+    color: var(--cards-default-text-light);
+    text-shadow: 0px 5px 5px var(--cards-default-text-light-shadow);
+}
+
+.flashcard.dark.shadow *, .flashcard.dark.img * {
+    color: var(--cards-default-text-dark);
+    text-shadow: 0px 5px 5px var(--cards-default-text-dark-shadow);
+}
+
+.flashcard *:not(hr) {
+    margin: auto;
+    text-align: center;
+    border: 0px;
+}
+
+.flashcard h1 {
+    font-size: 60px;
+    font-family: title;
+    padding: 0;
+}
+
+.flashcard p {
+    font-size: 24px;
+    font-family: semibold;
+}
+/* END Flashcards */
+
+/* START TitleCards */
+.titlecard {
+    min-height: 75vh;
+    background: var(--cards-default-bg-light);
+    background-attachment: fixed;
+    color: var(--cards-default-text-light); /* Default to Light */
+    
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.titlecard *, .titlecard.light * {
+    color: var(--cards-default-text-light);
+    border-color: var(--cards-hr-color-light);
+}
+
+.titlecard.dark {
+    background: var(--cards-default-bg-dark);
+    color: var(--cards-default-text-dark);
+    border-color: var(--cards-hr-color-dark);
+}
+
+.titlecard.dark * {
+    color: var(--cards-default-text-dark);
+    border-color: var(--cards-hr-color-dark);
+}
+
+.titlecard.light.shadow *, .titlecard.img * {
+    color: var(--cards-default-text-light);
+    text-shadow: 0px 5px 5px var(--cards-default-text-light-shadow);
+}
+
+.titlecard.dark.shadow *, .titlecard.dark.img * {
+    color: var(--cards-default-text-dark);
+    text-shadow: 0px 5px 5px var(--cards-default-text-dark-shadow);
+}
+
+.titlecard *:not(hr) {
+    margin: auto;
+    text-align: center;
+    border: 0px;
+}
+
+.titlecard h1 {
+    font-size: 60px;
+    font-family: title;
+    padding: 0;
+}
+
+.titlecard p {
+    font-size: 24px;
+    font-family: semibold;
+}
+
+/* END TitleCards */
+
+/* START flashcard and titlecard styling */
+
+/* Use Inline Styling to replace the background image */
+.flashcard.img, .titlecard.img {
+    background-image: url("/temp/bg1.jpg"); /* This is a Demonstration Image. TODO Remove this when finalized */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: var(--cards-default-bg-light);
+}
+
+/* Background Video TODO make it act like cover using object-fit css rules or whatever */
+.flashcard.video, .titlecard.video {
+    background-color: black;
+    overflow: hidden;
+}
+
+.flashcard.video video, .titlecard.video video {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    position: static;
+    object-fit: contain;
+    object-position: 50% 50%;
+}
+
+.flashcard.video div, .titlecard.video div {
+    z-index: 100;
+    position: absolute;
+}
+
+/* END Background Video */
+
+/* =====OLD STYLING===== */
+
+.flashcard.rainbow, .titlecard.rainbow {
+    background: rgb(255,35,15);
+    background: linear-gradient(146deg, rgba(255,35,15,1) 0%, rgba(38,130,166,1) 50%, rgba(187,229,36,1) 100%);
+    color: white !important;
+}
+
+.flashcard.rainbow *, .titlecard.rainbow *{
+    color: white;
+}
+
+.flashcard.red-orange, .titlecard.red-orange {
+    background: rgb(255,81,0);
+    background: linear-gradient(45deg, rgba(255,81,0,1) 0%, rgba(255,35,15,1) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.titlecard.red-orange *, .titlecard.titlecard.red-orange *{
+    color: white;
+}
+
+.flashcard.blue-green, .titlecard.blue-green {
+    background: rgb(187,229,36);
+    background: linear-gradient(45deg, rgba(187,229,36,1) 0%, rgba(38,130,166,1) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.blue-green *, .titlecard.blue-green *{
+    color: white;
+}
+
+.flashcard.grayscale, .titlecard.grayscale {
+    background: rgb(51,51,68);
+    background: linear-gradient(66deg, rgba(51,51,68,1) 0%, rgba(153,153,170,1) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.grayscale *, .titlecard.grayscale *{
+    color: white;
+}
+
+.flashcard.grayscale-light, .titlecard.grayscale-light {
+    background: rgb(255,255,255);
+    background: linear-gradient(96deg, rgba(255,255,255,1) 0%, rgba(159,159,159,1) 100%);
+}
+
+.flashcard.grayscale-light *, .titlecard.grayscale-light *{
+    color: #333;
+}
+
+.flashcard.garnet, .titlecard.garnet {
+    background: rgb(36,0,0);
+    background: linear-gradient(82deg, rgba(36,0,0,1) 0%, rgba(115,0,10,1) 35%, rgba(161,119,119,1) 100%);
+}
+
+/* END old flashcard and titlecard styling */
+
+/**** Flashcard Banner ****/
+
+/* This is used to house things like tags, and other information in the context of an index page */
+.flashcard > .banner {
+    font-size: unset;
+    min-height: 32px;
+    background-color: #00000088;
+    margin: 0;
+    padding: 2 0;
+    width: 100%;
+}
+
+.flashcard > .banner > * {
+    font-size: unset;
+    font-family: light;
+    color: white;
+}
+/* END Flashcard Banner */
+
+/**** New Card Styling ****/
+
+.flashcard.black-and-white, .titlecard.black-and-white {
+    background: black;
+}
+.flashcard.black-and-white *, .titlecard.black-and-white * {
+    color: white;
+    border-color: white;
+}
+
+.flashcard.dark-and-light, .titlecard.dark-and-light {
+    background: var(--dark-color);
+}
+.flashcard.dark-and-light *, .titlecard.dark-and-light * {
+    color: var(--light-color);
+    border-color: var(--light-color);
+}
+
+/*** Background Styling Only (classes are prefaced by 'bg-') ***/
+
+.flashcard.bg-stripes, .titlecard.bg-stripes {
+    background: var(--dark-color);
+    background: linear-gradient(-45deg, var(--dark-color) 0% 40%, var(--accent-1) 40% 44%, var(--dark-color) 44% 48%, var(--accent-2) 48% 52%, var(--dark-color) 52% 56%, var(--accent-3) 56% 60%, var(--dark-color) 60% 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a1-a2, .titlecard.bg-a1-a2 {
+    background: var(--accent-1);
+    background: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-2) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a1-a3, .titlecard.bg-a1-a3 {
+    background: var(--accent-1);
+    background: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-3) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a1-a4, .titlecard.bg-a1-a4 {
+    background: var(--accent-1);
+    background: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-4) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a2-a3, .titlecard.bg-a2-a3 {
+    background: var(--accent-2);
+    background: linear-gradient(45deg, var(--accent-2) 0%, var(--accent-3) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a2-a4, .titlecard.bg-a2-a4 {
+    background: var(--accent-2);
+    background: linear-gradient(45deg, var(--accent-2) 0%, var(--accent-4) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a3-a4, .titlecard.bg-a3-a4 {
+    background: var(--accent-3);
+    background: linear-gradient(45deg, var(--accent-3) 0%, var(--accent-4) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a1-gradient, .titlecard.bg-a1-gradient {
+    background: var(--accent-1);
+    background: linear-gradient(103deg, hsl(var(--accent-1-h), var(--accent-1-s), 30%) 0%, hsl(var(--accent-1-h), var(--accent-1-s), var(--accent-1-l)) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a2-gradient, .titlecard.bg-a2-gradient {
+    background: var(--accent-2);
+    background: linear-gradient(103deg, hsl(var(--accent-2-h), var(--accent-2-s), 30%) 0%, hsl(var(--accent-2-h), var(--accent-2-s), var(--accent-2-l)) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a3-gradient, .titlecard.bg-a3-gradient {
+    background: var(--accent-3);
+    background: linear-gradient(103deg, hsl(var(--accent-3-h), var(--accent-3-s), 30%) 0%, hsl(var(--accent-3-h), var(--accent-3-s), var(--accent-3-l)) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a4-gradient, .titlecard.bg-a4-gradient {
+    background: var(--accent-4);
+    background: linear-gradient(103deg, hsl(var(--accent-4-h), var(--accent-4-s), 30%) 0%, hsl(var(--accent-4-h), var(--accent-4-s), var(--accent-4-l)) 100%);
+    background-attachment: fixed;
+}
+
+.flashcard.bg-a1, .titlecard.bg-a1 {
+    background: var(--accent-1);
+}
+
+.flashcard.bg-a2, .titlecard.bg-a2 {
+    background: var(--accent-2);
+}
+
+.flashcard.bg-a3, .titlecard.bg-a3 {
+    background: var(--accent-3);
+}
+
+.flashcard.bg-a4, .titlecard.bg-a4 {
+    background: var(--accent-4);
+}
+
+.flashcard.bg-black, .titlecard.bg-black {
+    background: black;
+}
+
+.flashcard.bg-white, .titlecard.bg-white {
+    background: white;
+}
+
+.flashcard.bg-triangles-test, .titlecard.bg-triangles-test {
+    background: repeating-linear-gradient(0deg, transparent 0px, transparent 15px, rgba(0,0,0,0.3) 15px, rgba(0,0,0,0.3) 20px),
+    repeating-linear-gradient(60deg, transparent 0px, transparent 15px, rgba(0,0,0,0.3) 15px, rgba(0,0,0,0.3) 20px),
+    repeating-linear-gradient(120deg, transparent 0px, transparent 15px, rgba(0,0,0,0.3) 15px, rgba(0,0,0,0.3) 20px),
+    linear-gradient(180deg, white 0%, black 100%);
+}
+
+/*** Foreground Styling Only (classes are prefaced by 'fg-')  ***/
+
+/* Testing Text Gradients */
+.flashcard.fg-test-gradient *, .titlecard.fg-test-gradient * {
+    color: transparent;
+    background: linear-gradient(82deg, rgba(36,0,0,1) 0%, rgba(115,0,10,1) 35%, rgba(161,119,119,1) 100%);
+    border-image: linear-gradient(82deg, rgba(36,0,0,1) 0%, rgba(115,0,10,1) 35%, rgba(161,119,119,1) 100%) 1;
+    /* It's important that these are last */
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a1-a2 *, .titlecard.fg-a1-a2 * {
+    color: transparent;
+    background: var(--accent-1);
+    background: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-2) 100%);
+    border-image: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-2) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a1-a3 *, .titlecard.fg-a1-a3 * {
+    color: transparent;
+    background: var(--accent-1);
+    background: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-3) 100%);
+    border-image: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-3) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a1-a4 *, .titlecard.fg-a1-a4 * {
+    color: transparent;
+    background: var(--accent-1);
+    background: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-4) 100%);
+    border-image: linear-gradient(45deg, var(--accent-1) 0%, var(--accent-4) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a2-a3 *, .titlecard.fg-a2-a3 * {
+    color: transparent;
+    background: var(--accent-2);
+    background: linear-gradient(45deg, var(--accent-2) 0%, var(--accent-3) 100%);
+    border-image: linear-gradient(45deg, var(--accent-2) 0%, var(--accent-3) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a2-a4 *, .titlecard.fg-a2-a4 * {
+    color: transparent;
+    background: var(--accent-2);
+    background: linear-gradient(45deg, var(--accent-2) 0%, var(--accent-4) 100%);
+    border-image: linear-gradient(45deg, var(--accent-2) 0%, var(--accent-4) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a3-a4 *, .titlecard.fg-a3-a4 * {
+    color: transparent;
+    background: var(--accent-3);
+    background: linear-gradient(45deg, var(--accent-3) 0%, var(--accent-4) 100%);
+    border-image: linear-gradient(45deg, var(--accent-3) 0%, var(--accent-4) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a1-gradient *, .titlecard.fg-a1-gradient * {
+    color: transparent;
+    background: var(--accent-1);
+    background: linear-gradient(103deg, hsl(var(--accent-1-h), var(--accent-1-s), 30%) 0%, hsl(var(--accent-1-h), var(--accent-1-s), var(--accent-1-l)) 100%);
+    border-image: linear-gradient(103deg, hsl(var(--accent-1-h), var(--accent-1-s), 30%) 0%, hsl(var(--accent-1-h), var(--accent-1-s), var(--accent-1-l)) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a2-gradient *, .titlecard.fg-a2-gradient * {
+    color: transparent;
+    background: var(--accent-2);
+    background: linear-gradient(103deg, hsl(var(--accent-2-h), var(--accent-2-s), 30%) 0%, hsl(var(--accent-2-h), var(--accent-2-s), var(--accent-2-l)) 100%);
+    border-image: linear-gradient(103deg, hsl(var(--accent-2-h), var(--accent-2-s), 30%) 0%, hsl(var(--accent-2-h), var(--accent-2-s), var(--accent-2-l)) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a3-gradient *, .titlecard.fg-a3-gradient * {
+    color: transparent;
+    background: var(--accent-3);
+    background: linear-gradient(103deg, hsl(var(--accent-3-h), var(--accent-3-s), 30%) 0%, hsl(var(--accent-3-h), var(--accent-3-s), var(--accent-3-l)) 100%);
+    border-image: linear-gradient(103deg, hsl(var(--accent-3-h), var(--accent-3-s), 30%) 0%, hsl(var(--accent-3-h), var(--accent-3-s), var(--accent-3-l)) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a4-gradient *, .titlecard.fg-a4-gradient * {
+    color: transparent;
+    background: var(--accent-4);
+    background: linear-gradient(103deg, hsl(var(--accent-4-h), var(--accent-4-s), 30%) 0%, hsl(var(--accent-4-h), var(--accent-4-s), var(--accent-4-l)) 100%);
+    border-image: linear-gradient(103deg, hsl(var(--accent-4-h), var(--accent-4-s), 30%) 0%, hsl(var(--accent-4-h), var(--accent-4-s), var(--accent-4-l)) 100%) 1;
+    background-clip: text; /* Firefox */
+    -webkit-background-clip: text; /* For Chrome, and others */
+}
+
+.flashcard.fg-a1 *, .titlecard.fg-a1 * {
+    color: var(--accent-1);
+    border-color: var(--accent-1);
+}
+
+.flashcard.fg-a2 *, .titlecard.fg-a2 * {
+    color: var(--accent-2);
+    border-color: var(--accent-2);
+}
+
+.flashcard.fg-a3 *, .titlecard.fg-a3 * {
+    color: var(--accent-3);
+    border-color: var(--accent-3);
+}
+
+.flashcard.fg-a4 *, .titlecard.fg-a4 * {
+    color: var(--accent-4);
+    border-color: var(--accent-4);
+}

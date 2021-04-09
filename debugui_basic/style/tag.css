@@ -1,0 +1,72 @@
+/*
+    Tag Styling:
+
+    This file contains all styling for tags, including big variants for use in taxonomy-based pages.
+*/
+
+:root {
+    --tag-default-bg: #F0F7D4;
+    --tag-default-fg: #333;
+
+    --tag-outline-color: black;
+    --tag-shadow-color: #777;
+    --tag-shadow-hover-color: #999;
+}
+
+.tag {
+    border-radius: 5px;
+    background-color: var(--tag-default-bg);
+    padding: 2.5px;
+    box-shadow: 0px 3px 7px var(--tag-shadow-color);
+    margin: 5px;
+}
+
+.tag::before {
+    content: '#';
+    opacity: 0.5;
+}
+
+a.tag:link, a.tag:visited {
+    text-decoration: none;
+    color: var(--tag-default-fg);
+}
+
+a.tag:hover, a.tag:active {
+    box-shadow: 0px 5px 7px var(--tag-shadow-hover-color);
+    outline: 1px solid var(--tag-outline-color);
+}
+
+.big-tag {
+    border-radius: 10px;
+    background-color: var(--tag-default-bg);
+    padding: 5px;
+    box-shadow: 0px 3px 7px var(--tag-shadow-color);
+    margin: 10px;
+    font-size: 2em;
+    font-family: bold;
+    display: block;
+    width: auto;
+}
+
+.big-tag::before {
+    content: '#';
+    opacity: 0.5;
+}
+
+/* ===Legacy=== */
+
+.tag.green {
+    background-color: #dcf28d;
+}
+
+.tag.red {
+    background-color: #ff8a80;
+}
+
+.tag.blue {
+    background-color: #97d1e7;
+}
+
+.tag.orange {
+    background-color: #fecc81;
+}

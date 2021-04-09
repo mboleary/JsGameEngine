@@ -51,6 +51,15 @@ export default class GameObject {
         }
     }
 
+    getScriptByID(id) {
+        for (let i = 0; i < this.scripts.length; i++) {
+            let script = this.scripts[i];
+            if (script.id === id) {
+                return script;
+            }
+        }
+    }
+
     // Detaches a GameObject attached to this GameObject. Warning: This will make the child GameObject an orphan!
     detachGameObject(go) {
         go.parent = null;

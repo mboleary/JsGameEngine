@@ -1,0 +1,140 @@
+/* Markdown-specific Text decorations and styling 
+  
+  I can't believe that I'm writing more css. I need to not do that.
+  
+  (c) Brady O'Leary 2019
+
+*/
+
+/* @TODO Use CSS Vars for all colors as necessary */
+
+/* Undo most stylings in the main stylesheet */
+
+:root {
+  --decoration-color: #ccc;
+}
+
+.markdown h1 {
+  padding-left: 1px;
+  border-left: 0px;
+  margin-left: 0px;
+}
+
+.markdown h2 {
+  padding-left: 1px;
+  border-left: 0px;
+  margin-left: 0px;
+}
+
+.markdown h3 {
+  padding-left: 1px;
+  border-left: 0px;
+  margin-left: 0px;
+}
+
+.markdown h4 {
+  padding-left: 1px;
+  border-left: 0px;
+  margin-left: 0px;
+}
+
+.markdown h5 {
+  padding-left: 1px;
+  border-left: 0px;
+  margin-left: 0px;
+}
+
+.markdown h6 {
+  padding-left: 1px;
+  border-left: 0px;
+  margin-left: 0px;
+}
+
+/* Start new Stylings */
+
+.markdown h1::before {
+  color: var(--decoration-color);
+  content: "#";
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.markdown h2::before {
+  color: var(--decoration-color);
+  content: "##";
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.markdown h3::before {
+  color: var(--decoration-color);
+  content: "###";
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.markdown h4::before {
+  color: var(--decoration-color);
+  content: "####";
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.markdown h5::before {
+  color: var(--decoration-color);
+  content: "#####";
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.markdown h6::before {
+  color: var(--decoration-color);
+  content: "######";
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.markdown i::before {
+  color: var(--decoration-color);
+  content:"_";
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.markdown i::after {
+  color: var(--decoration-color);
+  content:"_";
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.markdown b::before {
+  color: var(--decoration-color);
+  content:"__";
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.markdown b::after {
+  color: var(--decoration-color);
+  content:"__";
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.markdown s::before {
+  color: var(--decoration-color);
+  content:"~~";
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.markdown s::after {
+  color: var(--decoration-color);
+  content:"~~";
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
