@@ -21,12 +21,12 @@ class PreRenderScript extends RenderScript {
     }
 
     init() {
-        if (!this.parent.tileset) return;
+        if (!this.gameObject.tileset) return;
         // Render the entire map
     }
 
     loop() {
-        if (!this.parent.tileset) return;
+        if (!this.gameObject.tileset) return;
     }
 
     render(ctx, width, height) {

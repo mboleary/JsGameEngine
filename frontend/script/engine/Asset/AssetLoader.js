@@ -75,7 +75,7 @@ export function addCustomLoader(typeName, loader) {
 // Defines an asset to be loaded later
 export function load(assetOpts) {
     if (loadedContent[assetOpts.name]) {
-        console.log("Asset already present in list");
+        // console.log("Asset already present in list");
         return;
     }
     let toSave = {

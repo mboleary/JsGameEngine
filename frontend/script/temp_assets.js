@@ -25,7 +25,7 @@ export function defineAssets() {
     });
     load({
         name: "tilesheet",
-        path: "/asset/test_spritesheet.png",
+        path: "/asset/test_tilesheet.png",
         type: "spritesheet",
         options: {
             height: 16,
