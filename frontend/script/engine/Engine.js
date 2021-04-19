@@ -43,6 +43,12 @@ const engineInternals = {
     TARGET_MILLIS_PER_FRAME
 };
 
+// Warning and Error Message Debouncing
+const errorTypes = {
+    "TenThousand": false,
+    "HundredThousand": false
+}
+
 export function addJMod(jmod) {
     if (!allowModuleLoading) {
         throw new Error("Error: Attempted to load module after initialization!");
@@ -348,10 +354,12 @@ function main() {
     }
 
     // @TODO Remove this
-    if (gameObjects.length > 10000) {
-        console.log("Over 10 Thousand Objects");
-    } else if (gameObjects.length > 100000) {
-        console.log("Over 100 Thousand Objects");
+    if (gameObjects.length > 10000 && !errorTypes.TenThousand) {
+        console.warn("Over 10 Thousand Objects");
+        errorTypes.TenThousand = true;
+    } else if (gameObjects.length > 100000 && !errorTypes.HundredThousand) {
+        console.warn("Over 100 Thousand Objects");
+        errorTypes.HundredThousand = true;
     }
 
 }
