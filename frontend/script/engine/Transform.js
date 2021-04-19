@@ -34,4 +34,28 @@ export class Three {
         this.y += vec.y;
         this.z += vec.z;
     }
+
+    subtract(vec) {
+        this.x -= vec.x;
+        this.y -= vec.y;
+        this.z -= vec.z;
+    }
+
+    scale(num) {
+        this.x *= num;
+        this.y *= num;
+        this.z *= num;
+    }
+
+    subtract(vec) {
+        this.x -= vec.x;
+        this.y -= vec.y;
+        this.z -= vec.z;
+    }
+
+    multiply(vec) {
+        this.x *= vec.x;
+        this.y *= vec.y;
+        this.z *= vec.z;
+    }
 }

@@ -12,6 +12,7 @@ import { Camera } from './engine/Camera/Camera.js';
 import DrawsThings from './game/DrawsThings.js';
 
 import TileMap from "./game/tilemap/TileMap.js";
+import TileLayer from './game/tilemap/TileLayer.js';
 
 import { asset } from './engine/Asset/AssetLoader.js';
 
@@ -32,10 +33,28 @@ export function spaceScene() {
 export function tileScene() {
     let scene = new Scene();
     scene.name = "Tile Scene";
+    scene.attachGameObject(new Camera());
+
     let tm = new TileMap();
+    
     scene.attachGameObject(tm);
+    
+    let lyr = new TileLayer();
+    lyr.transform.scale.x = 4;
+    lyr.transform.scale.y = 4;
+    let arr = [
+        [0,1,2],
+        [3,4,5]
+    ];
+    lyr.scripts[0].importFromArr(arr, 16);
+    tm.scripts[0].addLayer(lyr);
+
     const f = async () => {
-        tm.setTileset(await asset("tilesheet"))
+        let scr = tm.scripts[0]; // Should be TileMapScript
+        let t = await asset("tilesheet");
+        scr.setTileset(t);
+
+        
     }
     f();
     return scene;

@@ -3,9 +3,12 @@
  */
 
 import GameObject from '../../engine/GameObject.js';
-// import Script from '../../engine/Script.js';
+import Script from '../../engine/Script.js';
 import {Renderable} from '../../engine/Render.js';
 import RenderScript from "../../engine/Camera/RenderScript.js";
+import { enrollGameObject } from "../../engine/Engine.js";
+import TileLayer from './TileLayer.js';
+import Tile from './Tile.js';
 
 // This behaves like how an ENUM would in other languages
 export const MAP_TYPES = Object.freeze({
@@ -13,42 +16,43 @@ export const MAP_TYPES = Object.freeze({
     // ISOMETRIC: 1,
 });
 
-class PreRenderScript extends RenderScript {
+class TileMapScript extends Script {
     constructor() {
         super();
-        let canvas = document.createElement('canvas');
-        this.context = canvas.getContext('2d');
-    }
-
-    init() {
-        if (!this.gameObject.tileset) return;
-        // Render the entire map
-    }
-
-    loop() {
-        if (!this.gameObject.tileset) return;
-    }
-
-    render(ctx, width, height) {
-        // Get the Transform from the 2D context to determine where the camera is
-
-    }
-}
-class TileMap extends Renderable(GameObject) {
-    constructor() {
-        super();
-        this.layers = [];
         this.renderType = MAP_TYPES.ORTHAGONAL;
         this.tileset = null; // This should be a Spritesheet
-        this.attachScript(new PreRenderScript());
     }
 
     setTileset(spritesheet) {
         this.tileset = spritesheet;
+        // Update the layer spritesheets
+        for (const lyr of this.gameObject.children) {
+            if (lyr instanceof TileLayer) {
+                lyr.tileset = spritesheet;
+                // Reset the textures
+                for (const c of lyr.children) {
+                    if (c instanceof Tile) {
+                        if (spritesheet.sheet.has(c.tilesetID)) {
+                            c.texture = spritesheet.sheet.get(c.tilesetID);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     addLayer(lyr) {
-        this.layers.push(lyr);
+        lyr.renderType = this.renderType;
+        lyr.tileset = this.tileset;
+        console.log("Adding Layer:", lyr)
+        this.gameObject.attachGameObject(lyr);
+    }
+}
+
+class TileMap extends GameObject {
+    constructor() {
+        super();
+        this.attachScript(new TileMapScript());
     }
 }
 
