@@ -10,5 +10,7 @@ export default class Tile extends GameObject {
     constructor() {
         super();
         this.tilesetID = -1;
+        this.row = -1;
+        this.column = -1;
     }
 }

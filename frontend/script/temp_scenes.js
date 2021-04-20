@@ -66,8 +66,6 @@ export function tileScene() {
         let scr = tm.scripts[0]; // Should be TileMapScript
         let t = await asset("tilesheet");
         scr.setTileset(t);
-
-        
     }
     f();
     return scene;

@@ -9,24 +9,42 @@ import Tile from "./Tile.js";
 class TileImportScript extends Script {
     constructor() {
         super();
+        this.tiles = [];
     }
 
     // Arr of ints
     importFromArr(arr, size) {
         for (let i = 0; i < arr.length; i++) {
             const r = arr[i];
+            let rowArr = [];
             for (let j = 0; j < r.length; j++) {
                 const c = r[j];
                 const t = new Tile();
                 t.tilesetID = c;
+                t.row = i;
+                t.column = j;
                 t.transform.position.x = j * size;
                 t.transform.position.y = i * size;
                 if (this.gameObject.tileset && this.gameObject.tileset.sheet.has(c)) {
                     t.texture = this.gameObject.tileset.sheet.get(c);
                 }
                 this.gameObject.attachGameObject(t);
+                rowArr.push(t);
             }
+            this.tiles.push(rowArr);
         }
+    }
+
+    setTile(r, c, id) {
+        const t = this.tiles[r][c];
+        t.tilesetID = id;
+        if (this.gameObject.tileset && this.gameObject.tileset.sheet.has(id)) {
+            t.texture = this.gameObject.tileset.sheet.get(id);
+        }
+    }
+
+    getTile(r, c) {
+        return this.tiles[r][c];
     }
 }
 
