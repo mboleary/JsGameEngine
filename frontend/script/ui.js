@@ -5,7 +5,7 @@
 import { initializeWith2dContext, setCanvas } from './engine/Render.js';
 
 export const canvas = document.getElementById('canvas');
-const overlay = document.getElementById('overlay');
+export const overlay = document.getElementById('overlay');
 
 let overlayVisible = false;
 

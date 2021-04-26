@@ -25,6 +25,9 @@ import {jmod as phyJmod} from "./engine/Physics.js";
 import {jmod as rendJmod} from "./engine/Render.js";
 import {jmod as pJmod} from "./engine/Puppeteer.js";
 
+import {spaceScene, tileScene} from './temp_scenes.js';
+import { defineAssets, loadSpaceScene, loadTileScene } from './temp_assets.js';
+
 function initEngine() {
     addJMod(inputJmod);
     addJMod(phyJmod);
@@ -61,31 +64,10 @@ function main() {
     defineKey("right", TYPE_DIGITAL);
     // Set Defulat Keymappings
     setKeybindings({"test":{"state":0,"mapping":["k",32],"mappingName":" ","type":1},"up":{"state":0,"mapping":["k",38],"mappingName":"ArrowUp","type":1},"down":{"state":0,"mapping":["k",40],"mappingName":"ArrowDown","type":1},"left":{"state":0,"mapping":["k",37],"mappingName":"ArrowLeft","type":1},"right":{"state":0,"mapping":["k",39],"mappingName":"ArrowRight","type":1}});
-    load({
-        name: "0",
-        path: "/asset/fp/0.png",
-        type: "image",
-        groups: ["main"]
-    });
-    load({
-        name: "1",
-        path: "/asset/fp/1.png",
-        type: "image",
-        groups: ["main"]
-    });
-    load({
-        name: "2",
-        path: "/asset/fp/2.png",
-        type: "image",
-        groups: ["main"]
-    });
-    loadGroup("main").then(() => {
+    defineAssets();
+    loadSpaceScene().then(() => {
         // Set the Scene
-        let scene = new Scene();
-        scene.attachGameObject(new DrawsThings());
-        scene.attachGameObject(new Test());
-        scene.attachGameObject(new ControllerTest2());
-        scene.attachGameObject(new Camera());
+        let scene = spaceScene();
         
         setCurrentScene(scene);
         
@@ -105,6 +87,23 @@ function main() {
             a.transform.position.x = 50;
             enrollGameObject(a);
             scene.attachGameObject(a);
+        }
+
+        // Change scene
+        window.dev.scene = (num) => {
+            let scene = null;
+            const map = {
+                0: {ld:loadSpaceScene, scn:spaceScene},
+                1: {ld:loadTileScene, scn:tileScene}
+            };
+            scene = map[num];
+            if (scene) {
+                scene.ld().then(() => {
+                    setCurrentScene(scene.scn());
+                }).catch((err) => {
+                    console.error(err);
+                });
+            }
         }
     })
 }

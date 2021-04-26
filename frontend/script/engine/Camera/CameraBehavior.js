@@ -29,8 +29,13 @@ export default class CameraBehavior extends Script {
         // @TODO change the scale
         // @TODO make rotating around a point work
         // console.log("Delta:", delta.position, this.prevTransform.position, this.gameObject.transform.position);
-        context.translate(delta.position.x, delta.position.y);
+        context.translate(delta.position.x * -1, delta.position.y * -1);
         context.rotate(deg2rad(delta.rotation.z));
         this.prevTransform.deepCopy(this.gameObject.transform);
+    }
+
+    onDestroy() {
+        // Reset the context
+        context.setTransform(1,0,0,1,0,0);
     }
 }
