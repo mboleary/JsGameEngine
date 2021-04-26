@@ -43,6 +43,12 @@ const engineInternals = {
     TARGET_MILLIS_PER_FRAME
 };
 
+// Warning and Error Message Debouncing
+const errorTypes = {
+    "TenThousand": false,
+    "HundredThousand": false
+}
+
 export function addJMod(jmod) {
     if (!allowModuleLoading) {
         throw new Error("Error: Attempted to load module after initialization!");
@@ -120,8 +126,11 @@ export function restartGameLoop() {
     unpauseTime();
 }
 
+// Sets the current scene, and deletes the old one
 export function setCurrentScene(scene) {
+    let oldScn = currScene;
     currScene = scene;
+    deleteGameObjectSync(oldScn);
     enrollGameObject(scene);
 }
 
@@ -173,98 +182,103 @@ function enrollGameObjectHelper(go, refArr) {
     return refArr;
 }
 
-// @TODO Fix this. It may call beforeDestroy many times. This is not intended!
-export function deleteGameObject(go) {
+function deleteGameObjectSync(go) {
     if (!go) return;
     if (!gameObjectsIDs.has(go.id)) return;
-    // Done after the Loop, since we don't want to modify the array while it's being accessed
-    setTimeout(() => {
-        gameObjectsIDs.delete(go.id);
-        let toDel = null;
+    gameObjectsIDs.delete(go.id);
+    let toDel = null;
 
-        // Delete Entry in Array
-        for (let i = 0; i < gameObjects.length; i++) {
-            let item = gameObjects[i];
+    // Delete Entry in Array
+    for (let i = 0; i < gameObjects.length; i++) {
+        let item = gameObjects[i];
+        if (item.id === go.id) {
+            toDel = gameObjects[i];
+            gameObjectsIDs.delete(toDel.id);
+            delete gameObjectsByID[go.id];
+            // Remove from GameObject Name Array
+            for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
+                if (gameObjectsByName[go.name][j].id === go.id) {
+                    gameObjectsByName[go.name].splice(j, 1);
+                    break;
+                }
+            }
+            // Remove from GameObject Group Array
+            for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
+                if (gameObjectsByGroup[go.group][j].id === go.id) {
+                    gameObjectsByGroup[go.group].splice(j, 1);
+                    break;
+                }
+            }
+            toDel.beforeDestroy();
+            gameObjects.splice(i, 1);
+            break;
+        }
+    }
+
+    if (!toDel) return; // Item was not found
+
+    // Delete Parent's child instance (if any)
+    if (toDel.parent != null && toDel.parent.children && toDel.parent.children.length) {
+        for (let i = 0; i < toDel.parent.children.length; i++) {
+            let item = toDel.parent.children[i];
             if (item.id === go.id) {
-                toDel = gameObjects[i];
-                gameObjectsIDs.delete(toDel.id);
-                delete gameObjectsByID[go.id];
-                // Remove from GameObject Name Array
-                for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
-                    if (gameObjectsByName[go.name][j].id === go.id) {
-                        gameObjectsByName[go.name].splice(j, 1);
-                        break;
-                    }
-                }
-                // Remove from GameObject Group Array
-                for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
-                    if (gameObjectsByGroup[go.group][j].id === go.id) {
-                        gameObjectsByGroup[go.group].splice(j, 1);
-                        break;
-                    }
-                }
-                toDel.beforeDestroy();
-                gameObjects.splice(i, 1);
+                item.beforeDestroy();
+                toDel.parent.children.splice(i, 1);
                 break;
             }
         }
+    }
 
-        if (!toDel) return; // Item was not found
-
-        // Delete Parent's child instance (if any)
-        if (toDel.parent != null && toDel.parent.children && toDel.parent.children.length) {
-            for (let i = 0; i < toDel.parent.children.length; i++) {
-                let item = toDel.parent.children[i];
-                if (item.id === go.id) {
-                    item.beforeDestroy();
-                    toDel.parent.children.splice(i, 1);
+    // Delete the Children from the Array
+    if (toDel.children && toDel.children.length) {
+        let idsToFind = {arr:[]}; // Encapsulating in a Object to get Pass by reference
+        for (let i = 0; i < toDel.children.length; i++) {
+            getChildIDs(toDel.children[i], idsToFind);
+        }
+        // Remove Children from the ID Set, and other things
+        for (let i = 0; i < idsToFind.arr.length; i++) {
+            let go = idsToFind.arr[i];
+            gameObjectsIDs.delete(go.id);
+            delete gameObjectsByID[go.id];
+            // Remove from GameObject Name Array
+            for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
+                if (gameObjectsByName[go.name][j].id === go.id) {
+                    gameObjectsByName[go.name].splice(j, 1);
+                    break;
+                }
+            }
+            // Remove from GameObject Group Array
+            for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
+                if (gameObjectsByGroup[go.group][j].id === go.id) {
+                    gameObjectsByGroup[go.group].splice(j, 1);
                     break;
                 }
             }
         }
-
-        // Delete the Children from the Array
-        if (toDel.children && toDel.children.length) {
-            let idsToFind = {arr:[]}; // Encapsulating in a Object to get Pass by reference
-            for (let i = 0; i < toDel.children.length; i++) {
-                getChildIDs(toDel.children[i], idsToFind);
-            }
-            // Remove Children from the ID Set, and other things
-            for (let i = 0; i < idsToFind.arr.length; i++) {
-                let go = idsToFind[i];
-                gameObjectsIDs.delete(go.id);
-                delete gameObjectsByID[go.id];
-                // Remove from GameObject Name Array
-                for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
-                    if (gameObjectsByName[go.name][j].id === go.id) {
-                        gameObjectsByName[go.name].splice(j, 1);
-                        break;
-                    }
-                }
-                // Remove from GameObject Group Array
-                for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
-                    if (gameObjectsByGroup[go.group][j].id === go.id) {
-                        gameObjectsByGroup[go.group].splice(j, 1);
-                        break;
-                    }
-                }
-            }
-            // Find in the GameObject Array and remove
-            for (let i = 0; i < gameObjects.length && idsToFind.arr.length > 0; i++) {
-                for (let j = 0; j < idsToFind.arr.length; j++) {
-                    if (gameObjects[i].id === idsToFind.arr[j].id) {
-                        gameObjects[i].beforeDestroy();
-                        idsToFind.arr.splice(j, 1);
-                        gameObjects.splice(i, 1);
-                        i--;
-                        break;
-                    }
+        // Find in the GameObject Array and remove
+        for (let i = 0; i < gameObjects.length && idsToFind.arr.length > 0; i++) {
+            for (let j = 0; j < idsToFind.arr.length; j++) {
+                if (gameObjects[i].id === idsToFind.arr[j].id) {
+                    gameObjects[i].beforeDestroy();
+                    idsToFind.arr.splice(j, 1);
+                    gameObjects.splice(i, 1);
+                    i--;
+                    break;
                 }
             }
         }
-        
+    }
+}
+
+// @TODO Fix this. It may call beforeDestroy many times. This is not intended!
+export function deleteGameObject(go) {
+    // Done after the Loop, since we don't want to modify the array while it's being accessed
+    setTimeout(() => {
+        deleteGameObjectSync(go);
     });
 }
+
+
 
 /**
  * Gets the IDs of all of the children
@@ -340,10 +354,12 @@ function main() {
     }
 
     // @TODO Remove this
-    if (gameObjects.length > 10000) {
-        console.log("Over 10 Thousand Objects");
-    } else if (gameObjects.length > 100000) {
-        console.log("Over 100 Thousand Objects");
+    if (gameObjects.length > 10000 && !errorTypes.TenThousand) {
+        console.warn("Over 10 Thousand Objects");
+        errorTypes.TenThousand = true;
+    } else if (gameObjects.length > 100000 && !errorTypes.HundredThousand) {
+        console.warn("Over 100 Thousand Objects");
+        errorTypes.HundredThousand = true;
     }
 
 }

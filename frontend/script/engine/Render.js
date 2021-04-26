@@ -70,15 +70,19 @@ export const Renderable = (Base) => class extends Base {
         console.log("Attach Script:", scr.constructor.name);
         if (scr instanceof RenderScript) {
             this.renderScripts.push(scr);
-            scr.renderScriptIndex = this.renderScripts.length - 1;
         }
     }
 
     detachScript(scr) {
         super.detachScript(scr);
         console.log("Detach Script:", scr.constructor.name);
-        if (scr instanceof RenderScript && scr.renderScriptIndex >= 0) {
-            this.renderScripts.splice(scr.renderScriptIndex, 1);
+        if (scr instanceof RenderScript) {
+            for (let i = 0; i < this.renderScripts.length; i++) {
+                if (this.renderScripts[i].id === scr.id) {
+                    this.renderScripts.splice(i, 1);
+                    return;
+                }
+            }
         }
     }
 }
