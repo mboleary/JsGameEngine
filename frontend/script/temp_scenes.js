@@ -43,11 +43,14 @@ export function tileScene() {
 
     let cam = new Camera();
     let bmb = new BoxMovementBehavior();
+    bmb.xChange = 10;
+    bmb.yChange = 10;
+    bmb.speed = 0.01;
     cam.attachScript(bmb);
     scene.attachGameObject(cam);
 
     let tm = new TileMap();
-    
+    tm.transform.rotation.x = 45;
     scene.attachGameObject(tm);
     
     let lyr = new TileLayer();
@@ -68,10 +71,14 @@ export function tileScene() {
         scr.setTileset(t);
     }
     f();
+
+    // setTimeout(() => {
+    //     cam.transform.rotation.x = 45;
+    // }, 5000);
     return scene;
 }
 
-const DEFAULT_SIZE = 100;
+const DEFAULT_SIZE = 50; // was 100
 const DEFAULT_TILE_VALUES = [
     0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,
     21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,

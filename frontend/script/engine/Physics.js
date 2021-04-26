@@ -19,6 +19,9 @@ export function calculateAbsoluteTransform(gos) {
         if (go.parent) {
             // Relative to the parent
             let parent = go.parent.transform;
+            if (go.parent.absTransform) {
+                parent = go.parent.absTransform;
+            }
             // Scale the position
             abs.position.multiply(parent.scale);
             abs.position.add(parent.position);

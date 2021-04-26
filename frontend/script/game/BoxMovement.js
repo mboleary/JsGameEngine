@@ -15,7 +15,6 @@ export default class BoxMovementBehavior extends Script {
         this.xChange = 1000;
         this.yChange = 1000;
         this.speed = 0.5; // Pixels per frame
-        this.step = 0; // Max 3
     }
 
     init() {

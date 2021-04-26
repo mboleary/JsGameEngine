@@ -4,6 +4,8 @@
 
 // import { canvas } from '../ui.js';
 import RenderScript from './Camera/RenderScript.js';
+import { CAMERA_ID } from "./constants.js";
+import Transform from './Transform.js';
 
 let canvas = null;
 let context = null; // This is the context that will be used to render the game.
@@ -29,16 +31,55 @@ export function initializeWith2dContext() {
     context.imageSmoothingEnabled = false;
 }
 
+// export function renderGameObjectsWith2dContext(gos) {
+//     context.save(); // Saves the transform and such
+//     context.setTransform(1,0,0,1,0,0);
+//     context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+//     context.restore();
+//     gos.forEach((go) => {
+//         if (go.renderScripts) {
+//             // Check if this is a Renderable G.O
+//             go.renderScripts.forEach((rs) => {
+//                 rs.render(context, canvas.clientWidth, canvas.clientHeight);
+//             })
+//         } else if (go.texture) {
+//             // Use the texture as normal
+//             let iw = go.texture.width;
+//             let ih = go.texture.height;
+//             // Use the Absolute Transform, if available
+//             let transform = go.absTransform ? go.absTransform : go.transform;
+//             let pos = transform.position;
+//             let scl = transform.scale;
+//             let rot = transform.rotation;
+            
+//             context.drawImage(go.texture, pos.x, pos.y, iw * scl.x, ih * scl.y);
+//         }
+//     })
+// }
+
+// Uses the Camera Object to perform calculations and rotations
 export function renderGameObjectsWith2dContext(gos) {
-    context.save(); // Saves the transform and such
     context.setTransform(1,0,0,1,0,0);
     context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-    context.restore();
-    gos.forEach((go) => {
+    // Get the camera transform
+    let cam = null;
+    let root = gos[0]; // Generally the 1st object in the array
+    for (const go of gos) {
+        if (go.id === CAMERA_ID) {
+            cam = go.transform;
+            break;
+        }
+    }
+    if (!cam) {
+        cam = new Transform();
+    } else {
+
+    }
+    for (const go of gos) {
         if (go.renderScripts) {
             // Check if this is a Renderable G.O
             go.renderScripts.forEach((rs) => {
-                rs.render(context, canvas.clientWidth, canvas.clientHeight);
+                rs.render(context, canvas.clientWidth, canvas.clientHeight, cam);
             })
         } else if (go.texture) {
             // Use the texture as normal
@@ -49,10 +90,22 @@ export function renderGameObjectsWith2dContext(gos) {
             let pos = transform.position;
             let scl = transform.scale;
             let rot = transform.rotation;
-            
-            context.drawImage(go.texture, pos.x, pos.y, iw * scl.x, ih * scl.y);
+
+            // Use the old method if rotation is not present
+            if (!rot.x && !cam.rotation.x) {
+                context.drawImage(go.texture, pos.x - cam.position.x, pos.y - cam.position.y, iw * scl.x, ih * scl.y);
+            } else {
+                // Translate to position. Note, this is slower
+                context.setTransform(scl.x * cam.scale.x, 0, 0, scl.y * cam.scale.y, pos.x + (iw * 0.5 * scl.x) - cam.position.x, pos.y + (ih * 0.5 * scl.y) - cam.position.y);
+                context.rotate(deg2rad(rot.x + cam.rotation.x));
+                
+                context.drawImage(go.texture, (iw * -0.5), (ih * -0.5), iw, ih);
+                context.setTransform(1,0,0,1,0,0);
+                context.rotate(0);
+            }
         }
-    })
+    }
+    context.setTransform(1,0,0,1,0,0);
 }
 
 export function deg2rad(deg) {
