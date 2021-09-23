@@ -99,9 +99,9 @@ export function renderGameObjectsWith2dContext(gos) {
                 context.setTransform(scl.x * cam.scale.x, 0, 0, scl.y * cam.scale.y, pos.x + (iw * 0.5 * scl.x) - cam.position.x, pos.y + (ih * 0.5 * scl.y) - cam.position.y);
                 context.rotate(deg2rad(rot.x + cam.rotation.x));
                 
-                context.drawImage(go.texture, (iw * -0.5), (ih * -0.5), iw, ih);
-                context.setTransform(1,0,0,1,0,0);
-                context.rotate(0);
+                context.drawImage(go.texture, (iw * -0.5), (ih * -0.5), iw, ih); // Draw such that the center of the image is on (0, 0)
+                context.setTransform(1,0,0,1,0,0); // Also rotates to 0
+                // context.rotate(0);
             }
         }
     }

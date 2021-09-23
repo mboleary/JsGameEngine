@@ -46,11 +46,11 @@ export function tileScene() {
     bmb.xChange = 10;
     bmb.yChange = 10;
     bmb.speed = 0.01;
-    cam.attachScript(bmb);
+    // cam.attachScript(bmb);
     scene.attachGameObject(cam);
 
     let tm = new TileMap();
-    tm.transform.rotation.x = 45;
+    // tm.transform.rotation.x = 45;
     scene.attachGameObject(tm);
     
     let lyr = new TileLayer();
@@ -63,6 +63,7 @@ export function tileScene() {
     let arr = genTileArr();
     console.log(arr);
     lyr.scripts[0].importFromArr(arr, 16);
+    lyr.children[0].transform.rotation.x = 45;
     tm.scripts[0].addLayer(lyr);
 
     const f = async () => {
