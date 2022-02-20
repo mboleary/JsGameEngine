@@ -22,6 +22,17 @@ https://gist.github.com/jed/982883
 https://github.com/websockets/ws
     Might be good for a WebSocket Server for the backend
 
+
+https://developer.mozilla.org/en-US/docs/Web/API/Window/open
+    Opens a Popup window
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+    Might be useful for the debugger or Puppeteer
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#Dynamic_Imports
+    Dynamic imports
+
+
 ## Audio
 
 https://en.wikipedia.org/wiki/Head-related_transfer_function

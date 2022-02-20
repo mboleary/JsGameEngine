@@ -82,9 +82,16 @@ export function renderGameObjectsWith2dContext(gos) {
                 rs.render(context, canvas.clientWidth, canvas.clientHeight, cam);
             })
         } else if (go.texture) {
+            let tex = null;
+            // Sometimes texture is a function
+            if (typeof go.texture === "function") {
+                tex = go.texture();
+            } else {
+                tex = go.texture;
+            }
             // Use the texture as normal
-            let iw = go.texture.width;
-            let ih = go.texture.height;
+            let iw = tex.width;
+            let ih = tex.height;
             // Use the Absolute Transform, if available
             let transform = go.absTransform ? go.absTransform : go.transform;
             let pos = transform.position;
@@ -94,13 +101,13 @@ export function renderGameObjectsWith2dContext(gos) {
 
             // Use the old method if rotation is not present
             if (!rot.x && !cam.rotation.x) {
-                context.drawImage(go.texture, pos.x - cam.position.x, pos.y - cam.position.y, iw * scl.x, ih * scl.y);
+                context.drawImage(tex, pos.x - cam.position.x, pos.y - cam.position.y, iw * scl.x, ih * scl.y);
             } else {
                 // Translate to position. Note, this is slower
                 context.setTransform(scl.x * cam.scale.x, 0, 0, scl.y * cam.scale.y, pos.x + (iw * 0.5 * scl.x) - cam.position.x, pos.y + (ih * 0.5 * scl.y) - cam.position.y);
                 context.rotate(deg2rad(rot.x + cam.rotation.x));
                 
-                context.drawImage(go.texture, (iw * -0.5), (ih * -0.5), iw, ih); // Draw such that the center of the image is on (0, 0)
+                context.drawImage(tex, (iw * -0.5), (ih * -0.5), iw, ih); // Draw such that the center of the image is on (0, 0)
                 context.setTransform(1,0,0,1,0,0); // Also rotates to 0
                 // context.rotate(0);
             }

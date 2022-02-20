@@ -89,7 +89,7 @@ export default class DrawsThingsBehavior extends RenderScript {
         this.addStars = true;
     }
 
-    clear() {
+    clear = () => {
         this.stars = [];
     }
 }

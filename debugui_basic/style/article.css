@@ -1,0 +1,93 @@
+/*  Landing Page Styling
+        This page is designed to have a Large slide-like Layout to Display Information
+            Also needs to have light and dark classes
+        This should also have the facilities to provide a layout for articles
+        This page will have a modified Header Format
+
+  (c) Brady O'Leary 2018
+*/
+
+/* @TODO Use CSS Vars, turn <article> into class */
+
+:root {
+    --article-title-color: var(--accent-3);
+    --article-title-hover-color: hsl(var(--accent-3-h), var(--accent-3-s), 70%);
+
+    --article-info-color-light: #333;
+    --article-info-color-dark: #bbb;
+}
+
+/* Start Article Containers */
+
+article {
+    text-align: left;
+    margin: 1em 0px;
+}
+
+article img {
+    height: auto;
+    max-width: 50%;
+    display: block;
+    margin: auto;
+    object-fit: contain;
+}
+
+.article-header h1 {
+    color: var(--article-title-color);
+    font-family: bold;
+    /* font-size: 25px; */
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.article-header h1 a:link, .article-header h1 a:visited {
+    color: var(--article-title-color);
+    text-decoration: none;
+}
+
+.article-header h1 a:hover {
+    color: var(--article-title-hover-color);
+}
+
+.article-header .info {
+    font-family: ultralight;
+    margin: 0px;
+    
+    padding: 0px;
+    font-size: 13px;
+    color: var(--article-info-color-light);
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+    .article-header .info {
+        color: var(--article-info-color-dark);
+    }
+}
+
+.article-header {
+    margin-bottom: 5px;
+}
+
+article .continue {
+    width: 100%;
+    background-color: #eee;
+    color: black;
+    font-family: ultralight;
+    text-align: center;
+    margin: 5px 0px;
+}
+
+article a:link.continue, article a:visited.continue {
+    color: black;
+    text-decoration: none;
+    display: block;
+    background-color: #ccc;
+}
+
+article a:hover.continue {
+    color: #333;
+    background-color: #eee;
+}
+
+/* END Article Containers */

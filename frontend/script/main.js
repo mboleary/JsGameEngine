@@ -10,7 +10,7 @@ import ControllerTest2 from './game/ControllerTest2.js';
 
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './engine/Input.js';
 
-import { initDebug } from './engine/Debug.js';
+
 
 // import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.js';
 
@@ -30,8 +30,10 @@ import audioMod from './engine/Audio/Audio.js';
 
 import {spaceScene, tileScene} from './temp_scenes.js';
 import { defineAssets, loadSpaceScene, loadTileScene } from './temp_assets.js';
+import {jmod as dbgJmod} from './engine/Debug.js';
 
 function initEngine() {
+    addJMod(dbgJmod);
     addJMod(inputJmod);
     addJMod(phyJmod);
     addJMod(pJmod);
@@ -45,7 +47,7 @@ function main() {
 
     initEngine();
 
-    initDebug();
+    // initDebug();
 
     window.dev = {};
     window.dev.test = () => {
