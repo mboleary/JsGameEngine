@@ -20,6 +20,8 @@ import DrawsThings from './game/DrawsThings.js';
 
 import { load, asset, loadGroup } from './engine/Asset/AssetLoader.js';
 
+import { createRoom, getRooms } from './engine/Network/RoomController.js';
+
 import {jmod as inputJmod} from "./engine/Input.js";
 import {jmod as phyJmod} from "./engine/Physics.js";
 import {jmod as rendJmod} from "./engine/Render.js";
@@ -74,13 +76,29 @@ function main() {
         // Initialize the Game Loop
         initGameLoop();
 
+        window.dev.toggleOverlay = () => {
+            toggleOverlay();
+        }
+
         // TEMP: Testing puppeteer
         // connect(window.CONFIG.pubsub); // @TODO Find a better way to handle a failed connection
         window.dev.disconnect = () => {
             disconnect();
         }
-        window.dev.reconnect = () => {
-            connect(window.CONFIG.pubsub);
+        window.dev.createRoom = async () => {
+            let room = await createRoom(window.CONFIG.rooms_api, {
+                name: "JSGE Test Room",
+                private: false
+            });
+            console.log("Room created:", room);
+        }
+
+        window.dev.getRooms = async () => {
+            let rooms = await getRooms(window.CONFIG.rooms_api);
+            console.log("Got rooms:", rooms);
+        }
+        window.dev.reconnect = (roomID) => {
+            connect(window.CONFIG.pubsub + "/" + roomID);
         }
         window.dev.testws = () => {
             let a = new (Puppet(ControllerTest2, true))();
@@ -103,6 +121,30 @@ function main() {
                 }).catch((err) => {
                     console.error(err);
                 });
+            }
+        };
+
+
+
+
+        window.dev.a = async () => {
+            console.log("Creating Room...");
+            let room = await createRoom(window.CONFIG.rooms_api, {
+                name: "JSGE Test Room",
+                private: false
+            });
+            console.log("Joining Room:", room);
+            connect(window.CONFIG.pubsub + "/" + room.id);
+        }
+
+        window.dev.b = async () => {
+            console.log("Joining First room...");
+            let rooms = await getRooms(window.CONFIG.rooms_api);
+            if (rooms && rooms.length > 0) {
+                console.log("Joining Room:", rooms[0]);
+                connect(window.CONFIG.pubsub + "/" + rooms[0].id);
+            } else {
+                console.log("No Room!");
             }
         }
     })
