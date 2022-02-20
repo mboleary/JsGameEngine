@@ -26,6 +26,7 @@ import {jmod as inputJmod} from "./engine/Input.js";
 import {jmod as phyJmod} from "./engine/Physics.js";
 import {jmod as rendJmod} from "./engine/Render.js";
 import {jmod as pJmod} from "./engine/Puppeteer.js";
+import audioMod from './engine/Audio/Audio.js';
 
 import {spaceScene, tileScene} from './temp_scenes.js';
 import { defineAssets, loadSpaceScene, loadTileScene } from './temp_assets.js';
@@ -34,6 +35,7 @@ function initEngine() {
     addJMod(inputJmod);
     addJMod(phyJmod);
     addJMod(pJmod);
+    addJMod(audioMod);
     addJMod(rendJmod);
 }
 
