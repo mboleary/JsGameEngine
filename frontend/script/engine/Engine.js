@@ -134,6 +134,10 @@ export function setCurrentScene(scene) {
     enrollGameObject(scene);
 }
 
+export function getCurrentScene() {
+    return currScene;
+}
+
 // Enrolls GameObjects and their children, and initializes their scripts
 export function enrollGameObject(go) {
     if (!go) return;
@@ -331,7 +335,7 @@ function main() {
     stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
 
     // Calculate the Absolute Transforms of each GameObject
-    // calculateAbsoluteTransform(gameObjects);
+    calculateAbsoluteTransform(gameObjects);
 
     // Render the Game Field
     // renderGameObjectsWith2dContext(gameObjects);

@@ -7,7 +7,10 @@ import Transform from './Transform.js';
 export const jmod = {
     name: "Physics",
     version: 0,
-    loop: (internals) => calculateAbsoluteTransform(internals.gameObjects)
+    loop: (internals) => {
+        // calculateAbsoluteTransform(internals.gameObjects)
+        processColliders(internals.gameObjects);
+    }
 }
 
 // Calculates Absolute Transform object from Relative Transforms
@@ -33,4 +36,18 @@ export function calculateAbsoluteTransform(gos) {
             go.absTransform = abs;
         }
     });
+}
+
+// Processes Collisions
+export function processColliders(gos) {
+    let colliders = [];
+    gos.forEach((go) => {
+        if (go.colliders && go.colliders.length > 0) {
+            colliders.push(...go.colliders);
+        }
+    });
+
+    // @TODO Use a QuadTree here or something to speed this up
+
+    
 }
