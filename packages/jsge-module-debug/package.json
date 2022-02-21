@@ -1,0 +1,11 @@
+{
+  "name": "jsge-module-debug",
+  "version": "1.0.0",
+  "description": "This module provides a way to spawn a debug window so that parts of the game can be inspected and tinkered with. This was mainly an experiment to see how posting a message between 2 windows works.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -20,6 +20,8 @@
 
 ## Next Stage of development
 
+- Find a better package to use for 3d coordinates
+    - Add proper support for layering 2d graphics with a priority (z axis)
 - Add more complex timer, where multiple timers can be initialized and manipulated at the same time
 - Integrate actual uuid / shortid packages into core code
 - Integrate actual Physics into game engine
