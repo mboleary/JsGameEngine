@@ -6,6 +6,7 @@
 import RenderScript from './Camera/RenderScript.js';
 import { CAMERA_ID } from "./constants.js";
 import Transform from './Transform.js';
+import { init } from './Render/WebGLHelper.js';
 
 let canvas = null;
 let context = null; // This is the context that will be used to render the game.
@@ -13,9 +14,18 @@ let context = null; // This is the context that will be used to render the game.
 export const jmod = {
     name: "Render",
     version: 0,
-    // init: initializeWith2dContext,
+    init: initializeWith2dContext,
     loop: (internals) => {
         renderGameObjectsWith2dContext(internals.gameObjects);
+    }
+}
+
+export const jmodWebGL = {
+    name: "RenderWebGL",
+    version: 0,
+    init: initializeWithWebGL,
+    loop: (internals) => {
+        renderGameObjectsWithWebGL(internals.gameObjects);
     }
 }
 
@@ -23,11 +33,18 @@ export function setCanvas(node) {
     canvas = node;
 }
 
+// 2d context stuff
+
 export function initializeWith2dContext() {
     if (!canvas) {
         throw new Error("Error: Canvas must be set before initializing Render!");
     }
     context = canvas.getContext('2d');
+    if (!context) {
+        let msg = "Error Initializing the 2d context!";
+        console.error(msg);
+        throw new Error(msg)
+    }
     context.imageSmoothingEnabled = false;
 }
 
@@ -115,6 +132,26 @@ export function renderGameObjectsWith2dContext(gos) {
     }
     context.setTransform(1,0,0,1,0,0);
 }
+
+// END Legacy
+
+// new WebGL Context stuff
+
+export function initializeWithWebGL() {
+    context = canvas.getContext('webgl');
+    if (!context) {
+        let msg = "Browser Doesn't support WebGL!";
+        console.error(msg);
+        throw new Error(msg)
+    }
+    init(context);
+}
+
+export function renderGameObjectsWithWebGL(gos) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context
+}
+
+// Misc. Functions and Class definitions
 
 export function deg2rad(deg) {
     return (deg / 180) * Math.PI;

@@ -2,7 +2,7 @@
  * This contains all code to initialize and manage the UI
  */
 
-import { initializeWith2dContext, setCanvas } from './engine/Render.js';
+import { setCanvas } from './engine/Render.js';
 
 export const canvas = document.getElementById('canvas');
 export const overlay = document.getElementById('overlay');
@@ -27,7 +27,6 @@ function resizeScreen(e) {
     console.log("Screen:", width, height);
     canvas.setAttribute("width", width);
     canvas.setAttribute("height", height);
-    initializeWith2dContext();
 }
 
 export function toggleOverlay() {

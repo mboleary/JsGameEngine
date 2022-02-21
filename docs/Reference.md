@@ -4,9 +4,10 @@ https://developer.mozilla.org/en-US/docs/Games/Anatomy
 
 https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context
 
-https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
-
 https://developer.mozilla.org/en-US/docs/Web/API/ImageBitmap
+
+https://github.com/toji/gl-matrix
+    Matrix Library
 
 https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
     Look into converting this int WebGL later
@@ -52,3 +53,10 @@ https://www.musicdsp.org/en/latest/
 https://www.dspguide.com/ch1/3.htm
 
 https://theaudioprogrammer.com/how-to-learn-dsp-a-guide-for-audio-programmers/
+
+## Web GL
+https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
+    WebGL for 2D things
+
+https://webglfundamentals.org/webgl/lessons/webgl-fundamentals.html
+    Web GL

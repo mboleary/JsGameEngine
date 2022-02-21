@@ -2,7 +2,7 @@
  * Engine contains the basic framework for the game engine
  */
 
-import { renderGameObjectsWith2dContext, initializeWith2dContext } from './Render.js';
+import { renderGameObjectsWith2dContext, initializeWith2dContext, initializeWithWebGL, renderGameObjectsWithWebGL } from './Render.js';
 
 import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager.js';
 
@@ -72,10 +72,7 @@ export function initGameLoop() {
         const f = initFuncs[i];
         f(engineInternals);
     }
-
-    // initInput();
-    // initializeWith2dContext();
-
+    
     gameLoopStarted = true;
     currTime = window.performance.now();
     main();
