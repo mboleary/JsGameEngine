@@ -30,6 +30,15 @@
 - Fix issues with controller API in Input Module
 - Investigate how to implement building GameObject based on prefab
 
+## JSGE Generics library
+
+This library will contain generic data structures and components to help facilitate interoperability with other modules.
+
+Types:
+- 2d graphics
+- Transform
+- Audio Source
+
 ## Existing PRs
 
 These will need to be merged into master, or otherwise moved to a safe place, and then everything will be moved around
