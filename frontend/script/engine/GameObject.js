@@ -21,7 +21,7 @@ export default class GameObject {
         this.zIndex = 0; // Used for order of rendering in 2D
         this.priority = 0; // Determines the priority of the scripts.
         this.parent = null; // Contains reference to the Parent GameObject
-        this.deleteFlag = false; // True if the GameObject should be destroyed.
+        // this.deleteFlag = false; // True if the GameObject should be destroyed.
     }
 
     // Attaches a GameObject to this GameObject
@@ -47,6 +47,15 @@ export default class GameObject {
                     script.onDestroy();
                     return;
                 }
+            }
+        }
+    }
+
+    getScriptByID(id) {
+        for (let i = 0; i < this.scripts.length; i++) {
+            let script = this.scripts[i];
+            if (script.id === id) {
+                return script;
             }
         }
     }

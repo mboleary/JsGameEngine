@@ -2,13 +2,13 @@
  * Engine contains the basic framework for the game engine
  */
 
-import { renderGameObjectsWith2dContext, initializeWith2dContext } from './Render.js';
+import { renderGameObjectsWith2dContext, initializeWith2dContext, initializeWithWebGL, renderGameObjectsWithWebGL } from './Render.js';
 
 import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager.js';
 
 import { pollGamepads, initInput } from './Input.js';
 
-import { pauseTime, unpauseTime, advanceTime, getTime } from './Time.js';
+import { pauseTime, unpauseTime, advanceTime, getTime, isTimePaused } from './Time.js';
 
 import { calculateAbsoluteTransform } from './Physics.js';
 
@@ -43,6 +43,12 @@ const engineInternals = {
     TARGET_MILLIS_PER_FRAME
 };
 
+// Warning and Error Message Debouncing
+const errorTypes = {
+    "TenThousand": false,
+    "HundredThousand": false
+}
+
 export function addJMod(jmod) {
     if (!allowModuleLoading) {
         throw new Error("Error: Attempted to load module after initialization!");
@@ -66,10 +72,7 @@ export function initGameLoop() {
         const f = initFuncs[i];
         f(engineInternals);
     }
-
-    // initInput();
-    // initializeWith2dContext();
-
+    
     gameLoopStarted = true;
     currTime = window.performance.now();
     main();
@@ -106,23 +109,32 @@ export function stopGameLoop() {
 export function stepGameLoop(fakeDelta) {
     setTimeout(() => {
         if (fakeDelta || fakeDelta === 0) {
-            currTime = window.performance.now() - fakeDelta;
+            advanceTime(fakeDelta);
+        } else {
+            advanceTime(TARGET_MILLIS_PER_FRAME);
         }
-        advanceTime(deltaTime);
-        main();
-        window.cancelAnimationFrame(stopLoop);
+        loop();
     });
 }
 
 // Only use this if re-starting the game after the loop was stopped.
 export function restartGameLoop() {
-    stopLoop = window.requestAnimationFrame(main);
-    unpauseTime();
+    if (isTimePaused()) {
+        main();
+        unpauseTime();
+    }
 }
 
+// Sets the current scene, and deletes the old one
 export function setCurrentScene(scene) {
+    let oldScn = currScene;
     currScene = scene;
+    deleteGameObjectSync(oldScn);
     enrollGameObject(scene);
+}
+
+export function getCurrentScene() {
+    return currScene;
 }
 
 // Enrolls GameObjects and their children, and initializes their scripts
@@ -173,98 +185,103 @@ function enrollGameObjectHelper(go, refArr) {
     return refArr;
 }
 
-// @TODO Fix this. It may call beforeDestroy many times. This is not intended!
-export function deleteGameObject(go) {
+function deleteGameObjectSync(go) {
     if (!go) return;
     if (!gameObjectsIDs.has(go.id)) return;
-    // Done after the Loop, since we don't want to modify the array while it's being accessed
-    setTimeout(() => {
-        gameObjectsIDs.delete(go.id);
-        let toDel = null;
+    gameObjectsIDs.delete(go.id);
+    let toDel = null;
 
-        // Delete Entry in Array
-        for (let i = 0; i < gameObjects.length; i++) {
-            let item = gameObjects[i];
+    // Delete Entry in Array
+    for (let i = 0; i < gameObjects.length; i++) {
+        let item = gameObjects[i];
+        if (item.id === go.id) {
+            toDel = gameObjects[i];
+            gameObjectsIDs.delete(toDel.id);
+            delete gameObjectsByID[go.id];
+            // Remove from GameObject Name Array
+            for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
+                if (gameObjectsByName[go.name][j].id === go.id) {
+                    gameObjectsByName[go.name].splice(j, 1);
+                    break;
+                }
+            }
+            // Remove from GameObject Group Array
+            for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
+                if (gameObjectsByGroup[go.group][j].id === go.id) {
+                    gameObjectsByGroup[go.group].splice(j, 1);
+                    break;
+                }
+            }
+            toDel.beforeDestroy();
+            gameObjects.splice(i, 1);
+            break;
+        }
+    }
+
+    if (!toDel) return; // Item was not found
+
+    // Delete Parent's child instance (if any)
+    if (toDel.parent != null && toDel.parent.children && toDel.parent.children.length) {
+        for (let i = 0; i < toDel.parent.children.length; i++) {
+            let item = toDel.parent.children[i];
             if (item.id === go.id) {
-                toDel = gameObjects[i];
-                gameObjectsIDs.delete(toDel.id);
-                delete gameObjectsByID[go.id];
-                // Remove from GameObject Name Array
-                for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
-                    if (gameObjectsByName[go.name][j].id === go.id) {
-                        gameObjectsByName[go.name].splice(j, 1);
-                        break;
-                    }
-                }
-                // Remove from GameObject Group Array
-                for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
-                    if (gameObjectsByGroup[go.group][j].id === go.id) {
-                        gameObjectsByGroup[go.group].splice(j, 1);
-                        break;
-                    }
-                }
-                toDel.beforeDestroy();
-                gameObjects.splice(i, 1);
+                item.beforeDestroy();
+                toDel.parent.children.splice(i, 1);
                 break;
             }
         }
+    }
 
-        if (!toDel) return; // Item was not found
-
-        // Delete Parent's child instance (if any)
-        if (toDel.parent != null && toDel.parent.children && toDel.parent.children.length) {
-            for (let i = 0; i < toDel.parent.children.length; i++) {
-                let item = toDel.parent.children[i];
-                if (item.id === go.id) {
-                    item.beforeDestroy();
-                    toDel.parent.children.splice(i, 1);
+    // Delete the Children from the Array
+    if (toDel.children && toDel.children.length) {
+        let idsToFind = {arr:[]}; // Encapsulating in a Object to get Pass by reference
+        for (let i = 0; i < toDel.children.length; i++) {
+            getChildIDs(toDel.children[i], idsToFind);
+        }
+        // Remove Children from the ID Set, and other things
+        for (let i = 0; i < idsToFind.arr.length; i++) {
+            let go = idsToFind.arr[i];
+            gameObjectsIDs.delete(go.id);
+            delete gameObjectsByID[go.id];
+            // Remove from GameObject Name Array
+            for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
+                if (gameObjectsByName[go.name][j].id === go.id) {
+                    gameObjectsByName[go.name].splice(j, 1);
+                    break;
+                }
+            }
+            // Remove from GameObject Group Array
+            for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
+                if (gameObjectsByGroup[go.group][j].id === go.id) {
+                    gameObjectsByGroup[go.group].splice(j, 1);
                     break;
                 }
             }
         }
-
-        // Delete the Children from the Array
-        if (toDel.children && toDel.children.length) {
-            let idsToFind = {arr:[]}; // Encapsulating in a Object to get Pass by reference
-            for (let i = 0; i < toDel.children.length; i++) {
-                getChildIDs(toDel.children[i], idsToFind);
-            }
-            // Remove Children from the ID Set, and other things
-            for (let i = 0; i < idsToFind.arr.length; i++) {
-                let go = idsToFind[i];
-                gameObjectsIDs.delete(go.id);
-                delete gameObjectsByID[go.id];
-                // Remove from GameObject Name Array
-                for (let j = 0; j < gameObjectsByName[go.name].length; j++) {
-                    if (gameObjectsByName[go.name][j].id === go.id) {
-                        gameObjectsByName[go.name].splice(j, 1);
-                        break;
-                    }
-                }
-                // Remove from GameObject Group Array
-                for (let j = 0; j < gameObjectsByGroup[go.group].length; j++) {
-                    if (gameObjectsByGroup[go.group][j].id === go.id) {
-                        gameObjectsByGroup[go.group].splice(j, 1);
-                        break;
-                    }
-                }
-            }
-            // Find in the GameObject Array and remove
-            for (let i = 0; i < gameObjects.length && idsToFind.arr.length > 0; i++) {
-                for (let j = 0; j < idsToFind.arr.length; j++) {
-                    if (gameObjects[i].id === idsToFind.arr[j].id) {
-                        gameObjects[i].beforeDestroy();
-                        idsToFind.arr.splice(j, 1);
-                        gameObjects.splice(i, 1);
-                        i--;
-                        break;
-                    }
+        // Find in the GameObject Array and remove
+        for (let i = 0; i < gameObjects.length && idsToFind.arr.length > 0; i++) {
+            for (let j = 0; j < idsToFind.arr.length; j++) {
+                if (gameObjects[i].id === idsToFind.arr[j].id) {
+                    gameObjects[i].beforeDestroy();
+                    idsToFind.arr.splice(j, 1);
+                    gameObjects.splice(i, 1);
+                    i--;
+                    break;
                 }
             }
         }
-        
+    }
+}
+
+// @TODO Fix this. It may call beforeDestroy many times. This is not intended!
+export function deleteGameObject(go) {
+    // Done after the Loop, since we don't want to modify the array while it's being accessed
+    setTimeout(() => {
+        deleteGameObjectSync(go);
     });
 }
+
+
 
 /**
  * Gets the IDs of all of the children
@@ -307,17 +324,21 @@ export function getGameObjectByGroup(group) {
     return null;
 }
 
-// Game Loop
 function main() {
+    stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
+    loop();
+}
+
+// Game Loop
+function loop() {
     // Update Delta Time
     prevTime = currTime;
-    currTime = window.performance.now();
+    // currTime = window.performance.now();
+    currTime = getTime();
     deltaTime = currTime - prevTime;
 
-    stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
-
     // Calculate the Absolute Transforms of each GameObject
-    // calculateAbsoluteTransform(gameObjects);
+    calculateAbsoluteTransform(gameObjects);
 
     // Render the Game Field
     // renderGameObjectsWith2dContext(gameObjects);
@@ -340,10 +361,12 @@ function main() {
     }
 
     // @TODO Remove this
-    if (gameObjects.length > 10000) {
-        console.log("Over 10 Thousand Objects");
-    } else if (gameObjects.length > 100000) {
-        console.log("Over 100 Thousand Objects");
+    if (gameObjects.length > 10000 && !errorTypes.TenThousand) {
+        console.warn("Over 10 Thousand Objects");
+        errorTypes.TenThousand = true;
+    } else if (gameObjects.length > 100000 && !errorTypes.HundredThousand) {
+        console.warn("Over 100 Thousand Objects");
+        errorTypes.HundredThousand = true;
     }
 
 }

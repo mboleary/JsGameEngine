@@ -10,7 +10,7 @@ import ControllerTest2 from './game/ControllerTest2.js';
 
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './engine/Input.js';
 
-import { initDebug } from './engine/Debug.js';
+
 
 // import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.js';
 
@@ -20,15 +20,24 @@ import DrawsThings from './game/DrawsThings.js';
 
 import { load, asset, loadGroup } from './engine/Asset/AssetLoader.js';
 
+import { createRoom, getRooms } from './engine/Network/RoomController.js';
+
 import {jmod as inputJmod} from "./engine/Input.js";
 import {jmod as phyJmod} from "./engine/Physics.js";
 import {jmod as rendJmod} from "./engine/Render.js";
 import {jmod as pJmod} from "./engine/Puppeteer.js";
+import audioMod from './engine/Audio/Audio.js';
+
+import {spaceScene, tileScene} from './temp_scenes.js';
+import { defineAssets, loadSpaceScene, loadTileScene } from './temp_assets.js';
+import {jmod as dbgJmod} from './engine/Debug.js';
 
 function initEngine() {
+    addJMod(dbgJmod);
     addJMod(inputJmod);
     addJMod(phyJmod);
     addJMod(pJmod);
+    addJMod(audioMod);
     addJMod(rendJmod);
 }
 
@@ -38,7 +47,7 @@ function main() {
 
     initEngine();
 
-    initDebug();
+    // initDebug();
 
     window.dev = {};
     window.dev.test = () => {
@@ -61,50 +70,86 @@ function main() {
     defineKey("right", TYPE_DIGITAL);
     // Set Defulat Keymappings
     setKeybindings({"test":{"state":0,"mapping":["k",32],"mappingName":" ","type":1},"up":{"state":0,"mapping":["k",38],"mappingName":"ArrowUp","type":1},"down":{"state":0,"mapping":["k",40],"mappingName":"ArrowDown","type":1},"left":{"state":0,"mapping":["k",37],"mappingName":"ArrowLeft","type":1},"right":{"state":0,"mapping":["k",39],"mappingName":"ArrowRight","type":1}});
-    load({
-        name: "0",
-        path: "/asset/fp/0.png",
-        type: "image",
-        groups: ["main"]
-    });
-    load({
-        name: "1",
-        path: "/asset/fp/1.png",
-        type: "image",
-        groups: ["main"]
-    });
-    load({
-        name: "2",
-        path: "/asset/fp/2.png",
-        type: "image",
-        groups: ["main"]
-    });
-    loadGroup("main").then(() => {
+    defineAssets();
+    loadSpaceScene().then(() => {
         // Set the Scene
-        let scene = new Scene();
-        scene.attachGameObject(new DrawsThings());
-        scene.attachGameObject(new Test());
-        scene.attachGameObject(new ControllerTest2());
-        scene.attachGameObject(new Camera());
+        let scene = spaceScene();
         
         setCurrentScene(scene);
         
         // Initialize the Game Loop
         initGameLoop();
 
+        window.dev.toggleOverlay = () => {
+            toggleOverlay();
+        }
+
         // TEMP: Testing puppeteer
         // connect(window.CONFIG.pubsub); // @TODO Find a better way to handle a failed connection
         window.dev.disconnect = () => {
             disconnect();
         }
-        window.dev.reconnect = () => {
-            connect(window.CONFIG.pubsub);
+        window.dev.createRoom = async () => {
+            let room = await createRoom(window.CONFIG.rooms_api, {
+                name: "JSGE Test Room",
+                private: false
+            });
+            console.log("Room created:", room);
+        }
+
+        window.dev.getRooms = async () => {
+            let rooms = await getRooms(window.CONFIG.rooms_api);
+            console.log("Got rooms:", rooms);
+        }
+        window.dev.reconnect = (roomID) => {
+            connect(window.CONFIG.pubsub + "/" + roomID);
         }
         window.dev.testws = () => {
             let a = new (Puppet(ControllerTest2, true))();
             a.transform.position.x = 50;
             enrollGameObject(a);
             scene.attachGameObject(a);
+        }
+
+        // Change scene
+        window.dev.scene = (num) => {
+            let scene = null;
+            const map = {
+                0: {ld:loadSpaceScene, scn:spaceScene},
+                1: {ld:loadTileScene, scn:tileScene}
+            };
+            scene = map[num];
+            if (scene) {
+                scene.ld().then(() => {
+                    setCurrentScene(scene.scn());
+                }).catch((err) => {
+                    console.error(err);
+                });
+            }
+        };
+
+
+
+
+        window.dev.a = async () => {
+            console.log("Creating Room...");
+            let room = await createRoom(window.CONFIG.rooms_api, {
+                name: "JSGE Test Room",
+                private: false
+            });
+            console.log("Joining Room:", room);
+            connect(window.CONFIG.pubsub + "/" + room.id);
+        }
+
+        window.dev.b = async () => {
+            console.log("Joining First room...");
+            let rooms = await getRooms(window.CONFIG.rooms_api);
+            if (rooms && rooms.length > 0) {
+                console.log("Joining Room:", rooms[0]);
+                connect(window.CONFIG.pubsub + "/" + rooms[0].id);
+            } else {
+                console.log("No Room!");
+            }
         }
     })
 }
