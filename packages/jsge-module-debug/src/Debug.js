@@ -2,11 +2,18 @@
  * Contains interfaces to assist with Debugging
  */
 
-import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './Input.js';
+// import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './Input.js';
 
-import { defaultSerializer, defaultDeserializer, defaultStateUpdater, getKeys, makeSerializable, serialize, deserialize } from './Serialize.js';
+// import { defaultSerializer, defaultDeserializer, defaultStateUpdater, getKeys, makeSerializable, serialize, deserialize } from './Serialize.js';
 
-import { initDebug as engineDebug } from './Engine.js';
+// import { initDebug as engineDebug } from './Engine.js';
+
+
+// import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './Input.js';
+
+import { defaultSerializer, defaultDeserializer, defaultStateUpdater, getKeys, makeSerializable, serialize, deserialize } from '../node_modules/jsge-core/src/Serialize.js';
+
+import { initDebug as engineDebug } from '../node_modules/jsge-core/src/Engine.js';
 
 export const jmod = {
     name: "Debug Interface",
@@ -17,12 +24,12 @@ export const jmod = {
 export function initDebug() {
     window.debug = {};
     // Controller
-    window.debug.input = {};
-    window.debug.input.defineKey = defineKey;
-    window.debug.input.TYPE_DIGITAL = TYPE_DIGITAL;
-    window.debug.input.setKeyOnNextInput = setKeyOnNextInput;
-    window.debug.input.getAllKeys = getAllKeys;
-    window.debug.input.setKeybindings = setKeybindings;
+    // window.debug.input = {};
+    // window.debug.input.defineKey = defineKey;
+    // window.debug.input.TYPE_DIGITAL = TYPE_DIGITAL;
+    // window.debug.input.setKeyOnNextInput = setKeyOnNextInput;
+    // window.debug.input.getAllKeys = getAllKeys;
+    // window.debug.input.setKeybindings = setKeybindings;
     engineDebug();
 
     // Serialization

@@ -2,7 +2,10 @@
  * Manages plugging and unplugging effects from a track on the fly
  */
 
-import uuid from '../UUID.js';
+// import uuid from '../UUID.js';
+import {nanoid} from "../node_modules/nanoid/index.browser.js";
+
+const ID_LEN = 8;
 
 export default class EffectsContainer {
     constructor(source, destination) {
@@ -136,7 +139,8 @@ export default class EffectsContainer {
 // Wraps around an AudioNode-based processing module
 export class Effect {
     constructor() {
-        this.id = uuid();
+        // this.id = uuid();
+        this.id = nanoid(ID_LEN);
     }
 
     // // connects a source and destination

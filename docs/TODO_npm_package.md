@@ -71,4 +71,9 @@ These are standard libraries to be used throughout the project.
 
 - https://www.npmjs.com/package/gl-matrix
 - https://www.npmjs.com/package/uuid
-- https://www.npmjs.com/package/shortid
+- https://www.npmjs.com/package/nanoid
+
+## Other npm libraries to use
+
+- matter js
+- https://github.com/lo-th/Oimo.js/

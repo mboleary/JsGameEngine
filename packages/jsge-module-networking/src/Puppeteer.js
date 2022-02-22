@@ -2,9 +2,11 @@
  * Puppeteer is responsible for syncing the state of a GameObject across a network connection
  */
 
-import { serialize, deserialize, update, getConstructor } from './Serialize.js';
+// import { serialize, deserialize, update, getConstructor } from './Serialize.js';
+// import { enrollGameObject, deleteGameObject } from './Engine.js';
 
-import { enrollGameObject, deleteGameObject } from './Engine.js';
+import { serialize, deserialize, update, getConstructor } from '../node_modules/jsge-core/src/Serialize.js';
+import { enrollGameObject, deleteGameObject } from '../node_modules/jsge-core/src/Engine.js';
 
 const minFrames = 2;
 const defaultFrames = 15;

@@ -2,8 +2,6 @@
  * Handles Physics Calculations for all GameObjects, as well as updating Relative Transforms
  */
 
-import Transform from './Transform.js';
-
 export const jmod = {
     name: "Physics",
     version: 0,

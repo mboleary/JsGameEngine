@@ -17,7 +17,7 @@ import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings 
 // import { serialize, deserialize, defaultStateUpdater } from './engine/Serialize.js';
 
 // import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from './engine/Puppeteer.js';
-// import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from '/node_modules/jsge-module-networking/src/Puppeteer.js';
+import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from '/node_modules/jsge-module-networking/src/Puppeteer.js';
 // import { Camera } from './engine/Camera/Camera.js';
 // import DrawsThings from './game/DrawsThings.js';
 
@@ -34,23 +34,23 @@ import { createRoom, getRooms } from '/node_modules/jsge-module-networking/src/N
 // import {jmod as dbgJmod} from './engine/Debug.js';
 
 
-// import {jmod as inputJmod} from "/node_modules/jsge-module-input/src/Input.js";
-// import {jmod as phyJmod} from "/node_modules/jsge-module-basic-physics/src/Physics.js";
-// import {jmod as rendJmod} from "/node_modules/jsge-module-graphics2d/src/Render.js";
-// import {jmod as pJmod} from "/node_modules/jsge-module-networking/src/Puppeteer.js";
-// import audioMod from '/node_modules/jsge-module-audio/src/Audio/Audio.js';
-// import {jmod as dbgJmod} from '/node_modules/jsge-module-debug/src/Debug.js';
+import {jmod as inputJmod} from "/node_modules/jsge-module-input/src/Input.js";
+import {jmod as phyJmod} from "/node_modules/jsge-module-basic-physics/src/Physics.js";
+import {jmod as rendJmod} from "/node_modules/jsge-module-graphics2d/src/Render.js";
+import {jmod as pJmod} from "/node_modules/jsge-module-networking/src/Puppeteer.js";
+import audioMod from '/node_modules/jsge-module-audio/src/Audio.js';
+import {jmod as dbgJmod} from '/node_modules/jsge-module-debug/src/Debug.js';
 
 import {spaceScene, tileScene} from './temp_scenes.js';
 import { defineLoadTypes, defineAssets, loadSpaceScene, loadTileScene } from './temp_assets.js';
 
 function initEngine() {
-    // addJMod(dbgJmod);
-    // addJMod(inputJmod);
-    // addJMod(phyJmod);
-    // addJMod(pJmod);
-    // addJMod(audioMod);
-    // addJMod(rendJmod);
+    addJMod(dbgJmod);
+    addJMod(inputJmod);
+    addJMod(phyJmod);
+    addJMod(pJmod);
+    addJMod(audioMod);
+    addJMod(rendJmod);
 }
 
 function main() {
@@ -80,7 +80,7 @@ function main() {
     defineKey("down", TYPE_DIGITAL);
     defineKey("left", TYPE_DIGITAL);
     defineKey("right", TYPE_DIGITAL);
-    // Set Defulat Keymappings
+    // Set Default Keymappings
     setKeybindings({"test":{"state":0,"mapping":["k",32],"mappingName":" ","type":1},"up":{"state":0,"mapping":["k",38],"mappingName":"ArrowUp","type":1},"down":{"state":0,"mapping":["k",40],"mappingName":"ArrowDown","type":1},"left":{"state":0,"mapping":["k",37],"mappingName":"ArrowLeft","type":1},"right":{"state":0,"mapping":["k",39],"mappingName":"ArrowRight","type":1}});
     defineLoadTypes();
     defineAssets();
@@ -100,7 +100,7 @@ function main() {
         // TEMP: Testing puppeteer
         // connect(window.CONFIG.pubsub); // @TODO Find a better way to handle a failed connection
         window.dev.disconnect = () => {
-            // disconnect();
+            disconnect();
         }
         window.dev.createRoom = async () => {
             let room = await createRoom(window.CONFIG.rooms_api, {
@@ -115,13 +115,13 @@ function main() {
             console.log("Got rooms:", rooms);
         }
         window.dev.reconnect = (roomID) => {
-            // connect(window.CONFIG.pubsub + "/" + roomID);
+            connect(window.CONFIG.pubsub + "/" + roomID);
         }
         window.dev.testws = () => {
-            // let a = new (Puppet(ControllerTest2, true))();
-            // a.transform.position.x = 50;
-            // enrollGameObject(a);
-            // scene.attachGameObject(a);
+            let a = new (Puppet(ControllerTest2, true))();
+            a.transform.position.x = 50;
+            enrollGameObject(a);
+            scene.attachGameObject(a);
         }
 
         // Change scene
@@ -151,7 +151,7 @@ function main() {
                 private: false
             });
             console.log("Joining Room:", room);
-            // connect(window.CONFIG.pubsub + "/" + room.id);
+            connect(window.CONFIG.pubsub + "/" + room.id);
         }
 
         window.dev.b = async () => {
@@ -159,7 +159,7 @@ function main() {
             let rooms = await getRooms(window.CONFIG.rooms_api);
             if (rooms && rooms.length > 0) {
                 console.log("Joining Room:", rooms[0]);
-                // connect(window.CONFIG.pubsub + "/" + rooms[0].id);
+                connect(window.CONFIG.pubsub + "/" + rooms[0].id);
             } else {
                 console.log("No Room!");
             }
