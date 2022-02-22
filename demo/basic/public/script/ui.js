@@ -2,7 +2,8 @@
  * This contains all code to initialize and manage the UI
  */
 
-import { setCanvas } from './engine/Render.js';
+// import { setCanvas } from './engine/Render.js';
+import { setCanvas } from '/node_modules/jsge-module-graphics2d/src/Render.js';
 
 export const canvas = document.getElementById('canvas');
 export const overlay = document.getElementById('overlay');

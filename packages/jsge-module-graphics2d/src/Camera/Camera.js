@@ -2,9 +2,11 @@
  * Provides an interface to control the canvas transform and rotation
  */
 
-import GameObject from '../GameObject.js';
-import Transform from '../Transform.js';
 // import CameraBehavior from './CameraBehavior.js';
+// import GameObject from '../GameObject.js';
+
+import GameObject from '../../node_modules/jsge-core/src/GameObject.js';
+
 import { Renderable } from '../Render.js';
 import { CAMERA_ID } from "../constants.js";
 

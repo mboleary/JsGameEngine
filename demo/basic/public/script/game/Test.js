@@ -1,19 +1,28 @@
-import GameObject from '../engine/GameObject.js';
-import { GameObjectWithScript } from '../engine/Script.js';
+// import GameObject from '../engine/GameObject.js';
+// import { GameObjectWithScript } from '../engine/Script.js';
 
-import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
+// import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
 
-import Animation from '../engine/Animation.js';
+// import { getKeyState } from '../engine/Input.js';
 
-import Transform from '../engine/Transform.js';
+// import { makeSerializable } from '../engine/Serialize.js';
 
-import { getKeyState } from '../engine/Input.js';
+// import { getTime } from '../engine/Time.js';
 
-import { makeSerializable } from '../engine/Serialize.js';
+// import { asset, load } from '../engine/Asset/AssetLoader.js';
 
-import { getTime } from '../engine/Time.js';
+import GameObject from '/node_modules/jsge-core/src/GameObject.js';
+import { GameObjectWithScript } from '/node_modules/jsge-core/src/Script.js';
 
-import { asset, load } from '../engine/Asset/AssetLoader.js';
+import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from '/node_modules/jsge-core/src/Engine.js';
+
+import { getKeyState } from '/node_modules/jsge-module-input/src/Input.js';
+
+import { makeSerializable } from '/node_modules/jsge-core/src/Serialize.js';
+
+import { getTime } from '/node_modules/jsge-core/src/Time.js';
+
+import { asset, load } from '/node_modules/asset-loader/src/AssetLoader.js';
 
 let mainSpriteSheet = null;
 

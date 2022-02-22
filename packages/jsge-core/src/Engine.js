@@ -2,17 +2,17 @@
  * Engine contains the basic framework for the game engine
  */
 
-import { renderGameObjectsWith2dContext, initializeWith2dContext, initializeWithWebGL, renderGameObjectsWithWebGL } from './Render.js';
+// import { renderGameObjectsWith2dContext, initializeWith2dContext, initializeWithWebGL, renderGameObjectsWithWebGL } from './Render.js';
 
 import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager.js';
 
-import { pollGamepads, initInput } from './Input.js';
+// import { pollGamepads, initInput } from './Input.js';
 
 import { pauseTime, unpauseTime, advanceTime, getTime, isTimePaused } from './Time.js';
 
 import { calculateAbsoluteTransform } from './Physics.js';
 
-import { checkPuppets, disconnect } from './Puppeteer.js';
+// import { checkPuppets, disconnect } from './Puppeteer.js';
 
 let gameLoopStarted = false;
 let stopLoop = null; // Magic reference to stop the game Loop
@@ -98,7 +98,7 @@ export function initDebug() {
 
 export function stopGameLoop() {
     window.cancelAnimationFrame(stopLoop);
-    disconnect();
+    // disconnect();
     pauseTime();
 }
 

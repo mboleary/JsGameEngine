@@ -2,11 +2,15 @@
  * This is a Tilemap. This tilemap handles loading the map in and computing how the map will be drawn onto the final render (specific to 2d rendering backend)
  */
 
-import GameObject from '../../engine/GameObject.js';
-import Script from '../../engine/Script.js';
-import {Renderable} from '../../engine/Render.js';
-import RenderScript from "../../engine/Camera/RenderScript.js";
-import { enrollGameObject } from "../../engine/Engine.js";
+// import GameObject from '../../engine/GameObject.js';
+// import Script from '../../engine/Script.js';
+// import {Renderable} from '../../engine/Render.js';
+// import RenderScript from "../../engine/Camera/RenderScript.js";
+// import { enrollGameObject } from "../../engine/Engine.js";
+
+import GameObject from '/node_modules/jsge-core/src/GameObject.js';
+import Script from '/node_modules/jsge-core/src/Script.js';
+
 import TileLayer from './TileLayer.js';
 import Tile from './Tile.js';
 

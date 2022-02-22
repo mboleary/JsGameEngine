@@ -1,21 +1,31 @@
 # TODO for NPM Package refactor
 
-- [ ] Separate Packages
-    - [ ] Asset Loader
-    - [ ] Core Engine
-    - [ ] Debug Module
-    - [ ] Graphics Module
+- [~] Separate Packages
+    - [x] Asset Loader
+    - [x] Core Engine
+    - [x] Debug Module
+    - [x] Graphics Module
         - Camera
         - G.O. Component
-    - [ ] Basic Audio Module
-    - [ ] Puppeteer (Multiplayer) Module
+    - [x] Basic Audio Module
+    - [x] Puppeteer (Multiplayer) Module
         - Need to figure out what to do about the debug UI code, could probably integrate that into the existing code
         - Could just put in the Debug API in here, then make the user include the static HTML needed
     - [ ] Multiplayer Server
-    - [ ] Input Module
+    - [x] Input Module
 - [ ] Build Demos
-    - [ ] Old Demo
+    - [~] Old Demo
         - Should contain the bootstrapping code
+- [ ] Use NPM Packages
+    - [x] uuid
+    - [ ] rewrite Transform to use `gl-matrix`
+- [ ] Modify Jmods
+    - New Hooks
+        - [ ] pause
+        - [ ] destroy
+        - [ ] buildDebug
+    - Context passed in during loop
+        - [ ] Add array of loaded modules
 
 
 ## Next Stage of development
@@ -54,3 +64,11 @@ These will need to be merged into master, or otherwise moved to a safe place, an
 - Debug UI (has separate static assets in the debug UI)
 - WebGL (Make this a separate module)
     - Merge Last
+
+## New Standard libraries
+
+These are standard libraries to be used throughout the project.
+
+- https://www.npmjs.com/package/gl-matrix
+- https://www.npmjs.com/package/uuid
+- https://www.npmjs.com/package/shortid

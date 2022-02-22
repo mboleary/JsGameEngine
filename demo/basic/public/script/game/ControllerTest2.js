@@ -1,17 +1,25 @@
-import GameObject from '../engine/GameObject.js';
-import { GameObjectWithScript } from '../engine/Script.js';
+// import GameObject from '../engine/GameObject.js';
+// import { GameObjectWithScript } from '../engine/Script.js';
 
-import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
+// import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from '../engine/Engine.js';
 
-import Animation from '../engine/Animation.js';
+// import Animation from '../engine/Animation.js';
 
-import Transform from '../engine/Transform.js';
+// import Transform from '../engine/Transform.js';
 
-import { makeSerializable } from '../engine/Serialize.js';
+// import { makeSerializable } from '../engine/Serialize.js';
 
-import { getKeyState } from '../engine/Input.js';
+// import { getKeyState } from '../engine/Input.js';
 
-import { asset, load } from '../engine/Asset/AssetLoader.js';
+// import { asset, load } from '../engine/Asset/AssetLoader.js';
+
+import GameObject from '/node_modules/jsge-core/src/GameObject.js';
+import { GameObjectWithScript } from '/node_modules/jsge-core/src/Script.js';
+import { deltaTime, TARGET_MILLIS_PER_FRAME } from '/node_modules/jsge-core/src/Engine.js';
+import Transform from '/node_modules/jsge-core/src/Transform.js';
+import { makeSerializable } from '/node_modules/jsge-core/src/Serialize.js';
+import { getKeyState } from '/node_modules/jsge-module-input/src/Input.js';
+import { asset, load } from '/node_modules/asset-loader/src/AssetLoader.js';
 
 export default class ControllerTest2 extends GameObjectWithScript(GameObject) {
     constructor() {

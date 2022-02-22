@@ -2,8 +2,12 @@
  * Contains the Tile Layer, which comes in a few variants; One to hold Tiles, and the other to hold Objects
  */
 
-import GameObject from "../../engine/GameObject.js";
-import Script from "../../engine/Script.js";
+// import GameObject from "../../engine/GameObject.js";
+// import Script from "../../engine/Script.js";
+
+import GameObject from "/node_modules/jsge-core/src/GameObject.js";
+import Script from "/node_modules/jsge-core/src/Script.js";
+
 import Tile from "./Tile.js";
 
 class TileImportScript extends Script {

@@ -2,11 +2,17 @@
  * Contains a Behavior Script for the DrawsThings.js test
  */
 
-import RenderScript from "../engine/Camera/RenderScript.js";
+// import RenderScript from "../engine/Camera/RenderScript.js";
 
-import { getTime } from "../engine/Time.js";
+// import { getTime } from "../engine/Time.js";
 
-import { deltaTime, TARGET_MILLIS_PER_FRAME } from "../engine/Engine.js";
+// import { deltaTime, TARGET_MILLIS_PER_FRAME } from "../engine/Engine.js";
+
+import RenderScript from "/node_modules/jsge-module-graphics2d/src/Camera/RenderScript.js";
+
+import { getTime } from "/node_modules/jsge-core/src/Time.js";
+
+import { deltaTime, TARGET_MILLIS_PER_FRAME } from "/node_modules/jsge-core/src/Engine.js";
 
 const NUM_STARS = 1000;
 const MAX_TRAIL = 100;

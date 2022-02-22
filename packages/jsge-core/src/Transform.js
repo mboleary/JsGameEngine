@@ -1,5 +1,6 @@
 /**
  * A Transform hold position, rotation, and Scale data for an object
+ * @TODO Rewrite to use gl-matrix behind the scenes
  */
 
 export default class Transform {

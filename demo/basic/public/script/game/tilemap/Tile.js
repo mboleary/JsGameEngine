@@ -2,8 +2,8 @@
  * Tile Encapsulation Class
  */
 
-import GameObject from '../../engine/GameObject.js';
-import Script from '../../engine/Script.js';
+// import GameObject from '../../engine/GameObject.js';
+import GameObject from '/node_modules/jsge-core/src/GameObject.js';
 
 // A Tile is embedded into a TileChunk
 export default class Tile extends GameObject {

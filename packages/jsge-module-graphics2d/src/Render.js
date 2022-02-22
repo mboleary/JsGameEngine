@@ -2,10 +2,11 @@
  * Renders the GameObjects from the Engine
  */
 
-// import { canvas } from '../ui.js';
+// import Transform from './Transform.js';
+import Transform from '../node_modules/jsge-core/src/Transform.js';
+
 import RenderScript from './Camera/RenderScript.js';
 import { CAMERA_ID } from "./constants.js";
-import Transform from './Transform.js';
 import { init } from './Render/WebGLHelper.js';
 
 let canvas = null;

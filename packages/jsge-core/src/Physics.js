@@ -2,6 +2,8 @@
  * Contains the function to calculate the absolute position of all GameObjects for each loop
  */
 
+import Transform from "./Transform.js"
+
 // Calculates Absolute Transform object from Relative Transforms
 export function calculateAbsoluteTransform(gos) {
     gos.forEach((go) => {

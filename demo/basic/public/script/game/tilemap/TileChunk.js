@@ -2,10 +2,14 @@
  * Contains multiple tiles in a unit that makes it easier to load into a game
  */
 
-import GameObject from '../../engine/GameObject.js';
-// import Script from '../../engine/Script.js';
-import {Renderable} from '../../engine/Render.js';
-import RenderScript from "../../engine/Camera/RenderScript.js";
+// import GameObject from '../../engine/GameObject.js';
+// import {Renderable} from '../../engine/Render.js';
+// import RenderScript from "../../engine/Camera/RenderScript.js";
+
+import GameObject from '/node_modules/jsge-core/src/GameObject.js';
+import {Renderable} from '/node_modules/jsge-module-graphics2d/src/Render.js';
+import RenderScript from "/node_modules/jsge-module-graphics2d/src/Camera/RenderScript.js";
+
 import {MAP_TYPES} from './TileMap.js';
 class PreRenderScript extends RenderScript {
     constructor() {

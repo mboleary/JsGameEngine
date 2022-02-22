@@ -2,21 +2,20 @@
  * This is a collection of the scenes that are being used in JSGE. This file should be removed after Asset Loading / Prefabs are working properly.
  */
 
-import Scene from './engine/Scene.js';
+// import Scene from './engine/Scene.js';
+// import { Camera } from './engine/Camera/Camera.js';
+// import { asset } from './engine/Asset/AssetLoader.js';
+
+import Scene from '/node_modules/jsge-core/src/Scene.js';
+import { Camera } from '/node_modules/jsge-module-graphics2d/src/Camera/Camera.js';
+import { asset } from '/node_modules/asset-loader/src/AssetLoader.js';
 
 import Test from './game/Test.js';
-
-import ControllerTest2 from './game/ControllerTest2.js';
-
-import { Camera } from './engine/Camera/Camera.js';
 import DrawsThings from './game/DrawsThings.js';
-
+import ControllerTest2 from './game/ControllerTest2.js';
 import TileMap from "./game/tilemap/TileMap.js";
 import TileLayer from './game/tilemap/TileLayer.js';
-
 import BoxMovementBehavior from "./game/BoxMovement.js";
-
-import { asset } from './engine/Asset/AssetLoader.js';
 
 /**
  * Constructs the Space Scene that has the starfield and FighterPilot Ship
