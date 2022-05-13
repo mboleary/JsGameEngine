@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 8001;
 
 const http = require('http');
 
-const app = require('./http');
-const initWebsocket = require('./wshandler');
+const app = require('./src/http');
+const initWebsocket = require('./src/wshandler');
 
 const server = http.createServer();
 
