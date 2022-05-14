@@ -37,7 +37,7 @@
 - Integrate actual Physics into game engine
 - Refactor GameObjects to take in components for all attributes, turning the Engine into an Entity-Component system
     - Involves turning Scripts into Components
-- Refactor Serialization to accomodate new G.O. architecture
+- Refactor Serialization to accommodate new G.O. architecture
 - Change Debug / Serialization code to use the same code for sending data back and forth
 - Fix issues with controller API in Input Module
 - Investigate how to implement building GameObject based on prefab
