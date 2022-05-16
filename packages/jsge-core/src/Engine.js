@@ -225,6 +225,7 @@ function deleteGameObjectSync(go) {
         for (let i = 0; i < toDel.parent.children.length; i++) {
             let item = toDel.parent.children[i];
             if (item.id === go.id) {
+                // @TODO are we calling beforeDestroy() twice?
                 item.beforeDestroy();
                 toDel.parent.children.splice(i, 1);
                 break;

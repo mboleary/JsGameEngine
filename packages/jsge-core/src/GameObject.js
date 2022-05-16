@@ -9,11 +9,8 @@ import uuid from "../node_modules/uuid/dist/esm-browser/v4.js";
 export default class GameObject {
     constructor() {
         // Public
-        this.scripts = [];
-        this.colliders = []; // @TODO Figure out a good way to build colliders
-        this.texture = null; // @TODO Add a texture here
         this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
-        this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
+        
         this.name = ""; // Name of the GameObject
         this.group = ""; // Name of the Group the GameObject belongs to
 
@@ -23,6 +20,8 @@ export default class GameObject {
         this.priority = 0; // Determines the priority of the scripts.
         this.parent = null; // Contains reference to the Parent GameObject
         // this.deleteFlag = false; // True if the GameObject should be destroyed.
+        this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
+        this.components = []; // Components of the GameObject
     }
 
     // Attaches a GameObject to this GameObject
@@ -31,32 +30,32 @@ export default class GameObject {
         this.children.push(go);
     }
 
-    // Attaches a Script to this GameObject
-    attachScript(scr) {
+    // Attaches a Component to this GameObject
+    attachComponent(scr) {
         scr.gameObject = this;
-        this.scripts.push(scr);
+        this.components.push(scr);
         scr.init();
     }
 
     // Removes a Script already attached to this GameObject
-    detachScript(scr) {
+    detachComponent(scr) {
         if (scr.id) {
-            for (let i = 0; i < this.scripts.length; i++) {
-                let script = this.scripts[i];
-                if (script.id === scr.id) {
-                    this.scripts.splice(i, 1);
-                    script.onDestroy();
+            for (let i = 0; i < this.components.length; i++) {
+                let component = this.components[i];
+                if (component.id === scr.id) {
+                    this.components.splice(i, 1);
+                    component.onDestroy();
                     return;
                 }
             }
         }
     }
 
-    getScriptByID(id) {
-        for (let i = 0; i < this.scripts.length; i++) {
-            let script = this.scripts[i];
-            if (script.id === id) {
-                return script;
+    getComponentByID(id) {
+        for (let i = 0; i < this.components.length; i++) {
+            let component = this.components[i];
+            if (component.id === id) {
+                return component;
             }
         }
     }
@@ -73,11 +72,11 @@ export default class GameObject {
     }
 
     // Called before this GameObject is deleted
-    beforeDestroy() {
-        if (this.scripts && this.scripts.length) {
-            this.scripts.forEach((script) => {
-                script.onDestroy();
-            });
-        }
-    }
+    // beforeDestroy() {
+    //     if (this.components && this.components.length) {
+    //         this.components.forEach((script) => {
+    //             script.onDestroy();
+    //         });
+    //     }
+    // }
 }

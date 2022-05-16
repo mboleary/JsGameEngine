@@ -21,8 +21,9 @@
     - [ ] rewrite Transform to use `gl-matrix`
 - [ ] Modify Jmods
     - New Hooks
-        - [ ] pause
-        - [ ] destroy
+        - [ ] pause (when game is paused)
+        - [ ] destroy (when GameObject is destroyed)
+        - [ ] enroll (when GameObject is added)
         - [ ] buildDebug
     - Context passed in during loop
         - [ ] Add array of loaded modules
