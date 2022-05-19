@@ -46,6 +46,10 @@ The GameObject class will now put all components that extend the functionality o
     - init()
     - loop()
     - onDestroy()
+- Transform extends ComponentBase
+    - x
+    - y
+    - z
 - RenderBehavior extends Behavior
     - render(...)
 - RenderComponent extends ComponentBase
