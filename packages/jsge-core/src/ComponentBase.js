@@ -12,4 +12,14 @@ export default class ComponentBase {
         this.name = name;
         this.gameObject = gameObject;
     }
+
+    // Function called when component created
+    init () {
+
+    }
+
+    // Function called when component destroyed
+    destroy () {
+
+    }
 }

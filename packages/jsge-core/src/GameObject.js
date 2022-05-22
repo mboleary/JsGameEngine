@@ -72,11 +72,11 @@ export default class GameObject {
     }
 
     // Called before this GameObject is deleted
-    // beforeDestroy() {
-    //     if (this.components && this.components.length) {
-    //         this.components.forEach((script) => {
-    //             script.onDestroy();
-    //         });
-    //     }
-    // }
+    beforeDestroy() {
+        if (this.components && this.components.length) {
+            this.components.forEach((c) => {
+                c.destroy();
+            });
+        }
+    }
 }
