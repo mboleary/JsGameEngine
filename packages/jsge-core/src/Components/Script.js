@@ -3,7 +3,7 @@
  */
 
 // import uuid from './UUID.js';
-import uuid from "../node_modules/uuid/dist/esm-browser/v4.js";
+import uuid from "uuid/dist/esm-browser/v4";
 
 export default class Script {
     constructor(gameObject) {

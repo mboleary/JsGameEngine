@@ -11,6 +11,7 @@ export default class ComponentBase {
         this.id = PREFIX + uuid();
         this.name = name;
         this.gameObject = gameObject;
+        this._attrName = null; // Name of attribute that will be created on the GameObject
     }
 
     // Function called when component created

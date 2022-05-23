@@ -2,14 +2,14 @@
  * Definitions for a GameObject
  */
 
-import Transform from './Transform.js';
+// import Transform from './Transform.js';
 // import uuid from './UUID.js';
 import uuid from "../node_modules/uuid/dist/esm-browser/v4.js";
 
 export default class GameObject {
     constructor() {
         // Public
-        this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
+        // this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
         
         this.name = ""; // Name of the GameObject
         this.group = ""; // Name of the Group the GameObject belongs to
@@ -22,6 +22,8 @@ export default class GameObject {
         // this.deleteFlag = false; // True if the GameObject should be destroyed.
         this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
         this.components = []; // Components of the GameObject
+
+        // this = {test: true};
     }
 
     // Attaches a GameObject to this GameObject
