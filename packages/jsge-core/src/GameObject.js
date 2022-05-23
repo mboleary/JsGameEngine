@@ -6,6 +6,8 @@
 // import uuid from './UUID.js';
 import uuid from "../node_modules/uuid/dist/esm-browser/v4.js";
 
+const KEY_BLACKLIST = ["name", "group", "id", "parent", "children", "components"];
+
 export default class GameObject {
     constructor() {
         // Public
@@ -37,6 +39,10 @@ export default class GameObject {
         scr.gameObject = this;
         this.components.push(scr);
         scr.init();
+        if (scr._attrName && !scr._attrName in KEY_BLACKLIST) {
+            this[scr._attrName] = scr;
+            scr._attrSet = true;
+        }
     }
 
     // Removes a Script already attached to this GameObject
@@ -47,8 +53,11 @@ export default class GameObject {
                 if (component.id === scr.id) {
                     this.components.splice(i, 1);
                     component.onDestroy();
-                    return;
+                    break;
                 }
+            }
+            if (scr._attrSet && !scr._attrName in KEY_BLACKLIST) {
+                delete this[scr._attrName];
             }
         }
     }

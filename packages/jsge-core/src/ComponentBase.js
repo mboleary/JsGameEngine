@@ -12,6 +12,7 @@ export default class ComponentBase {
         this.name = name;
         this.gameObject = gameObject;
         this._attrName = null; // Name of attribute that will be created on the GameObject
+        this._attrSet = false; // true when the attribute has been set successfully
     }
 
     // Function called when component created

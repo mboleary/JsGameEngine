@@ -4,11 +4,12 @@
 
 // import uuid from './UUID.js';
 import uuid from "uuid/dist/esm-browser/v4";
+import ComponentBase from "../ComponentBase";
 
-export default class Script {
-    constructor(gameObject) {
-        this.gameObject = gameObject; // Reference to the GameObject that this script is attached to
-        this.id = uuid();
+export default class Script extends ComponentBase {
+    constructor({...params}) {
+        super({...params});
+        this._priority = 1;
     }
 
     // Override this to initialize a script
@@ -18,11 +19,6 @@ export default class Script {
 
     // Override this to perform a check during the gameLoop
     loop() {
-
-    }
-
-    // Override this to do Physics stuff
-    physicsLoop() {
 
     }
 
@@ -48,27 +44,4 @@ export const AsyncScript = Base => class extends Base {
             this.asyncLoop();
         });
     }
-}
-
-// Provide a class misin that allows all code for a GameObject to be in one place
-export const GameObjectWithScript = Base => class extends Base {
-    constructor() {
-        super();
-        this.internalScript = new Script();
-        // Binding to the new 'this' is a must for inheritance to work properly
-        this.internalScript.init = this.init.bind(this);
-        this.internalScript.loop = this.loop.bind(this);
-        this.internalScript.physicsLoop = this.physicsLoop.bind(this);
-        this.internalScript.onDestroy = this.onDestroy.bind(this);
-        this.scripts.push(this.internalScript);
-        this.gameObject = this;
-    }
-
-    init() { }
-
-    loop() { }
-
-    physicsLoop() { }
-
-    onDestroy() { }
 }
