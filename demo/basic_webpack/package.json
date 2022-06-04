@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "description": "My webpack project",
+  "name": "my-webpack-project",
+  "scripts": {
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
+  },
+  "dependencies": {
+    "asset-loader": "file:../../packages/asset-loader",
+    "jsge-core": "file:../../packages/jsge-core",
+    "jsge-module-audio": "file:../../packages/jsge-module-audio",
+    "jsge-module-basic-physics": "file:../../packages/jsge-module-basic-physics",
+    "jsge-module-debug": "file:../../packages/jsge-module-debug",
+    "jsge-module-graphics2d": "file:../../packages/jsge-module-graphics2d",
+    "jsge-module-input": "file:../../packages/jsge-module-input",
+    "jsge-module-networking": "file:../../packages/jsge-module-networking",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "html-webpack-plugin": "^5.5.0",
+    "prettier": "^2.5.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
+    "workbox-webpack-plugin": "^6.5.0"
+  }
+}
