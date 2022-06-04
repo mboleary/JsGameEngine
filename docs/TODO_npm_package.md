@@ -14,16 +14,18 @@
     - [ ] Multiplayer Server
     - [x] Input Module
 - [ ] Build Demos
-    - [~] Old Demo
+    - [x] Old Demo
         - Should contain the bootstrapping code
 - [ ] Use NPM Packages
     - [x] uuid
+    - [x] nanoid for parts that also need IDs and aren't gameObjects
     - [ ] rewrite Transform to use `gl-matrix`
 - [ ] Modify Jmods
     - New Hooks
         - [ ] pause
         - [ ] destroy
         - [ ] buildDebug
+            - Re-add input debug, move the debug init code around so that it's modular
     - Context passed in during loop
         - [ ] Add array of loaded modules
 
