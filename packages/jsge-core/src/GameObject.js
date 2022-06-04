@@ -4,7 +4,7 @@
 
 import Transform from './Transform.js';
 // import uuid from './UUID.js';
-import uuid from "../node_modules/uuid/dist/esm-browser/v4.js";
+import {v4 as uuid} from "uuid";
 
 export default class GameObject {
     constructor() {

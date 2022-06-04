@@ -5,7 +5,7 @@
 import RenderScript from './RenderScript.js';
 import Transform from '../Transform.js';
 
-import { canvas } from '../../ui.js';
+// import { canvas } from '../../ui.js';
 import { deg2rad } from '../Render.js';
 
 // const context = canvas.getContext('2d');

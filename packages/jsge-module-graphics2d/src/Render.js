@@ -3,7 +3,7 @@
  */
 
 // import Transform from './Transform.js';
-import Transform from '../node_modules/jsge-core/src/Transform.js';
+import Transform from 'jsge-core/src/Transform.js';
 
 import RenderScript from './Camera/RenderScript.js';
 import { CAMERA_ID } from "./constants.js";
