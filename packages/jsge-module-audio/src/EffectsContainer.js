@@ -3,7 +3,7 @@
  */
 
 // import uuid from '../UUID.js';
-import {nanoid} from "../node_modules/nanoid/index.browser.js";
+import {nanoid} from "nanoid";
 
 const ID_LEN = 8;
 

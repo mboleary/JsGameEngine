@@ -11,9 +11,9 @@
 
 // import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from './Input.js';
 
-import { defaultSerializer, defaultDeserializer, defaultStateUpdater, getKeys, makeSerializable, serialize, deserialize } from '../node_modules/jsge-core/src/Serialize.js';
+import { defaultSerializer, defaultDeserializer, defaultStateUpdater, getKeys, makeSerializable, serialize, deserialize } from 'jsge-core/src/Serialize.js';
 
-import { initDebug as engineDebug } from '../node_modules/jsge-core/src/Engine.js';
+import { initDebug as engineDebug } from 'jsge-core/src/Engine.js';
 
 export const jmod = {
     name: "Debug Interface",

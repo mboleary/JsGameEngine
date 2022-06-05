@@ -4,7 +4,7 @@
 
 // import Transform from './Transform.js';
 // import uuid from './UUID.js';
-import uuid from "../node_modules/uuid/dist/esm-browser/v4.js";
+import {v4 as uuid} from "uuid";
 
 const KEY_BLACKLIST = ["name", "group", "id", "parent", "children", "components"];
 
@@ -66,6 +66,15 @@ export default class GameObject {
         for (let i = 0; i < this.components.length; i++) {
             let component = this.components[i];
             if (component.id === id) {
+                return component;
+            }
+        }
+    }
+
+    getComponentByType(typename) {
+        for (let i = 0; i < this.components.length; i++) {
+            let component = this.components[i];
+            if (component.constructor?.name === typename) {
                 return component;
             }
         }

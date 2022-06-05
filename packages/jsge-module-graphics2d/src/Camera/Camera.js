@@ -5,7 +5,7 @@
 // import CameraBehavior from './CameraBehavior.js';
 // import GameObject from '../GameObject.js';
 
-import GameObject from '../../node_modules/jsge-core/src/GameObject.js';
+import GameObject from 'jsge-core/src/GameObject.js';
 
 import { Renderable } from '../Render.js';
 import { CAMERA_ID } from "../constants.js";
