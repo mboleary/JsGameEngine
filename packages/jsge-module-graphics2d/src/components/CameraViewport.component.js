@@ -1,24 +1,28 @@
 /**
- * Contains the behavior for the Camera
+ * Contains an extension to Script for use with Rendering directly to the canvas
  */
 
-import RenderScript from '../Components/Renderable.componentS.js';
-import Transform from '../Transform.js';
+// import Script from '../Script.js';
 
-// import { canvas } from '../../ui.js';
-import { deg2rad } from '../Render.js';
+import Script from 'jsge-core/src/components/Script.js';
+import Renderable from './Renderable.interface';
+import { CAMERA_ID } from '../constants';
+import Transform from '../Transform';
 
-// const context = canvas.getContext('2d');
+// @TODO Make this not be a script? Use as base for Sprites and Camera?
 
-export default class CameraBehavior extends RenderScript {
-    constructor(gameObject) {
-        super(gameObject);
+export default class CameraViewportComponent extends Renderable(Script) {
+
+    constructor({...params}) {
+        super({...params});
+        this.id = CAMERA_ID;
+        this.name = "CameraViewport";
         this.prevTransform = new Transform();
+        this._context = null;
     }
 
-    init() { }
-
-    render(context, width, height) {
+    // Override this to render things directly to the canvas
+    render(context, width, height, camTransform) {
         let delta = new Transform();
         delta.position.x = this.gameObject.transform.position.x - this.prevTransform.position.x;
         delta.position.y = this.gameObject.transform.position.y - this.prevTransform.position.y;
@@ -32,10 +36,12 @@ export default class CameraBehavior extends RenderScript {
         context.translate(delta.position.x * -1, delta.position.y * -1);
         context.rotate(deg2rad(delta.rotation.z));
         this.prevTransform.deepCopy(this.gameObject.transform);
+        if (!this._context) {
+            this._context = context;
+        }
     }
 
-    onDestroy() {
-        // Reset the context
-        context.setTransform(1,0,0,1,0,0);
+    destroy() {
+        this._context.setTransform(1,0,0,1,0,0);
     }
 }

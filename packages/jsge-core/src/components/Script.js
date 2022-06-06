@@ -24,6 +24,10 @@ export default class Script extends ComponentBase {
     onDestroy() {
 
     }
+
+    destroy() {
+        this.onDestroy();
+    }
 }
 
 export const AsyncScript = Base => class extends Base {

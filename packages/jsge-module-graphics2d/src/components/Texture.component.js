@@ -1,11 +1,12 @@
 /**
  * Contains the texture component used for rendering
+ * @TODO this is now deprecated
  */
 
-import ComponentBase from "../../../jsge-core/src/ComponentBase.js";
-import {asset} from "../../../asset-loader/src/AssetLoader.js";
+import ComponentBase from "jsge-core/src/ComponentBase.js";
+import {asset} from "asset-loader/src/AssetLoader.js";
 
-export default class TransformComponent extends ComponentBase {
+export default class TextureComponent extends ComponentBase {
     constructor({assetName, ...params}) {
         super(...params);
 

@@ -5,7 +5,7 @@
 // import Transform from './Transform.js';
 import Transform from 'jsge-core/src/Transform.js';
 
-import RenderScript from './Camera/RenderScript.js';
+import RenderScript from './Components/Renderable.component.js.js';
 import { CAMERA_ID } from "./constants.js";
 import { init } from './Render/WebGLHelper.js';
 
@@ -158,30 +158,30 @@ export function deg2rad(deg) {
     return (deg / 180) * Math.PI;
 }
 
-export const Renderable = (Base) => class extends Base {
-    constructor() {
-        super();
-        this.renderScripts = []; // Scripts to provide to the Renderer
-    }
+// export const Renderable = (Base) => class extends Base {
+//     constructor() {
+//         super();
+//         this.renderScripts = []; // Scripts to provide to the Renderer
+//     }
 
-    attachScript(scr) {
-        super.attachScript(scr);
-        console.log("Attach Script:", scr.constructor.name);
-        if (scr instanceof RenderScript) {
-            this.renderScripts.push(scr);
-        }
-    }
+//     attachScript(scr) {
+//         super.attachScript(scr);
+//         console.log("Attach Script:", scr.constructor.name);
+//         if (scr instanceof RenderScript) {
+//             this.renderScripts.push(scr);
+//         }
+//     }
 
-    detachScript(scr) {
-        super.detachScript(scr);
-        console.log("Detach Script:", scr.constructor.name);
-        if (scr instanceof RenderScript) {
-            for (let i = 0; i < this.renderScripts.length; i++) {
-                if (this.renderScripts[i].id === scr.id) {
-                    this.renderScripts.splice(i, 1);
-                    return;
-                }
-            }
-        }
-    }
-}
+//     detachScript(scr) {
+//         super.detachScript(scr);
+//         console.log("Detach Script:", scr.constructor.name);
+//         if (scr instanceof RenderScript) {
+//             for (let i = 0; i < this.renderScripts.length; i++) {
+//                 if (this.renderScripts[i].id === scr.id) {
+//                     this.renderScripts.splice(i, 1);
+//                     return;
+//                 }
+//             }
+//         }
+//     }
+// }

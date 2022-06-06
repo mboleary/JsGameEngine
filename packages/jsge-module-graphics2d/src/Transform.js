@@ -1,10 +1,8 @@
-import ComponentBase from "../../../jsge-core/src/ComponentBase.js";
-
 /**
  * A Transform holds position, rotation, and Scale data for an object
  * @TODO Rewrite to use gl-matrix behind the scenes
  */
-export default class TransformComponent extends ComponentBase {
+export default class Transform {
     constructor(...params) {
         super(...params);
 
