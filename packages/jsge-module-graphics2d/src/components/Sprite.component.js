@@ -13,6 +13,7 @@ export default class SpriteComponent extends Renderable(ComponentBase) {
         this._assetName = assetName;
         this.texture = null;
         this.zIndex = zIndex;
+        this.hidden = false;
 
         asset(assetName).then((img) => {
             // @TODO handle animations and spritesheets properly
