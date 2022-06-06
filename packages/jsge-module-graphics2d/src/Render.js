@@ -7,7 +7,6 @@ import Transform from 'jsge-core/src/Transform.js';
 
 import RenderableInterface from './components/Renderable.interface.js';
 import { CAMERA_ID } from "./constants.js";
-import { init } from './Render/WebGLHelper.js';
 
 let canvas = null;
 let context = null; // This is the context that will be used to render the game.
@@ -19,15 +18,6 @@ export const jmod = {
     init: initializeWith2dContext,
     loop: (internals) => {
         renderGameObjectsWith2dContext(internals.gameObjects);
-    }
-}
-
-export const jmodWebGL = {
-    name: "RenderWebGL",
-    version: 0,
-    init: initializeWithWebGL,
-    loop: (internals) => {
-        renderGameObjectsWithWebGL(internals.gameObjects);
     }
 }
 
