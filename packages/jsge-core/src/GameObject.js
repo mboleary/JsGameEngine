@@ -9,15 +9,15 @@ import {v4 as uuid} from "uuid";
 const KEY_BLACKLIST = ["name", "group", "id", "parent", "children", "components"];
 
 export default class GameObject {
-    constructor() {
+    constructor({name = "", group = "", id} = {}) {
         // Public
         // this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
         
-        this.name = ""; // Name of the GameObject
-        this.group = ""; // Name of the Group the GameObject belongs to
+        this.name = name; // Name of the GameObject
+        this.group = group; // Name of the Group the GameObject belongs to
 
         // Private @TODO find a way to trim out these variables from scripts
-        this.id = uuid(); // This should be unique, as this is how the gameObject will be serialized
+        this.id = id || uuid(); // This should be unique, as this is how the gameObject will be serialized
         this.zIndex = 0; // Used for order of rendering in 2D
         this.priority = 0; // Determines the priority of the scripts.
         this.parent = null; // Contains reference to the Parent GameObject
@@ -39,7 +39,7 @@ export default class GameObject {
         scr.gameObject = this;
         this.components.push(scr);
         scr.init();
-        if (scr._attrName && !scr._attrName in KEY_BLACKLIST) {
+        if (scr._attrName && !(scr._attrName in KEY_BLACKLIST)) {
             this[scr._attrName] = scr;
             scr._attrSet = true;
         }

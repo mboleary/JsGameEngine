@@ -12,7 +12,7 @@
 // import { asset, load } from '../engine/Asset/AssetLoader.js';
 
 import GameObject from 'jsge-core/src/GameObject.js';
-import { GameObjectWithScript } from 'jsge-core/src/components/Script.js';
+import Script from 'jsge-core/src/components/Script.js';
 
 import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from 'jsge-core/src/Engine.js';
 
@@ -23,6 +23,8 @@ import { makeSerializable } from 'jsge-core/src/Serialize.js';
 import { getTime } from 'jsge-core/src/Time.js';
 
 import { asset, load } from 'asset-loader/src/AssetLoader.js';
+import SpriteComponent from 'jsge-module-graphics2d/src/components/Sprite.component';
+import TransformComponent from 'jsge-module-graphics2d/src/components/Transform.component';
 
 let mainSpriteSheet = null;
 
@@ -32,51 +34,47 @@ const squish = 1000; //4000
 
 const death = 1500; //3000
 
-export default class Test extends GameObjectWithScript(GameObject) {
+export default function testFactory() {
+    let toRet = new GameObject({
+        name: "Test"
+    });
+
+    let spr = new SpriteComponent({
+        assetName: "TEST"
+    });
+
+    let tb = new TestBehavior();
+
+    let tc = new TransformComponent();
+
+    tc.value.scale.x = 2;
+    tc.value.scale.y = 2;
+
+    load({
+        name: "TEST",
+        path: "/asset/fp/S_B_1.png",
+        type: "image"
+    });
+
+    toRet.attachComponent(spr);
+    toRet.attachComponent(tb);
+    toRet.attachComponent(tc);
+
+    return toRet;
+}
+
+export class TestBehavior extends Script {
     constructor() {
         super();
         this.movementAmt = 5;
-        this.transform.scale.x = 2;
-        this.transform.scale.y = 2;
-        // asset("MARIO_SPRITESHEET").then((spriteSheet) => {
-        //     mainSpriteSheet = spriteSheet;
-        //     let frames = [];
-        //     frames.push(spriteSheet.sheet.get("goomba_1"));
-        //     frames.push(spriteSheet.sheet.get("goomba_2"));
-        //     this.ani = new Animation(frames, 15);
-        //     this.texture = this.ani.currentFrame;
-        // })
-        load({
-            name: "TEST",
-            path: "/asset/fp/S_B_1.png",
-            type: "image"
-        });
-        asset("TEST").then((img) => {
-            this.texture = img;
-            // `spritesheet` is the imported spritesheet
-            // let frames = [];
-            // frames.push(spriteSheet.sheet.get("parakoopa_1"));
-            // frames.push(spriteSheet.sheet.get("parakoopa_2"));
-            // this.ani = new Animation(frames, 15);
-            // this.texture = this.ani.currentFrame;
-        });
+        
         this.squished = false;
         this.squishedTimer = 0;
         this.direction = 0;
         this.birthTimer = 0;
         this.deathTimer = 0;
         this.selfReplicate = 3; // Sterilize them after a few generations so that we don't crash the browser
-        this.name = "Test";
     }
-
-    // get texture() {
-    //     if (this.squished) {
-    //         return mainSpriteSheet.sheet.get("goomba_squish");
-    //     }
-    //     return this.ani.currentFrame;
-    // }
-
-    // set texture(a) {}
 
     init() {
         let now = getTime();
@@ -96,23 +94,27 @@ export default class Test extends GameObjectWithScript(GameObject) {
         if (!this.squished) {
             if (now - this.birthTimer > birth && this.selfReplicate > 0) {
                 // Give Birth
-                let goomba = new Test();
-                goomba.direction = (this.direction + 1) % 2;
-                goomba.selfReplicate = this.selfReplicate - 1;
-                goomba.transform.deepCopy(this.transform);
+                // @TODO replace this with prefab builder
+                let goomba = testFactory();
+
+                const testBehavior = goomba.getComponentByType(this.constructor.name);
+
+                testBehavior.direction = (this.direction + 1) % 2;
+                testBehavior.selfReplicate = this.selfReplicate - 1;
+                goomba.transform.value.deepCopy(goomba.transform.value);
                 enrollGameObject(goomba);
                 this.birthTimer = now;
             }
             if (this.direction === 0) {
-                this.transform.position.x += this.movementAmt * (deltaTime/TARGET_MILLIS_PER_FRAME);
-                this.transform.rotation.z += 1 * (deltaTime/TARGET_MILLIS_PER_FRAME);
+                this.gameObject.transform.value.position.x += this.movementAmt * (deltaTime/TARGET_MILLIS_PER_FRAME);
+                this.gameObject.transform.value.rotation.z += 1 * (deltaTime/TARGET_MILLIS_PER_FRAME);
             } else if (this.direction === 1) {
-                this.transform.position.y += this.movementAmt * (deltaTime/TARGET_MILLIS_PER_FRAME);
+                this.gameObject.transform.value.position.y += this.movementAmt * (deltaTime/TARGET_MILLIS_PER_FRAME);
             }
         } else if (!this.deathTimer) {
             this.deathTimer = now;
         } else if (now - this.deathTimer > death) {
-            deleteGameObject(this);
+            deleteGameObject(this.gameObject);
         }
     }
 
@@ -126,39 +128,39 @@ export default class Test extends GameObjectWithScript(GameObject) {
 // Make the GameObject Serializable
 
 // Keys to copy over
-const keys = [
-    "movementAmt",
-    "transform",
-    "id",
-    "name",
-    "direction",
-    "selfReplicate"
-]
+// const keys = [
+//     "movementAmt",
+//     "transform",
+//     "id",
+//     "name",
+//     "direction",
+//     "selfReplicate"
+// ]
 
-function serializer(obj) {
-    console.log("Serialize Test");
-    let toRet = {};
-    keys.forEach((key) => {
-        toRet[key] = obj[key];
-    });
-    return toRet;
-}
+// function serializer(obj) {
+//     console.log("Serialize Test");
+//     let toRet = {};
+//     keys.forEach((key) => {
+//         toRet[key] = obj[key];
+//     });
+//     return toRet;
+// }
 
-function deserializer(json) {
-    console.log("Deserialize Test");
-    let toRet = new Test();
-    keys.forEach((key) => {
-        if (json[key]) toRet[key] = json[key];
-    });
-    return toRet;
-}
+// function deserializer(json) {
+//     console.log("Deserialize Test");
+//     let toRet = new Test();
+//     keys.forEach((key) => {
+//         if (json[key]) toRet[key] = json[key];
+//     });
+//     return toRet;
+// }
 
-function stateUpdater(obj, json) {
-    console.log("State Updater");
-    keys.forEach((key) => {
-        if (json[key]) obj[key] = json[key];
-    });
-    return obj
-}
+// function stateUpdater(obj, json) {
+//     console.log("State Updater");
+//     keys.forEach((key) => {
+//         if (json[key]) obj[key] = json[key];
+//     });
+//     return obj
+// }
 
-makeSerializable(Test, serializer, deserializer, stateUpdater);
+// makeSerializable(Test, serializer, deserializer, stateUpdater);

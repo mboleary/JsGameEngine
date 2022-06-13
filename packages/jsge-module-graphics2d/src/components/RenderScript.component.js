@@ -5,13 +5,13 @@
 // import Script from '../Script.js';
 
 import Script from 'jsge-core/src/components/Script.js';
-import Renderable from './Renderable.component.base';
+import Renderable from './Renderable.interface';
 
 // @TODO Make this not be a script? Use as base for Sprites and Camera?
 
 export default class RenderScript extends Renderable(Script) {
 
-    constructor({...params}) {
+    constructor({...params} = {}) {
         super({...params});
 
     }

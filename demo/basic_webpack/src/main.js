@@ -12,7 +12,7 @@ import {jmod as rendJmod} from "jsge-module-graphics2d/src/Render.js";
 // import audioMod from 'jsge-module-audio/src/Audio.js';
 // import {jmod as dbgJmod} from 'jsge-module-debug/src/Debug.js';
 
-import {spaceScene, tileScene} from './temp_scenes.js';
+import {spaceScene} from './temp_scenes.js';
 import { defineLoadTypes, defineAssets, loadSpaceScene, loadTileScene } from './temp_assets.js';
 
 function initEngine() {
@@ -100,7 +100,7 @@ function main() {
             let scene = null;
             const map = {
                 0: {ld:loadSpaceScene, scn:spaceScene},
-                1: {ld:loadTileScene, scn:tileScene}
+                // 1: {ld:loadTileScene, scn:tileScene}
             };
             scene = map[num];
             if (scene) {

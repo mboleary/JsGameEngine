@@ -7,7 +7,7 @@ import {v4 as uuid} from "uuid";
 const PREFIX = "comp-";
 
 export default class ComponentBase {
-    constructor({name, gameObject, attribute = null}) {
+    constructor({name, gameObject, attribute = null} = {}) {
         this.id = PREFIX + uuid();
         this.name = name;
         this.gameObject = gameObject;

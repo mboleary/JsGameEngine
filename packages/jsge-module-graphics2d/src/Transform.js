@@ -4,7 +4,6 @@
  */
 export default class Transform {
     constructor(...params) {
-        super(...params);
 
         this.position = new Three(0, 0, 0);
         this.rotation = new Three(0, 0, 0);

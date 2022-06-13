@@ -23,12 +23,12 @@ export default class BoxMovementBehavior extends Script {
 
     init() {
         let t = new Transform();
-        t.deepCopy(this.gameObject.transform);
+        t.deepCopy(this.gameObject.transform.value);
         this.startPoint = t.position;
     }
 
     loop() {
-        const p = this.gameObject.transform.position;
+        const p = this.gameObject.transform.value.position;
         const amt = this.speed * deltaTime;
         // p.x += amt;
         // p.y += amt * 0.5;

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "asset-loader": "file:../asset-loader",
     "jsge-core": "file:../jsge-core"
   }
 }

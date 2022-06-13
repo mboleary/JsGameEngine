@@ -100,6 +100,7 @@ export function load(assetOpts) {
 // Access an asset (will automatically load if not already loaded)
 export async function asset(assetName, forceReload=false) {
     if (!loadedContent[assetName]) {
+        console.log(assetName, JSON.parse(JSON.stringify(loadedContent)));
         let err = "Asset not defined!";
         console.error(err);
         throw new Error(err);

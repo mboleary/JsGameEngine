@@ -10,7 +10,7 @@ import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager
 
 import { pauseTime, unpauseTime, advanceTime, getTime, isTimePaused } from './Time.js';
 
-import { calculateAbsoluteTransform } from './Physics.js';
+// import { calculateAbsoluteTransform } from './Physics.js';
 
 // import { checkPuppets, disconnect } from './Puppeteer.js';
 
@@ -327,7 +327,12 @@ export function getGameObjectByGroup(group) {
 
 function main() {
     stopLoop = window.requestAnimationFrame(main); // Puts this function into the message queue
-    loop();
+    try {
+        loop();
+    } catch (err) {
+        console.error("Error thrown in main loop:", err);
+        stopGameLoop();
+    }
 }
 
 // Game Loop
@@ -339,7 +344,7 @@ function loop() {
     deltaTime = currTime - prevTime;
 
     // Calculate the Absolute Transforms of each GameObject
-    calculateAbsoluteTransform(gameObjects);
+    // calculateAbsoluteTransform(gameObjects);
 
     // Render the Game Field
     // renderGameObjectsWith2dContext(gameObjects);

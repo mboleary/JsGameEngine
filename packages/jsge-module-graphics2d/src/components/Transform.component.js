@@ -6,8 +6,8 @@ import Transform from "../Transform";
  * @TODO Rewrite to use gl-matrix behind the scenes
  */
 export default class TransformComponent extends ComponentBase {
-    constructor(...params) {
-        super(...params);
+    constructor({...params} = {}) {
+        super({...params, attribute: "transform"});
 
         this.value = new Transform(); // Actual transform value
         this._absolute = new Transform(); // Absolute position with parent values added

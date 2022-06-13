@@ -3,7 +3,7 @@
  */
 
 // import Transform from './Transform.js';
-import Transform from 'jsge-core/src/Transform.js';
+import Transform from './Transform';
 
 import RenderableInterface from './components/Renderable.interface.js';
 import { CAMERA_ID } from "./constants.js";
@@ -39,7 +39,8 @@ export function initializeWith2dContext() {
 }
 
 export function enrollRenderableComponent(renderable) {
-    if (renderable instanceof RenderableInterface) {
+    // @TODO find a better way to do this
+    if (renderable._renderable) {
         renderableComponents.push(renderable);
     }
 }
@@ -55,6 +56,8 @@ export function removeRenderableComponent(id) {
 
 // Uses the Camera Object to perform calculations and rotations
 export function renderGameObjectsWith2dContext(gos) {
+    // @TODO remove when finished
+    calculateAbsoluteTransform(gos);
     context.setTransform(1,0,0,1,0,0);
     context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
     // Get the camera transform
@@ -117,4 +120,30 @@ export function renderGameObjectsWith2dContext(gos) {
 
 export function deg2rad(deg) {
     return (deg / 180) * Math.PI;
+}
+
+// @TODO rewrite transform class to calculate this automatically
+function calculateAbsoluteTransform(gos) {
+    gos.forEach((go) => {
+        if (!go.transform) return;
+        let abs = new Transform();
+        abs.deepCopy(go.transform.value);
+
+        if (go.parent && go.parent.transform) {
+            // Relative to the parent
+            let parent = go.parent.transform?.value;
+            if (go.parent.transform._absolute) {
+                parent = go.parent.transform._absolute;
+            }
+            // Scale the position
+            abs.position.multiply(parent.scale);
+            abs.position.add(parent.position);
+            abs.rotation.add(parent.rotation); // @TODO Fix rotation
+            abs.scale.multiply(parent.scale);
+            go.transform._absolute = abs;
+        } else {
+            // Relative to the origin [(0,0,0), (0,0,0), (1,1,1)]
+            go.transform._absolute = abs;
+        }
+    });
 }

@@ -5,7 +5,7 @@
 import ComponentBase from "../ComponentBase";
 
 export default class Script extends ComponentBase {
-    constructor({...params}) {
+    constructor({...params} = {}) {
         super({...params});
         this._priority = 1;
     }

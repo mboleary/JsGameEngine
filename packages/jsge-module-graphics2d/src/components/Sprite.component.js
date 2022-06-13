@@ -7,15 +7,17 @@ import Renderable from "./Renderable.interface";
 import {asset} from "asset-loader/src/AssetLoader.js";
 
 export default class SpriteComponent extends Renderable(ComponentBase) {
-    constructor({assetName, zIndex, ...params}) {
-        super(...params);
+    constructor({assetName, zIndex, ...params} = {}) {
+        super({...params});
 
-        this._assetName = assetName;
+        this.assetName = assetName;
         this.texture = null;
         this.zIndex = zIndex;
         this.hidden = false;
+    }
 
-        asset(assetName).then((img) => {
+    init() {
+        asset(this.assetName).then((img) => {
             // @TODO handle animations and spritesheets properly
             this.texture = img;
         });

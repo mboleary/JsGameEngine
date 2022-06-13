@@ -6,9 +6,9 @@ import {enrollRenderableComponent, removeRenderableComponent} from "../Render";
 
 // @TODO Make this not be a script? Use as base for Sprites and Camera?
 
-export default Renderable = (Base) => class extends Base {
+const Renderable = (Base) => class extends Base {
 
-    constructor({...params}) {
+    constructor({...params} = {}) {
         super({...params});
         this._renderable = true;
     }
@@ -28,3 +28,5 @@ export default Renderable = (Base) => class extends Base {
         if (super.destroy) super.destroy();
     }
 }
+
+export default Renderable;
