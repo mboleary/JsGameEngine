@@ -1,0 +1,14 @@
+{
+  "name": "jsge-module-networking",
+  "version": "1.0.0",
+  "description": "This module provides a basic multiplayer implementation using Websockets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsge-core": "file:../jsge-core"
+  }
+}
