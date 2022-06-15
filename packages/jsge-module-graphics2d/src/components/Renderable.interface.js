@@ -11,6 +11,12 @@ const Renderable = (Base) => class extends Base {
     constructor({...params} = {}) {
         super({...params});
         this._renderable = true;
+        enrollRenderableComponent(this);
+    }
+
+    // Override to generate things when the context is first created
+    onContextInit(context,  width, height) {
+
     }
 
     // Override this to render things directly to the canvas
@@ -19,7 +25,7 @@ const Renderable = (Base) => class extends Base {
     }
 
     init() {
-        enrollRenderableComponent(this);
+        
         if (super.init) super.init();
     }
 

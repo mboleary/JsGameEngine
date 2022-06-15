@@ -12,6 +12,13 @@ let canvas = null;
 let context = null; // This is the context that will be used to render the game.
 let renderableComponents = []; // components that will need to be rendered
 
+// @TODO remove this when debug stuff gets refactored
+window.mod = {
+    render: {
+        renderableComponents
+    }
+};
+
 export const jmod = {
     name: "Render",
     version: 0,
@@ -36,16 +43,24 @@ export function initializeWith2dContext() {
         throw new Error(msg)
     }
     context.imageSmoothingEnabled = false;
+    if (renderableComponents.length) {
+        renderableComponents.forEach((com) => com.onContextInit(context, canvas.clientWidth, canvas.clientHeight));
+    }
 }
 
 export function enrollRenderableComponent(renderable) {
     // @TODO find a better way to do this
     if (renderable._renderable) {
         renderableComponents.push(renderable);
+        if (context) {
+            renderable.onContextInit(context, canvas.clientWidth, canvas.clientHeight);
+        }
     }
+    
 }
 
 export function removeRenderableComponent(id) {
+    console.log("remove renderable component", id);
     for (let i = 0; i < renderableComponents.length; i++) {
         if (renderableComponents[i]?.id === id) {
             renderableComponents.splice(i, 1);

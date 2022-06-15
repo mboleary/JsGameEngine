@@ -3,11 +3,13 @@
  */
 
 import ComponentBase from "../ComponentBase";
+import {enrollScriptComponent, removeScriptComponent} from "../ScriptManager";
 
 export default class Script extends ComponentBase {
     constructor({...params} = {}) {
         super({...params});
         this._priority = 1;
+        enrollScriptComponent(this);
     }
 
     // Override this to initialize a script
@@ -26,6 +28,7 @@ export default class Script extends ComponentBase {
     }
 
     destroy() {
+        removeScriptComponent(this);
         this.onDestroy();
     }
 }

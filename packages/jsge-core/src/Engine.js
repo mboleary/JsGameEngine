@@ -67,6 +67,9 @@ export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
     allowModuleLoading = false;
 
+    // @TODO remove this later
+    initDebug();
+
     // Initialize
     for (let i = 0; i < initFuncs.length; i++) {
         const f = initFuncs[i];
@@ -93,6 +96,9 @@ export function initDebug() {
     dbg.getGameObjectByName = getGameObjectByName;
     dbg.getGameObjectByGroup = getGameObjectByGroup;
     dbg.TARGET_MILLIS_PER_FRAME = TARGET_MILLIS_PER_FRAME;
+    if (!window.debug) {
+        window.debug = {};
+    }
     window.debug.engine = dbg;
 }
 

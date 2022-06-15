@@ -41,15 +41,15 @@ export default class DrawsThingsBehavior extends RenderScript {
         })
     }
 
-    render(context, width, height) {
-        if (!this.gradient) {
-            let grad = context.createLinearGradient(0, 0, 0, height);
-            grad.addColorStop(0, '#000000');
-            grad.addColorStop(.75, '#333333');
-            grad.addColorStop(1, '#000000');
-            this.gradient = grad;
-        }
+    onContextInit(context, width, height) {
+        let grad = context.createLinearGradient(0, 0, 0, height);
+        grad.addColorStop(0, '#000000');
+        grad.addColorStop(.75, '#333333');
+        grad.addColorStop(1, '#000000');
+        this.gradient = grad;
+    }
 
+    render(context, width, height) {
         context.fillStyle = this.gradient;
         context.fillRect(0, 0, width, height);
 

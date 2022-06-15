@@ -17,6 +17,7 @@ export default class SpriteComponent extends Renderable(ComponentBase) {
     }
 
     init() {
+        super.init();
         asset(this.assetName).then((img) => {
             // @TODO handle animations and spritesheets properly
             this.texture = img;
@@ -30,6 +31,8 @@ export default class SpriteComponent extends Renderable(ComponentBase) {
     render(context, width, height, cam) {
         const tex = this._getCurrentFrame();
         const go = this.gameObject;
+
+        if (!tex) return;
 
         // Use the texture as normal
         const iw = tex.width;

@@ -93,6 +93,7 @@ export default class GameObject {
 
     // Called before this GameObject is deleted
     beforeDestroy() {
+        console.log("beforeDestroy");
         if (this.components && this.components.length) {
             this.components.forEach((c) => {
                 c.destroy();

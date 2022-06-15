@@ -27,7 +27,7 @@ export function spaceScene() {
     let scene = new Scene();
     scene.name = "Space Scene";
     scene.attachGameObject(drawsThingsFactory());
-    scene.attachGameObject(testFactory());
+    // scene.attachGameObject(testFactory());
     scene.attachGameObject(controllerTest2Factory());
     scene.attachGameObject(cameraFactory());
     return scene;

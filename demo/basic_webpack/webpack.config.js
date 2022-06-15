@@ -17,7 +17,8 @@ const config = {
   devServer: {
     open: false, // makes browser not automatically open
     host: "localhost",
-    port: process.env.PORT || "8080"
+    port: process.env.PORT || "8080",
+    hot: false,
   },
   plugins: [
     new HtmlWebpackPlugin({

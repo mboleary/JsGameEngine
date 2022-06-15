@@ -13,11 +13,5 @@ export default class RenderScript extends Renderable(Script) {
 
     constructor({...params} = {}) {
         super({...params});
-
-    }
-
-    // Override this to render things directly to the canvas
-    render(context, width, height, camTransform) {
-
     }
 }
