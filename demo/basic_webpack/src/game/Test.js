@@ -73,11 +73,7 @@ export class TestBehavior extends Script {
         this.direction = 0;
         this.birthTimer = 0;
         this.deathTimer = 0;
-<<<<<<< HEAD
         this.selfReplicate = 3; // Sterilize them after a few generations so that we don't crash the browser
-=======
-        this.selfReplicate = 0; // Sterilize them after a few generations so that we don't crash the browser
->>>>>>> a34f2e20dce1d1423e7dc8d5a053325355946ee3
     }
 
     onInit() {
