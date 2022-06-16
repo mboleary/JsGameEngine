@@ -30,8 +30,8 @@ export function initGameObjectScripts(gos) {
     //         });
     //     }
     // });
-    for (const script of scriptsMap.values()) {
-        script.init();
+    for (const go of gos) {
+        go.initialize();
     }
 }
 

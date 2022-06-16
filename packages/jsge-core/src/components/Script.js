@@ -9,11 +9,17 @@ export default class Script extends ComponentBase {
     constructor({...params} = {}) {
         super({...params});
         this._priority = 1;
+        
+    }
+
+    init() {
         enrollScriptComponent(this);
+        if (super.init) super.init();
+        this.onInit()
     }
 
     // Override this to initialize a script
-    init() {
+    onInit() {
 
     }
 

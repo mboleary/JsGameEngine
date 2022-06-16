@@ -59,8 +59,8 @@ export function enrollRenderableComponent(renderable) {
     
 }
 
-export function removeRenderableComponent(id) {
-    console.log("remove renderable component", id);
+export function removeRenderableComponent(renderable) {
+    const id = renderable.id;
     for (let i = 0; i < renderableComponents.length; i++) {
         if (renderableComponents[i]?.id === id) {
             renderableComponents.splice(i, 1);

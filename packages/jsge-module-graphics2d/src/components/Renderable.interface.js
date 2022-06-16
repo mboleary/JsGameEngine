@@ -11,7 +11,12 @@ const Renderable = (Base) => class extends Base {
     constructor({...params} = {}) {
         super({...params});
         this._renderable = true;
+        
+    }
+
+    init() {
         enrollRenderableComponent(this);
+        if (super.init) super.init();
     }
 
     // Override to generate things when the context is first created
@@ -22,11 +27,6 @@ const Renderable = (Base) => class extends Base {
     // Override this to render things directly to the canvas
     render(context, width, height, camTransform) {
 
-    }
-
-    init() {
-        
-        if (super.init) super.init();
     }
 
     destroy() {

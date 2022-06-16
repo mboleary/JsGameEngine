@@ -45,9 +45,6 @@ class ControllerTest2Script extends Script {
         this.accel = new Transform();
     }
 
-    init() {
-    }
-
     loop() {
         let moveDelta = this.movementAmt * (deltaTime/TARGET_MILLIS_PER_FRAME);
         const transform = this.gameObject.transform.value;
@@ -70,12 +67,6 @@ class ControllerTest2Script extends Script {
         }
         
     }
-
-    onDestroy() {
-
-    }
-
-
 }
 
 // Make the GameObject Serializable

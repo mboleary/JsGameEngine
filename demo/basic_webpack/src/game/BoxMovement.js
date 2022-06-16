@@ -21,7 +21,7 @@ export default class BoxMovementBehavior extends Script {
         this.speed = 0.5; // Pixels per frame
     }
 
-    init() {
+    onInit() {
         let t = new Transform();
         t.deepCopy(this.gameObject.transform.value);
         this.startPoint = t.position;

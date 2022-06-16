@@ -156,6 +156,7 @@ export function enrollGameObject(go) {
         }
         enrollGameObjectHelper(go, toInitScripts);
         initGameObjectScripts(toInitScripts.arr);
+        // go.initialize();
     });
 }
 

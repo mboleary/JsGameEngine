@@ -30,9 +30,9 @@ let mainSpriteSheet = null;
 
 const birth = 100; //500
 
-const squish = 500; //4000
+const squish = 1000; //4000
 
-const death = 1000; //3000
+const death = 2000; //3000
 
 export default function testFactory() {
     let toRet = new GameObject({
@@ -73,10 +73,10 @@ export class TestBehavior extends Script {
         this.direction = 0;
         this.birthTimer = 0;
         this.deathTimer = 0;
-        this.selfReplicate = 2; // Sterilize them after a few generations so that we don't crash the browser
+        this.selfReplicate = 3; // Sterilize them after a few generations so that we don't crash the browser
     }
 
-    init() {
+    onInit() {
         let now = getTime();
         this.birthTimer = now;
         this.squishedTimer = now;

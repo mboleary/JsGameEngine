@@ -18,12 +18,13 @@ export default class GameObject {
 
         // Private @TODO find a way to trim out these variables from scripts
         this.id = id || uuid(); // This should be unique, as this is how the gameObject will be serialized
-        this.zIndex = 0; // Used for order of rendering in 2D
-        this.priority = 0; // Determines the priority of the scripts.
+        this.zIndex = 0; // Used for order of rendering in 2D @TODO remove
+        this.priority = 0; // Determines the priority of the scripts. @TODO remove
         this.parent = null; // Contains reference to the Parent GameObject
         // this.deleteFlag = false; // True if the GameObject should be destroyed.
         this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
         this.components = []; // Components of the GameObject
+        this._initialized = false;
 
         // this = {test: true};
     }
@@ -38,7 +39,10 @@ export default class GameObject {
     attachComponent(scr) {
         scr.gameObject = this;
         this.components.push(scr);
-        scr.init();
+        if (this._initialized) {
+            console.log("comp added after init");
+            scr.init();
+        }
         if (scr._attrName && !(scr._attrName in KEY_BLACKLIST)) {
             this[scr._attrName] = scr;
             scr._attrSet = true;
@@ -91,9 +95,18 @@ export default class GameObject {
         }
     }
 
+    // Called to initialize the Components
+    initialize() {
+        if (this.components && this.components.length) {
+            this.components.forEach((c) => {
+                c.init();
+            });
+        }
+        this._initialized = true;
+    }
+
     // Called before this GameObject is deleted
     beforeDestroy() {
-        console.log("beforeDestroy");
         if (this.components && this.components.length) {
             this.components.forEach((c) => {
                 c.destroy();
