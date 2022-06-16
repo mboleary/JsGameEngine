@@ -73,7 +73,7 @@ export class TestBehavior extends Script {
         this.direction = 0;
         this.birthTimer = 0;
         this.deathTimer = 0;
-        this.selfReplicate = 2; // Sterilize them after a few generations so that we don't crash the browser
+        this.selfReplicate = 0; // Sterilize them after a few generations so that we don't crash the browser
     }
 
     init() {
@@ -89,6 +89,7 @@ export class TestBehavior extends Script {
         }
         let now = getTime();
         if (now - this.squishedTimer > squish) {
+            console.log("squish");
             this.squished = true;
         }
         if (!this.squished) {
@@ -99,9 +100,13 @@ export class TestBehavior extends Script {
 
                 const testBehavior = goomba.getComponentByType(this.constructor.name);
 
+                console.log("new behavior", testBehavior);
+
                 testBehavior.direction = (this.direction + 1) % 2;
                 testBehavior.selfReplicate = this.selfReplicate - 1;
                 goomba.transform.value.deepCopy(this.gameObject.transform.value);
+                // Attach to the parent to ensure that it's attached to the same scene
+                this.gameObject.parent.attachGameObject(goomba);
                 enrollGameObject(goomba);
                 this.birthTimer = now;
             }
