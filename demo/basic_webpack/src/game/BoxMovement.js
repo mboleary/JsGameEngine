@@ -2,10 +2,6 @@
  * Moves the GameObject in a box
  */
 
-// import Script from "../engine/Script.js";
-// import Transform from "../engine/Transform.js";
-// import { deltaTime } from "../engine/Engine.js";
-
 import Script from "jsge-core/src/components/Script.js";
 import Transform from "jsge-core/src/Transform.js";
 import { deltaTime } from "jsge-core/src/Engine.js";

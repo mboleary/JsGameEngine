@@ -89,7 +89,6 @@ export class TestBehavior extends Script {
         }
         let now = getTime();
         if (now - this.squishedTimer > squish) {
-            console.log("squish");
             this.squished = true;
         }
         if (!this.squished) {
@@ -99,8 +98,6 @@ export class TestBehavior extends Script {
                 let goomba = testFactory();
 
                 const testBehavior = goomba.getComponentByType(this.constructor.name);
-
-                console.log("new behavior", testBehavior);
 
                 testBehavior.direction = (this.direction + 1) % 2;
                 testBehavior.selfReplicate = this.selfReplicate - 1;

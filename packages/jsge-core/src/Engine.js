@@ -284,9 +284,9 @@ function deleteGameObjectSync(go) {
 // @TODO Fix this. It may call beforeDestroy many times. This is not intended!
 export function deleteGameObject(go) {
     // Done after the Loop, since we don't want to modify the array while it's being accessed
-    setTimeout(() => {
-        deleteGameObjectSync(go);
-    });
+    deleteGameObjectSync(go);
+    // setTimeout(() => {
+    // });
 }
 
 

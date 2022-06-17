@@ -5,7 +5,7 @@ import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings 
 // import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from 'jsge-module-networking/src/Puppeteer.js';
 // import { createRoom, getRooms } from 'jsge-module-networking/src/Network/RoomController.js';
 
-// import {jmod as inputJmod} from "jsge-module-input/src/Input.js";
+import {jmod as inputJmod} from "jsge-module-input/src/Input.js";
 // import {jmod as phyJmod} from "jsge-module-basic-physics/src/Physics.js";
 import {jmod as rendJmod} from "jsge-module-graphics2d/src/Render.js";
 // import {jmod as pJmod} from "jsge-module-networking/src/Puppeteer.js";
@@ -17,7 +17,7 @@ import { defineLoadTypes, defineAssets, loadSpaceScene, loadTileScene } from './
 
 function initEngine() {
     // addJMod(dbgJmod);
-    // addJMod(inputJmod);
+    addJMod(inputJmod);
     // addJMod(phyJmod);
     // addJMod(pJmod);
     // addJMod(audioMod);
