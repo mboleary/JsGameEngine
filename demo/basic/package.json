@@ -1,0 +1,21 @@
+{
+  "name": "jsge-demo-basic",
+  "version": "1.0.0",
+  "description": "This is a general demo of JSGE, and doesn't use Webpack.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "asset-loader": "file:../../packages/asset-loader",
+    "jsge-core": "file:../../packages/jsge-core",
+    "jsge-module-audio": "file:../../packages/jsge-module-audio",
+    "jsge-module-basic-physics": "file:../../packages/jsge-module-basic-physics",
+    "jsge-module-debug": "file:../../packages/jsge-module-debug",
+    "jsge-module-graphics2d": "file:../../packages/jsge-module-graphics2d",
+    "jsge-module-input": "file:../../packages/jsge-module-input",
+    "jsge-module-networking": "file:../../packages/jsge-module-networking"
+  }
+}
