@@ -9,7 +9,7 @@ import {v4 as uuid} from "uuid";
 const KEY_BLACKLIST = ["name", "group", "id", "parent", "children", "components"];
 
 export default class GameObject {
-    constructor({name = "", group = "", id} = {}) {
+    constructor({name = "", group = "", id, parent = null} = {}) {
         // Public
         // this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
         
@@ -20,7 +20,7 @@ export default class GameObject {
         this.id = id || uuid(); // This should be unique, as this is how the gameObject will be serialized
         this.zIndex = 0; // Used for order of rendering in 2D @TODO remove
         this.priority = 0; // Determines the priority of the scripts. @TODO remove
-        this.parent = null; // Contains reference to the Parent GameObject
+        this.parent = parent; // Contains reference to the Parent GameObject
         // this.deleteFlag = false; // True if the GameObject should be destroyed.
         this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
         this.components = []; // Components of the GameObject

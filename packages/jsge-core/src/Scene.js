@@ -5,8 +5,8 @@
 import GameObject from './GameObject.js';
 
 export default class Scene extends GameObject {
-    constructor() {
-        super();
+    constructor({...params}) {
+        super({...params});
         this.name = "Scene";
     }
 
