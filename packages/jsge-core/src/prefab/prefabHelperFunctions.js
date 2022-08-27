@@ -10,9 +10,10 @@ import GameObject from '../GameObject';
  /**
   * Builds a GameObject from a prefab
   * @param {Object} prefabJson prefab to hydrate
+  * @param {Object} options options Object
   * @returns {GameObject} hydrated GameObject
   */
-export async function buildGameObjectFromPrefab(prefabJson) {
+export async function buildGameObjectFromPrefab(prefabJson, options) {
 
     // @TODO validate modules
 
@@ -58,6 +59,8 @@ function _buildGameObjectTreeHelper(json, parent) {
     if (json.components) {
         toRet.components = _buildGameObjectComponents(json.components, toRet);
     }
+
+    return toRet;
 }
 
 function _buildGameObjectComponents(componentJson, gameObject) {
