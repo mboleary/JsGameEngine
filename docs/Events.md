@@ -35,7 +35,7 @@ Here are some examples of events that are fired by various JSGE GameOjects:
 
 Since it looks like it's going to be hard to use the existing DOM-related classes, we're going to use a custom event class that's similar enough to the DOM ones, but with some improvements to make it more convenient to use.
 
-An event dispatch should be asyncronous, where the first call isn't blocked by all of the event listeners being executed. The event listeners, however should be executed syncronously, since we need to look for things like stopping event bubbling.
+An event dispatch should be asynchronous, where the first call isn't blocked by all of the event listeners being executed. The event listeners, however should be executed synchronously, since we need to look for things like stopping event bubbling.
 
 The event handling classes could wrap around other systems, and could be made to use existing event systems, such as the NodeJS one, or the one used in HTMLElements.
 
