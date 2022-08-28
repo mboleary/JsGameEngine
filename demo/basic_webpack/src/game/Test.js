@@ -18,8 +18,6 @@ import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME 
 
 import { getKeyState } from 'jsge-module-input/src/Input.js';
 
-import { makeSerializable } from 'jsge-core/src/Serialize.js';
-
 import { getTime } from 'jsge-core/src/Time.js';
 
 import { asset, load } from 'asset-loader/src/AssetLoader.js';

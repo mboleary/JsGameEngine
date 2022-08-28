@@ -2,9 +2,36 @@
  * Stores serializable types
  */
 
+import {defaultSerializer} from "./Serialize";
+import {defaultDeserializer, defaultStateUpdater} from "./Deserialize";
+import { getKeys } from "./common";
+
 const serialTypes = new Map(); // Stores all serializable types with functions to handle them
 
-export function addSerializableType({typename, serializer, deserializer, stateUpdater, classRef, keys} = {}) {
+export function addSerializableType({
+    classRef, 
+    serializer, 
+    deserializer,
+    stateUpdater, 
+    typename, 
+    keys
+} = {}) {
+    if (!typename) {
+        // Use Class constructor name
+        typename = classRef.name;
+    }
+    if (!keys) {
+        keys = getKeys(classRef, []);
+    }
+    if (!serializer) {
+        serializer = defaultSerializer(keys, false);
+    }
+    if (!deserializer) {
+        deserializer = defaultDeserializer(keys, classRef);
+    }
+    if (!stateUpdater) {
+        stateUpdater = defaultStateUpdater;
+    }
     if (!serialTypes.has(typename)) {
         const obj = {
             type: typename,

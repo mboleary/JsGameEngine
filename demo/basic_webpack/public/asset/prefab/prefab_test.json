@@ -30,7 +30,7 @@
                 }
             },
             {
-                "type": "ControllerTestBehavior"
+                "type": "ControllerTestBehavior2"
             },
             {
                 "type": "SpriteComponent",
