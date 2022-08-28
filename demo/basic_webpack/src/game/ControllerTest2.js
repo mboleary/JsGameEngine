@@ -74,14 +74,13 @@ class ControllerTest2Behavior extends Script {
 // Keys to copy over
 const keys = [
     "movementAmt",
-    "transform",
     "id",
     "name",
     "accel"
 ];
 
 function serializer(obj) {
-    console.log("Serialize ControllerTest2");
+    console.log("Serialize ControllerTest2Behavior");
     let toRet = {};
     keys.forEach((key) => {
         toRet[key] = obj[key];
@@ -90,8 +89,8 @@ function serializer(obj) {
 }
 
 function deserializer(json) {
-    console.log("Deserialize ControllerTest2");
-    let toRet = new ControllerTest2();
+    console.log("Deserialize ControllerTest2Behavior");
+    let toRet = new ControllerTest2Behavior();
     keys.forEach((key) => {
         if (json[key]) toRet[key] = json[key];
     });
@@ -101,9 +100,7 @@ function deserializer(json) {
 export function stateUpdater(obj, state) {
     keys.forEach((key) => {
         if (state[key]) {
-            if (key === "transform") {
-                obj.transform.deepCopy(state.transform);
-            } else if (key === "accel") {
+            if (key === "accel") {
                 obj.accel.deepCopy(state.accel);
             } else {
                 Reflect.set(obj, key, state[key]);
@@ -113,4 +110,11 @@ export function stateUpdater(obj, state) {
     return obj;
 }
 
-addSerializableType({classRef: ControllerTest2, serializer, deserializer, stateUpdater, keys});
+addSerializableType({
+    typename: "ControllerTest2Behavior",
+    classRef: ControllerTest2Behavior,
+    serializer, 
+    deserializer, 
+    stateUpdater, 
+    keys
+});

@@ -11,9 +11,21 @@ export default class Transform {
     }
 
     deepCopy(transform) {
-        this.position = new Three(transform.position.x, transform.position.y, transform.position.z);
-        this.rotation = new Three(transform.rotation.x, transform.rotation.y, transform.rotation.z);
-        this.scale = new Three(transform.scale.x, transform.scale.y, transform.scale.z);
+        this.position = new Three(
+            transform.position?.x || 0, 
+            transform.position?.y || 0, 
+            transform.position?.z || 0
+        );
+        this.rotation = new Three(
+            transform.rotation?.x || 0, 
+            transform.rotation?.y || 0, 
+            transform.rotation?.z || 0
+        );
+        this.scale = new Three(
+            transform.scale?.x || 1, 
+            transform.scale?.y || 1, 
+            transform.scale?.z || 1
+        );
     }
 }
 
@@ -22,7 +34,7 @@ export default class Transform {
  */
 
  export class Three {
-    constructor(x, y, z) {
+    constructor(x = 0, y = 0, z = 0) {
         this.x = x;
         this.y = y;
         this.z = z;

@@ -6,6 +6,8 @@
 
 import Scene from '../Scene';
 import GameObject from '../GameObject';
+import { deserialize } from '../serialization';
+import {asset, load} from "asset-loader/src/AssetLoader.js";
 
  /**
   * Builds a GameObject from a prefab
@@ -13,18 +15,18 @@ import GameObject from '../GameObject';
   * @param {Object} options options Object
   * @returns {GameObject} hydrated GameObject
   */
-export async function buildGameObjectFromPrefab(prefabJson, options) {
+export function buildGameObjectFromPrefab(prefabJson, options) {
 
     // @TODO validate modules
 
-    await loadAssets(prefabJson.assets);
+    loadAssets(prefabJson.assets);
 
-    let root = buildGameObjectTree(prefabJson.root, prefabJson.scene);
+    let root = buildGameObjectTree(prefabJson.root, prefabJson.scene, options);
 
     return root;
 }
 
-function buildGameObjectTree(rootJson, scene = false) {
+function buildGameObjectTree(rootJson, scene = false, options) {
     const BaseClass = scene ? Scene : GameObject;
     let toRet = new BaseClass({
         name: rootJson.name,
@@ -32,19 +34,20 @@ function buildGameObjectTree(rootJson, scene = false) {
         id: rootJson.id,
     });
 
-    if (json.children) {
-        toRet.children = _buildGameObjectTreeHelper(json.children, toRet);
+    if (rootJson.children && rootJson.children.length) {
+        _buildGameObjectTreeHelper(rootJson.children, toRet, options);
     }
 
-    if (json.components) {
-        toRet.components = _buildGameObjectComponents(json.components, toRet);
+    if (rootJson.components && rootJson.components.length) {
+        _buildGameObjectComponents(rootJson.components, toRet, options);
     }
 
     
     return toRet;
 }
 
-function _buildGameObjectTreeHelper(json, parent) {
+function _buildGameObjectTreeHelper(json, parent, options) {
+    console.log("_buildGameObjectTreeHelper", json);
     let toRet = new GameObject({
         name: json.name,
         id: json.id,
@@ -52,23 +55,45 @@ function _buildGameObjectTreeHelper(json, parent) {
         parent
     });
 
-    if (json.children) {
-        toRet.children = _buildGameObjectTreeHelper(json.children, toRet);
+    parent.attachGameObject(toRet);
+
+    if (json.children && json.children.length) {
+        _buildGameObjectTreeHelper(json.children, toRet, options);
     }
 
-    if (json.components) {
-        toRet.components = _buildGameObjectComponents(json.components, toRet);
+    if (json.components && json.components.length) {
+        _buildGameObjectComponents(json.components, toRet, options);
     }
 
     return toRet;
 }
 
-function _buildGameObjectComponents(componentJson, gameObject) {
+function _buildGameObjectComponents(componentJson, gameObject, options) {
     // @TODO this should go into the serialization part of the engine and build the components that are to be added
+    if (componentJson && Array.isArray(componentJson)) {
+        for (const compItem of componentJson) {
+            console.log("serializing component", compItem);
+            try {
+
+                const component = deserialize(compItem);
+                gameObject.attachComponent(component);
+            } catch (err) {
+                console.error(err);
+                if (!options.ignoreErrors) {
+                    throw err;
+                }
+            }
+        }
+    }
 }
 
 function loadAssets(assetArr) {
     // @TODO should call out into the asset loader to load the assets used in this prefab if they are not already loaded
+    if (assetArr && Array.isArray(assetArr)) {
+        for (const assetItem of assetArr) {
+            load({...assetItem});
+        }
+    }
 }
 
 function _loadExtraData(extraJson, assets, gameObjects) {

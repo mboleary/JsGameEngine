@@ -19,6 +19,7 @@ export function addSerializableType({
     if (!typename) {
         // Use Class constructor name
         typename = classRef.name;
+        console.warn("[SERIALIZATION]: Warning: Using class constructor names is unsafe!");
     }
     if (!keys) {
         keys = getKeys(classRef, []);
@@ -42,6 +43,7 @@ export function addSerializableType({
             keys
         };
         serialTypes.set(typename, obj);
+        console.log(`Enrolled Serializable Type [${typename}: ${keys.join(", ")}]`);
     }
 }
 

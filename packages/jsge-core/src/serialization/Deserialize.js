@@ -1,19 +1,20 @@
 /**
  * Handles Deserialization
  */
+import {getSerializableType} from "./Types";
 
  // Deserializes parsed JSON and returns all parsed GameObjects
 export function deserialize(json, typeName) {
     let name = typeName || json.type;
-    let type = serialTypes[name];
+    let type = getSerializableType(name);
     let toRet = null;
 
     if (!type) {
-        console.error("Cannot Deserialize: Not in List!");
+        console.error("Cannot Deserialize: Not in List!", name);
         throw new Error("Cannot Deserialize: Not in List");
     }
 
-    toRet = type.deserializer(json.data);
+    toRet = type.deserializer(json.data || {});
 
     return toRet;
 }
@@ -21,10 +22,10 @@ export function deserialize(json, typeName) {
 // Updates a GameObject with a given state (Like Deserialize, but the object is not instanciated)
 export function update(obj, state, typeName) {
     let name = typeName || state.type;
-    let type = serialTypes[name];
+    let type = getSerializableType(name);
 
     if (!type) {
-        console.error("Cannot Update State: Not in List!");
+        console.error("Cannot Update State: Not in List!", name);
         throw new Error("Cannot Update State: Not in List");
     }
 

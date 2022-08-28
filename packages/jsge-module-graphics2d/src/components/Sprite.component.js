@@ -5,6 +5,7 @@
 import ComponentBase from "jsge-core/src/ComponentBase.js";
 import Renderable from "./Renderable.interface";
 import {asset} from "asset-loader/src/AssetLoader.js";
+import { addSerializableType } from 'jsge-core/src/serialization';
 
 export default class SpriteComponent extends Renderable(ComponentBase) {
     constructor({assetName, zIndex, ...params} = {}) {
@@ -58,3 +59,47 @@ export default class SpriteComponent extends Renderable(ComponentBase) {
         }
     }
 }
+
+// Serialization code
+
+const keys = [
+    "id",
+    "name",
+    "assetName",
+    "zIndex",
+    "hidden"
+];
+
+function serializer(obj) {
+    const toRet = {};
+    keys.forEach((key) => {
+        toRet[key] = obj[key];
+    });
+    return toRet;
+}
+
+function deserializer(json) {
+    const toRet = new SpriteComponent();
+    keys.forEach((key) => {
+        if (json[key]) toRet[key] = json[key];
+    });
+    return toRet;
+}
+
+function stateUpdater(obj, state) {
+    keys.forEach((key) => {
+        if (state[key]) {
+            Reflect.set(obj, key, state[key]);
+        }
+    });
+    return obj;
+}
+
+addSerializableType({
+    typename: "SpriteComponent",
+    classRef: SpriteComponent, 
+    serializer, 
+    deserializer, 
+    stateUpdater, 
+    keys
+});

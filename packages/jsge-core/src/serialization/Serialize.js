@@ -3,7 +3,6 @@
  */
 
 import {getSerializableType} from "./Types";
-import {} from "./common";
 
 // Serializes a GameObject or Script
 export function serialize(serObj, serializeChildren = true, typeName) {
