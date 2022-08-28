@@ -5,7 +5,9 @@
 // import Transform from './Transform.js';
 import Transform from './Transform';
 
-import RenderableInterface from './components/Renderable.interface.js';
+// import RenderableInterface from './components/Renderable.interface.js';
+import { addCustomLoader } from 'asset-loader/src/AssetLoader';
+import { ASSET_LOADERS } from './assetLoader';
 import { CAMERA_ID } from "./constants.js";
 
 let canvas = null;
@@ -28,6 +30,10 @@ export const jmod = {
     }
 }
 
+export function initializeAssetLoaders() {
+    Object.keys(ASSET_LOADERS).forEach(key => addCustomLoader(key, ASSET_LOADERS[key]));
+}
+
 export function setCanvas(node) {
     canvas = node;
 }
@@ -36,6 +42,7 @@ export function initializeWith2dContext() {
     if (!canvas) {
         throw new Error("Error: Canvas must be set before initializing Render!");
     }
+    initializeAssetLoaders();
     context = canvas.getContext('2d');
     if (!context) {
         let msg = "Error Initializing the 2d context!";

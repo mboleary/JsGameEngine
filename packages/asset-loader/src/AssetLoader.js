@@ -26,16 +26,16 @@ const loaders = {
     //     options.data = s;
     //     options.loaded = true;
     // },
-    "image": async (options) => {
-        let p = new Promise((res, rej) => {
-            let i = new Image();
-            i.src = options.path;
-            i.onload = () => res(i);
-            i.onerror = (e) => rej(e);
-        });
-        options.data = await p;
-        options.loaded = true;
-    },
+    // "image": async (options) => {
+    //     let p = new Promise((res, rej) => {
+    //         let i = new Image();
+    //         i.src = options.path;
+    //         i.onload = () => res(i);
+    //         i.onerror = (e) => rej(e);
+    //     });
+    //     options.data = await p;
+    //     options.loaded = true;
+    // },
     "json": async (options) => {
         let resp = await fetch(options.path);
         options.data = resp.json();
