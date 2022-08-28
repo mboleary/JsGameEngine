@@ -30,7 +30,7 @@ const TestPrefab = {
     "assets": [
         {
             "name": "PLAYER",
-            "path": "/asset/fp/Player.png",
+            "path": "/asset/fp/Ship.png",
             "type": "image"
         }
     ],
@@ -74,7 +74,7 @@ export function spaceScene() {
     scene.attachGameObject(drawsThingsFactory());
     scene.attachGameObject(testFactory());
     // scene.attachGameObject(controllerTest2Factory());
-    const ct2 = buildGameObjectFromPrefab(TestPrefab, {ignoreErrors: false});
+    const ct2 = buildGameObjectFromPrefab(TestPrefab, {ignoreErrors: true});
     console.log("ControllerTest2", ct2);
     scene.attachGameObject(ct2);
     scene.attachGameObject(cameraFactory());
