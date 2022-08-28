@@ -4,7 +4,7 @@
 
 import ComponentBase from "jsge-core/src/ComponentBase.js";
 import Renderable from "./Renderable.interface";
-import {asset} from "asset-loader/src/AssetLoader.js";
+import {load} from "asset-loader/src/AssetLoader.js";
 import { addSerializableType } from 'jsge-core/src/serialization';
 
 export default class SpriteComponent extends Renderable(ComponentBase) {
@@ -19,7 +19,7 @@ export default class SpriteComponent extends Renderable(ComponentBase) {
 
     init() {
         super.init();
-        asset(this.assetName).then((img) => {
+        load(this.assetName).then((img) => {
             // @TODO handle animations and spritesheets properly
             this.texture = img;
         });

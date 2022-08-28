@@ -20,7 +20,7 @@ import { getKeyState } from 'jsge-module-input/src/Input.js';
 
 import { getTime } from 'jsge-core/src/Time.js';
 
-import { asset, load } from 'asset-loader/src/AssetLoader.js';
+import { define } from 'asset-loader/src/AssetLoader.js';
 import SpriteComponent from 'jsge-module-graphics2d/src/components/Sprite.component';
 import TransformComponent from 'jsge-module-graphics2d/src/components/Transform.component';
 
@@ -48,7 +48,7 @@ export default function testFactory() {
     tc.value.scale.x = 2;
     tc.value.scale.y = 2;
 
-    load({
+    define({
         name: "TEST",
         path: "/asset/fp/S_B_1.png",
         type: "image"

@@ -73,7 +73,7 @@ export function addCustomLoader(typeName, loader) {
 }
 
 // Defines an asset to be loaded later
-export function load(assetOpts) {
+export function define(assetOpts) {
     if (loadedContent[assetOpts.name]) {
         // console.log("Asset already present in list");
         return;
@@ -98,7 +98,7 @@ export function load(assetOpts) {
 }
 
 // Access an asset (will automatically load if not already loaded)
-export async function asset(assetName, forceReload=false) {
+export async function load(assetName, forceReload=false) {
     if (!loadedContent[assetName]) {
         console.log(assetName, JSON.parse(JSON.stringify(loadedContent)));
         let err = "Asset not defined!";

@@ -19,7 +19,7 @@ import { deltaTime, TARGET_MILLIS_PER_FRAME } from '/node_modules/jsge-core/src/
 import Transform from '/node_modules/jsge-core/src/Transform.js';
 import { makeSerializable } from '/node_modules/jsge-core/src/Serialize.js';
 import { getKeyState } from '/node_modules/jsge-module-input/src/Input.js';
-import { asset, load } from '/node_modules/asset-loader/src/AssetLoader.js';
+import { define, load } from '/node_modules/asset-loader/src/AssetLoader.js';
 
 export default class ControllerTest2 extends GameObjectWithScript(GameObject) {
     constructor() {
@@ -27,12 +27,12 @@ export default class ControllerTest2 extends GameObjectWithScript(GameObject) {
         this.movementAmt = 5;
         this.transform.scale.x = 2;
         this.transform.scale.y = 2;
-        load({
+        define({
             name: "PLAYER",
             path: "/asset/fp/Ship.png",
             type: "image"
         });
-        asset("PLAYER").then((img) => {
+        load("PLAYER").then((img) => {
             this.texture = img;
             // `spritesheet` is the imported spritesheet
             // let frames = [];

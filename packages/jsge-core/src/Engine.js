@@ -62,9 +62,8 @@ export function addJMod(jmod) {
     }
 }
 
-// Starts the Game Loop
-export function initGameLoop() {
-    if (!currScene) throw new Error("You must select a Scene First!");
+// Loads all modules and disables loading new modules
+export function initEngine() {
     allowModuleLoading = false;
 
     // @TODO remove this later
@@ -75,7 +74,16 @@ export function initGameLoop() {
         const f = initFuncs[i];
         f(engineInternals);
     }
+}
+
+// Starts the Game Loop
+export function initGameLoop() {
+    if (!currScene) throw new Error("You must select a Scene First!");
     
+    if (!allowModuleLoading) {
+        initEngine();
+    }
+
     gameLoopStarted = true;
     currTime = window.performance.now();
     main();

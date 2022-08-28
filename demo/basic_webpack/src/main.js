@@ -1,5 +1,5 @@
 import { initUI, toggleOverlay } from './ui.js';
-import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enrollGameObject, addJMod } from 'jsge-core/src/Engine.js';
+import { initGameLoop, setCurrentScene, TARGET_MILLIS_PER_FRAME, deltaTime, enrollGameObject, addJMod, initEngine as initJSGE } from 'jsge-core/src/Engine.js';
 // import ControllerTest2 from './game/ControllerTest2.js';
 import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings } from 'jsge-module-input/src/Input.js';
 // import { Puppet, convertInstanceIntoPuppet, convertPuppetIntoInstance, disablePuppetUpdates, connect, disconnect } from 'jsge-module-networking/src/Puppeteer.js';
@@ -22,6 +22,7 @@ function initEngine() {
     // addJMod(pJmod);
     // addJMod(audioMod);
     addJMod(rendJmod);
+    initJSGE();
 }
 
 function main() {

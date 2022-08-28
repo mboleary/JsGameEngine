@@ -7,7 +7,7 @@
 import Scene from '../Scene';
 import GameObject from '../GameObject';
 import { deserialize } from '../serialization';
-import {asset, load} from "asset-loader/src/AssetLoader.js";
+import {define} from "asset-loader/src/AssetLoader.js";
 
  /**
   * Builds a GameObject from a prefab
@@ -91,7 +91,7 @@ function loadAssets(assetArr) {
     // @TODO should call out into the asset loader to load the assets used in this prefab if they are not already loaded
     if (assetArr && Array.isArray(assetArr)) {
         for (const assetItem of assetArr) {
-            load({...assetItem});
+            define({...assetItem});
         }
     }
 }

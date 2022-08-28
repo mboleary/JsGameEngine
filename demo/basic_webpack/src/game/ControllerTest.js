@@ -11,10 +11,10 @@ import TransformComponent from "jsge-module-graphics2d/src/components/Transform.
 
 import { getKeyState } from 'jsge-module-input/src/Input.js';
 
-import { asset, load } from 'asset-loader/src/Asset/AssetLoader.js';
+import { define } from 'asset-loader/src/Asset/AssetLoader.js';
 
 export default function controllerTestFactory() {
-    load({
+    define({
         name: "PLAYER",
         path: "/asset/fp/Player.png",
         type: "image"

@@ -8,7 +8,7 @@
 
 import Scene from '/node_modules/jsge-core/src/Scene.js';
 import { Camera } from '/node_modules/jsge-module-graphics2d/src/Camera/Camera.js';
-import { asset } from '/node_modules/asset-loader/src/AssetLoader.js';
+import { load } from '/node_modules/asset-loader/src/AssetLoader.js';
 
 import Test from './game/Test.js';
 import DrawsThings from './game/DrawsThings.js';
@@ -67,7 +67,7 @@ export function tileScene() {
 
     const f = async () => {
         let scr = tm.scripts[0]; // Should be TileMapScript
-        let t = await asset("tilesheet");
+        let t = await load("tilesheet");
         scr.setTileset(t);
     }
     f();

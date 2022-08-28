@@ -2,7 +2,7 @@
  * Contains definitions for all assets loaded in for the game. This is a temporary file and should be removed when AssetLoading / Prefabs are fully implemented.
  */
 
-import { load, asset, loadGroup, addCustomLoader } from '/node_modules/asset-loader/src/AssetLoader.js';
+import { define, loadGroup, addCustomLoader } from '/node_modules/asset-loader/src/AssetLoader.js';
 import SpriteSheet from "/node_modules/jsge-module-graphics2d/src/SpriteSheet.js";
 
 export function defineLoadTypes() {
@@ -28,25 +28,25 @@ export function defineLoadTypes() {
 }
 
 export function defineAssets() {
-    load({
+    define({
         name: "0",
         path: "/asset/fp/0.png",
         type: "image",
         groups: ["main"]
     });
-    load({
+    define({
         name: "1",
         path: "/asset/fp/1.png",
         type: "image",
         groups: ["main"]
     });
-    load({
+    define({
         name: "2",
         path: "/asset/fp/2.png",
         type: "image",
         groups: ["main"]
     });
-    load({
+    define({
         name: "tilesheet",
         path: "/asset/test_tilesheet.png",
         type: "spritesheet",

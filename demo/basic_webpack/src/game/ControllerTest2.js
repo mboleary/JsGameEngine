@@ -6,11 +6,11 @@ import SpriteComponent from 'jsge-module-graphics2d/src/components/Sprite.compon
 import TransformComponent from "jsge-module-graphics2d/src/components/Transform.component";
 import { addSerializableType } from 'jsge-core/src/serialization';
 import { getKeyState } from 'jsge-module-input/src/Input.js';
-import { asset, load } from 'asset-loader/src/AssetLoader.js';
+import { define } from 'asset-loader/src/AssetLoader.js';
 
 export default function controllerTest2Factory() {
 
-    load({
+    define({
         name: "PLAYER",
         path: "/asset/fp/Player.png",
         type: "image"
