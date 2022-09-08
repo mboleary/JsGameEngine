@@ -11,4 +11,6 @@ export async function imageAssetLoader(options) {
     });
     options.data = await p;
     options.loaded = true;
+
+    return options.data;
 }

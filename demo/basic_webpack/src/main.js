@@ -14,6 +14,7 @@ import {jmod as rendJmod} from "jsge-module-graphics2d/src/Render.js";
 
 import {spaceScene} from './temp_scenes.js';
 import { defineLoadTypes, defineAssets, loadSpaceScene, loadTileScene } from './temp_assets.js';
+import "./game/index.js";
 
 function initEngine() {
     // addJMod(dbgJmod);

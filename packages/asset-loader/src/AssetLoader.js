@@ -114,8 +114,8 @@ export async function load(assetName, forceReload=false) {
             console.error(err);
             throw new Error(err);
         }
-        await loaders[type](loadedContent[assetName]);
-        return loadedContent[assetName].data;
+        const returnedVal = await loaders[type](loadedContent[assetName]);
+        return returnedVal || loadedContent[assetName].data;
     }
 }
 

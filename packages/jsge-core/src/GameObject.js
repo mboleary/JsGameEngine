@@ -29,43 +29,59 @@ export default class GameObject {
         // this = {test: true};
     }
 
-    // Attaches a GameObject to this GameObject
+    /**
+     * Attaches a GameObject to this GameObject.
+     * This does NOT initialize the gameobject or add it to the engine
+     * @TODO add check to make sure that gameObject is not already attached
+     * @param {GameObject} go gameobject to attach
+     */
     attachGameObject(go) {
         go.parent = this;
         this.children.push(go);
     }
 
-    // Attaches a Component to this GameObject
-    attachComponent(scr) {
-        scr.gameObject = this;
-        this.components.push(scr);
+    /**
+     * Attaches a Component to this GameObject. This _does_ initialize the component if it hasn't already been initialized
+     * @param {Component} comp component to attach
+     */
+    attachComponent(comp) {
+        comp.gameObject = this;
+        this.components.push(comp);
         if (this._initialized) {
             console.log("comp added after init");
-            scr.init();
+            comp.init();
         }
-        if (scr._attrName && !(scr._attrName in KEY_BLACKLIST)) {
-            this[scr._attrName] = scr;
-            scr._attrSet = true;
+        if (comp._attrName && !(comp._attrName in KEY_BLACKLIST)) {
+            this[comp._attrName] = comp;
+            comp._attrSet = true;
         }
     }
 
-    // Removes a Script already attached to this GameObject
-    detachComponent(scr) {
-        if (scr.id) {
+    /**
+     * Removes a Component already attached to this GameObject. Component will be destroyed when removed
+     * @param {Component} comp component to destroy
+     */
+    detachComponent(comp) {
+        if (comp.id) {
             for (let i = 0; i < this.components.length; i++) {
                 let component = this.components[i];
-                if (component.id === scr.id) {
+                if (component.id === comp.id) {
                     this.components.splice(i, 1);
                     component.onDestroy();
                     break;
                 }
             }
-            if (scr._attrSet && !scr._attrName in KEY_BLACKLIST) {
-                delete this[scr._attrName];
+            if (comp._attrSet && !comp._attrName in KEY_BLACKLIST) {
+                delete this[comp._attrName];
             }
         }
     }
 
+    /**
+     * Get a component by the ID
+     * @param {string} id UUID of component to return
+     * @returns {Component | null} specified component or null
+     */
     getComponentByID(id) {
         for (let i = 0; i < this.components.length; i++) {
             let component = this.components[i];
@@ -73,8 +89,15 @@ export default class GameObject {
                 return component;
             }
         }
+        return null;
     }
 
+    /**
+     * Returns a component by the typename
+     * @TODO change this to support using a class reference
+     * @param {string} typename type of component to return
+     * @returns {Component | null} specified component
+     */
     getComponentByType(typename) {
         for (let i = 0; i < this.components.length; i++) {
             let component = this.components[i];
@@ -82,9 +105,13 @@ export default class GameObject {
                 return component;
             }
         }
+        return null;
     }
 
-    // Detaches a GameObject attached to this GameObject. Warning: This will make the child GameObject an orphan!
+    /**
+     * Detaches a GameObject attached to this GameObject. Warning: This will make the child GameObject an orphan!
+     * @param {GameObject} go gameobject to detach
+     */
     detachGameObject(go) {
         go.parent = null;
         for (let i = 0; i < this.children.length; i++) {
@@ -95,7 +122,9 @@ export default class GameObject {
         }
     }
 
-    // Called to initialize the Components
+    /**
+     * Gets called to initialize the Components
+     */
     initialize() {
         if (this.components && this.components.length) {
             this.components.forEach((c) => {
@@ -105,7 +134,9 @@ export default class GameObject {
         this._initialized = true;
     }
 
-    // Called before this GameObject is deleted
+    /**
+     * Gets called before this GameObject is deleted
+     */
     beforeDestroy() {
         if (this.components && this.components.length) {
             this.components.forEach((c) => {

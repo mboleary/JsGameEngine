@@ -7,62 +7,63 @@
 // import { asset } from './engine/Asset/AssetLoader.js';
 
 import Scene from 'jsge-core/src/Scene.js';
-// import { asset } from 'asset-loader/src/AssetLoader.js';
+import { define, load } from 'asset-loader/src/AssetLoader.js';
 
 import testFactory from './game/Test.js';
 import drawsThingsFactory from './game/DrawsThings.js';
-import controllerTest2Factory from './game/ControllerTest2.js';
+// import controllerTest2Factory from './game/ControllerTest2.js';
 import GameObject from 'jsge-core/src/GameObject';
 import CameraViewportComponent from "jsge-module-graphics2d/src/components/CameraViewport.component";
 import TransformComponent from 'jsge-module-graphics2d/src/components/Transform.component';
-import {buildGameObjectFromPrefab} from "jsge-core/src/prefab";
+import { enrollGameObject } from 'jsge-core/src/Engine.js';
+// import {buildGameObjectFromPrefab} from "jsge-core/src/prefab";
 // import TileMap from "./game/tilemap/TileMap.js";
 // import TileLayer from './game/tilemap/TileLayer.js';
 // import BoxMovementBehavior from "./game/BoxMovement.js";
 
-const TestPrefab = {
-    "name": "Test Prefab",
-    "scene": false,
-    "modules": [],
-    "meta": {
-        "test": true
-    },
-    "assets": [
-        {
-            "name": "PLAYER",
-            "path": "/asset/fp/Ship.png",
-            "type": "image"
-        }
-    ],
-    "root": {
-        "name": "Test Pilot from Prefab",
-        "id": "4ed2040c-264b-11ed-8405-cb2de71853f0",
-        "group": "test",
-        "children": [],
-        "components": [
-            {
-                "type": "TransformComponent",
-                "data": {
-                    "value": {
-                        "scale": {
-                            "x": 2,
-                            "y": 2
-                        }
-                    }
-                }
-            },
-            {
-                "type": "ControllerTest2Behavior"
-            },
-            {
-                "type": "SpriteComponent",
-                "data": {
-                    "assetName": "PLAYER"
-                }
-            }
-        ]
-    }
-};
+// const TestPrefab = {
+//     "name": "Test Prefab",
+//     "scene": false,
+//     "modules": [],
+//     "meta": {
+//         "test": true
+//     },
+//     "assets": [
+//         {
+//             "name": "PLAYER",
+//             "path": "/asset/fp/Ship.png",
+//             "type": "image"
+//         }
+//     ],
+//     "root": {
+//         "name": "Test Pilot from Prefab",
+//         "id": "4ed2040c-264b-11ed-8405-cb2de71853f0",
+//         "group": "test",
+//         "children": [],
+//         "components": [
+//             {
+//                 "type": "TransformComponent",
+//                 "data": {
+//                     "value": {
+//                         "scale": {
+//                             "x": 2,
+//                             "y": 2
+//                         }
+//                     }
+//                 }
+//             },
+//             {
+//                 "type": "ControllerTest2Behavior"
+//             },
+//             {
+//                 "type": "SpriteComponent",
+//                 "data": {
+//                     "assetName": "PLAYER"
+//                 }
+//             }
+//         ]
+//     }
+// };
 
 /**
  * Constructs the Space Scene that has the starfield and FighterPilot Ship
@@ -74,9 +75,19 @@ export function spaceScene() {
     scene.attachGameObject(drawsThingsFactory());
     scene.attachGameObject(testFactory());
     // scene.attachGameObject(controllerTest2Factory());
-    const ct2 = buildGameObjectFromPrefab(TestPrefab, {ignoreErrors: true});
-    console.log("ControllerTest2", ct2);
-    scene.attachGameObject(ct2);
+    // const ct2 = buildGameObjectFromPrefab(TestPrefab, {ignoreErrors: true});
+    // console.log("ControllerTest2", ct2);
+    // scene.attachGameObject(ct2);
+    define({
+        name: "TestPrefab",
+        path: "/asset/prefab/prefab_test.json",
+        type: "prefab"
+    });
+    load("TestPrefab").then(prefab => {
+        console.log("TestPrefab Loaded:", prefab);
+        // scene.attachGameObject(prefab);
+        enrollGameObject(prefab);
+    });
     scene.attachGameObject(cameraFactory());
     return scene;
 }

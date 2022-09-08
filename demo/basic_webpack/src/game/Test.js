@@ -71,7 +71,8 @@ export class TestBehavior extends Script {
         this.direction = 0;
         this.birthTimer = 0;
         this.deathTimer = 0;
-        this.selfReplicate = 3; // Sterilize them after a few generations so that we don't crash the browser
+        // Sterilize them after a few generations so that we don't crash the browser
+        this.selfReplicate = 1; // was 3
     }
 
     onInit() {
@@ -101,8 +102,10 @@ export class TestBehavior extends Script {
                 testBehavior.selfReplicate = this.selfReplicate - 1;
                 goomba.transform.value.deepCopy(this.gameObject.transform.value);
                 // Attach to the parent to ensure that it's attached to the same scene
+                console.log("parent:", this.gameObject.parent);
                 this.gameObject.parent.attachGameObject(goomba);
                 enrollGameObject(goomba);
+                console.log("new object parent:", goomba.parent);
                 this.birthTimer = now;
             }
             if (this.direction === 0) {

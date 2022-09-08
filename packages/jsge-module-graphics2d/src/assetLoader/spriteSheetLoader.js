@@ -11,6 +11,7 @@ export async function spritesheetAssetLoader(options) {
     await s.ready;
     options.data = s;
     options.loaded = true;
+    return s;
 }
 
 export async function spritesheetOptionsAssetLoader(options) {
@@ -22,4 +23,5 @@ export async function spritesheetOptionsAssetLoader(options) {
     await s.ready;
     options.data = s;
     options.loaded = true;
+    return s;
 }

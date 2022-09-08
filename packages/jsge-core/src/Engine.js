@@ -10,6 +10,9 @@ import { processGameObjectScripts, initGameObjectScripts } from './ScriptManager
 
 import { pauseTime, unpauseTime, advanceTime, getTime, isTimePaused } from './Time.js';
 
+import { addCustomLoader } from 'asset-loader/src/AssetLoader';
+import { ASSET_LOADERS } from './assetLoader';
+
 // import { calculateAbsoluteTransform } from './Physics.js';
 
 // import { checkPuppets, disconnect } from './Puppeteer.js';
@@ -47,6 +50,10 @@ const engineInternals = {
 const errorTypes = {
     "TenThousand": false,
     "HundredThousand": false
+};
+
+export function initializeAssetLoaders() {
+    Object.keys(ASSET_LOADERS).forEach(key => addCustomLoader(key, ASSET_LOADERS[key]));
 }
 
 export function addJMod(jmod) {
@@ -69,6 +76,9 @@ export function initEngine() {
     // @TODO remove this later
     initDebug();
 
+    // Add support for loading prefabs through asset loader
+    initializeAssetLoaders();
+
     // Initialize
     for (let i = 0; i < initFuncs.length; i++) {
         const f = initFuncs[i];
@@ -80,7 +90,7 @@ export function initEngine() {
 export function initGameLoop() {
     if (!currScene) throw new Error("You must select a Scene First!");
     
-    if (!allowModuleLoading) {
+    if (allowModuleLoading) {
         initEngine();
     }
 
@@ -235,16 +245,22 @@ function deleteGameObjectSync(go) {
 
     if (!toDel) return; // Item was not found
 
-    // Delete Parent's child instance (if any)
+    // Delete Parent's child reference (if any)
     if (toDel.parent != null && toDel.parent.children && toDel.parent.children.length) {
+        let found = false;
         for (let i = 0; i < toDel.parent.children.length; i++) {
             let item = toDel.parent.children[i];
             if (item.id === go.id) {
+                console.log("Found child reference to parent");
                 // @TODO are we calling beforeDestroy() twice?
-                item.beforeDestroy();
+                // item.beforeDestroy();
                 toDel.parent.children.splice(i, 1);
+                found = true;
                 break;
             }
+        }
+        if (!found) {
+            console.warn("Warning: gameObject not found in parent!", go.id, toDel.parent);
         }
     }
 

@@ -14,6 +14,8 @@ export async function prefabAssetLoader(options) {
         options._cachedJsonLoaded = true;
     }
 
+    // Note: we don't set the data value in this one as we don't want to return stale references
+
     return buildGameObjectFromPrefab(json, {ignoreErrors: true});
 }
 
