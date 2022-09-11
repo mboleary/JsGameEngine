@@ -137,6 +137,28 @@ export default class GameObject {
     }
 
     /**
+     * Returns true if the gameobject is a descendant of this gameobject
+     * @param {GameObject} go 
+     * @returns 
+     */
+    hasGameObject(go) {
+        let result = this._childrenIDs.has(go.id);
+        if (!result) {
+            for (const child of this.children) {
+                result = child.hasGameObject(go);
+                if (result) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    hasComponent(comp) {
+        return this._componentIDs.has(comp.id);
+    }
+
+    /**
      * Gets called to initialize the Components
      */
     initialize() {
