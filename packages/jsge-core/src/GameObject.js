@@ -26,16 +26,23 @@ export default class GameObject {
         this.components = []; // Components of the GameObject
         this._initialized = false;
 
+        this._childrenIDs = new Set();
+        this._componentIDs = new Set();
+
         // this = {test: true};
     }
 
     /**
      * Attaches a GameObject to this GameObject.
      * This does NOT initialize the gameobject or add it to the engine
-     * @TODO add check to make sure that gameObject is not already attached
      * @param {GameObject} go gameobject to attach
      */
     attachGameObject(go) {
+        if (this._childrenIDs.has(go.id)) {
+            console.warn("already has child", go);
+            return;
+        }
+        this._childrenIDs.add(go.id);
         go.parent = this;
         this.children.push(go);
     }
@@ -45,6 +52,11 @@ export default class GameObject {
      * @param {Component} comp component to attach
      */
     attachComponent(comp) {
+        if (this._componentIDs.has(comp.id)) {
+            console.warn("already has component", comp);
+            return;
+        }
+        this._componentIDs.add(comp.id);
         comp.gameObject = this;
         this.components.push(comp);
         if (this._initialized) {
@@ -74,6 +86,7 @@ export default class GameObject {
             if (comp._attrSet && !comp._attrName in KEY_BLACKLIST) {
                 delete this[comp._attrName];
             }
+            this._componentIDs.delete(comp.id);
         }
     }
 
@@ -114,6 +127,7 @@ export default class GameObject {
      */
     detachGameObject(go) {
         go.parent = null;
+        this._componentIDs.delete(comp.id);
         for (let i = 0; i < this.children.length; i++) {
             if (go.id === this.children[i].id) {
                 this.children.splice(i, 1);

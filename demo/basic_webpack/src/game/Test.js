@@ -102,10 +102,8 @@ export class TestBehavior extends Script {
                 testBehavior.selfReplicate = this.selfReplicate - 1;
                 goomba.transform.value.deepCopy(this.gameObject.transform.value);
                 // Attach to the parent to ensure that it's attached to the same scene
-                console.log("parent:", this.gameObject.parent);
                 this.gameObject.parent.attachGameObject(goomba);
                 enrollGameObject(goomba);
-                console.log("new object parent:", goomba.parent);
                 this.birthTimer = now;
             }
             if (this.direction === 0) {

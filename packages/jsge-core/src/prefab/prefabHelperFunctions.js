@@ -47,7 +47,6 @@ function buildGameObjectTree(rootJson, scene = false, options) {
 }
 
 function _buildGameObjectTreeHelper(json, parent, options) {
-    console.log("_buildGameObjectTreeHelper", json);
     let toRet = new GameObject({
         name: json.name,
         id: json.id,
@@ -72,7 +71,6 @@ function _buildGameObjectComponents(componentJson, gameObject, options) {
     // @TODO this should go into the serialization part of the engine and build the components that are to be added
     if (componentJson && Array.isArray(componentJson)) {
         for (const compItem of componentJson) {
-            console.log("serializing component", compItem);
             try {
 
                 const component = deserialize(compItem);

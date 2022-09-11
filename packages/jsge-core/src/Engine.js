@@ -166,16 +166,14 @@ export function enrollGameObject(go) {
     if (!go) return;
     // Check for ID
     if (gameObjectsIDs.has(go.id)) return;
-    setTimeout(() => {
-        let toInitScripts = {arr:[]};
-        // Attach to the current Scene, unless we are attaching the scene itself!
-        if (go.id !== currScene.id) {
-            currScene.attachGameObject(go);
-        }
-        enrollGameObjectHelper(go, toInitScripts);
-        initGameObjectScripts(toInitScripts.arr);
-        // go.initialize();
-    });
+    let toInitScripts = {arr:[]};
+    // Attach to the current Scene, unless we are attaching the scene itself!
+    if (go.id !== currScene.id) {
+        currScene.attachGameObject(go);
+    }
+    enrollGameObjectHelper(go, toInitScripts);
+    initGameObjectScripts(toInitScripts.arr);
+    // go.initialize();
 }
 
 /**
@@ -251,7 +249,6 @@ function deleteGameObjectSync(go) {
         for (let i = 0; i < toDel.parent.children.length; i++) {
             let item = toDel.parent.children[i];
             if (item.id === go.id) {
-                console.log("Found child reference to parent");
                 // @TODO are we calling beforeDestroy() twice?
                 // item.beforeDestroy();
                 toDel.parent.children.splice(i, 1);
