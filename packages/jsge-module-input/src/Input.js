@@ -17,12 +17,12 @@ let setOnNextRejector = null;
 let gamepadConnected = 0;
 let gamePadsBound = []; // Stores indicies of all gamepads bound. This is done for Chromium support
 
-export const jmod = {
-    name: "Input",
-    version: 0,
-    init: initInput,
-    loop: () => pollGamepads()
-}
+// export const jmod = {
+//     name: "Input",
+//     version: 0,
+//     init: initInput,
+//     loop: () => pollGamepads()
+// }
 
 export function initInput() {
     // Chrome does Gamepads differently than Firefox
