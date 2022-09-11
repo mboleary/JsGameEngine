@@ -6,7 +6,7 @@ import { addSerializableType } from 'jsge-core/src/serialization';
  * A Transform holds position, rotation, and Scale data for an object
  * @TODO Rewrite to use gl-matrix behind the scenes
  */
-export default class TransformComponent extends ComponentBase {
+export class TransformComponent extends ComponentBase {
     constructor({...params} = {}) {
         super({...params, attribute: "transform"});
 

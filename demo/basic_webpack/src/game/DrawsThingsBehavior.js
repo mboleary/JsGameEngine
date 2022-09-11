@@ -8,7 +8,7 @@
 
 // import { deltaTime, TARGET_MILLIS_PER_FRAME } from "../engine/Engine.js";
 
-import RenderScript from "jsge-module-graphics2d/src/components/RenderScript.component";
+import {RenderScript} from "jsge-module-graphics2d/src/components/RenderScript.component";
 
 import { getTime } from "jsge-core/src/Time.js";
 

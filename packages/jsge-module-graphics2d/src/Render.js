@@ -10,6 +10,8 @@ import { addCustomLoader } from 'asset-loader/src/AssetLoader';
 import { ASSET_LOADERS } from './assetLoader';
 import { CAMERA_ID } from "./constants.js";
 
+import { calculateAbsoluteTransform } from "./util/transformHelpers";
+
 let canvas = null;
 let context = null; // This is the context that will be used to render the game.
 let renderableComponents = []; // components that will need to be rendered
@@ -21,14 +23,14 @@ window.mod = {
     }
 };
 
-export const jmod = {
-    name: "Render",
-    version: 0,
-    init: initializeWith2dContext,
-    loop: (internals) => {
-        renderGameObjectsWith2dContext(internals.gameObjects);
-    }
-}
+// export const jmod = {
+//     name: "Render",
+//     version: 0,
+//     init: initializeWith2dContext,
+//     loop: (internals) => {
+//         renderGameObjectsWith2dContext(internals.gameObjects);
+//     }
+// }
 
 export function initializeAssetLoaders() {
     Object.keys(ASSET_LOADERS).forEach(key => addCustomLoader(key, ASSET_LOADERS[key]));
@@ -138,34 +140,4 @@ export function renderGameObjectsWith2dContext(gos) {
     context.setTransform(1,0,0,1,0,0);
 }
 
-// Misc. Functions and Class definitions
-
-export function deg2rad(deg) {
-    return (deg / 180) * Math.PI;
-}
-
 // @TODO rewrite transform class to calculate this automatically
-function calculateAbsoluteTransform(gos) {
-    gos.forEach((go) => {
-        if (!go.transform) return;
-        let abs = new Transform();
-        abs.deepCopy(go.transform.value);
-
-        if (go.parent && go.parent.transform) {
-            // Relative to the parent
-            let parent = go.parent.transform?.value;
-            if (go.parent.transform._absolute) {
-                parent = go.parent.transform._absolute;
-            }
-            // Scale the position
-            abs.position.multiply(parent.scale);
-            abs.position.add(parent.position);
-            abs.rotation.add(parent.rotation); // @TODO Fix rotation
-            abs.scale.multiply(parent.scale);
-            go.transform._absolute = abs;
-        } else {
-            // Relative to the origin [(0,0,0), (0,0,0), (1,1,1)]
-            go.transform._absolute = abs;
-        }
-    });
-}

@@ -9,7 +9,7 @@ import Renderable from './Renderable.interface';
 
 // @TODO Make this not be a script? Use as base for Sprites and Camera?
 
-export default class RenderScript extends Renderable(Script) {
+export class RenderScript extends Renderable(Script) {
 
     constructor({...params} = {}) {
         super({...params});

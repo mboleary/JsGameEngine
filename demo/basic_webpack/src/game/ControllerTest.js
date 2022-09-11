@@ -1,11 +1,11 @@
 import GameObject from 'jsge-core/src/GameObject.js';
-import Script from 'jsge-core/src/components/Script.js';
+import {Script} from 'jsge-core/src/components/Script.js';
 
 import { deltaTime, TARGET_MILLIS_PER_FRAME } from 'jsge-core/src/Engine.js';
 
-import SpriteComponent from "jsge-module-graphics2d/src/components/Sprite.component";
+import {SpriteComponent} from "jsge-module-graphics2d/src/components/Sprite.component";
 
-import TransformComponent from "jsge-module-graphics2d/src/components/Transform.component";
+import {TransformComponent} from "jsge-module-graphics2d/src/components/Transform.component";
 
 // import { makeSerializable } from 'jsge-core/src/Serialize.js';
 

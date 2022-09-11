@@ -11,7 +11,7 @@ import Transform from '../Transform';
 
 // @TODO Make this not be a script? Use as base for Sprites and Camera?
 
-export default class CameraViewportComponent extends Renderable(Script) {
+export class CameraViewportComponent extends Renderable(Script) {
 
     constructor({...params} = {}) {
         super({...params});

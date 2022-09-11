@@ -8,6 +8,8 @@ export default class ModuleBase {
         this._debugName = null;
         this._version = "0.0.0";
         this._meta = {};
+        this.hasInit = false;
+        this.hasLoop = false;
     }
 
     get name() {

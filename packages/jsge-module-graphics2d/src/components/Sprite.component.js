@@ -6,8 +6,9 @@ import ComponentBase from "jsge-core/src/ComponentBase.js";
 import Renderable from "./Renderable.interface";
 import {load} from "asset-loader/src/AssetLoader.js";
 import { addSerializableType } from 'jsge-core/src/serialization';
+import { deg2rad } from "../util/conversions";
 
-export default class SpriteComponent extends Renderable(ComponentBase) {
+export class SpriteComponent extends Renderable(ComponentBase) {
     constructor({assetName, zIndex, ...params} = {}) {
         super({...params});
 

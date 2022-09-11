@@ -2,7 +2,7 @@
  * Contains the Animation Object
  */
 
-export default class Animation {
+export class Animation {
     constructor(frames, advance) {
         this.frames = frames; // Animation Frames
         this.advance = advance; // How many frames to display each animation frame for

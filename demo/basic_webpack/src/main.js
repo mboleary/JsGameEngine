@@ -7,7 +7,7 @@ import { defineKey, TYPE_DIGITAL, setKeyOnNextInput, getAllKeys, setKeybindings 
 
 import {jmod as inputJmod} from "jsge-module-input/src/Input.js";
 // import {jmod as phyJmod} from "jsge-module-basic-physics/src/Physics.js";
-import {jmod as rendJmod} from "jsge-module-graphics2d/src/Render.js";
+import {RenderModule} from "jsge-module-graphics2d/src";
 // import {jmod as pJmod} from "jsge-module-networking/src/Puppeteer.js";
 // import audioMod from 'jsge-module-audio/src/Audio.js';
 // import {jmod as dbgJmod} from 'jsge-module-debug/src/Debug.js';
@@ -22,7 +22,7 @@ function initEngine() {
     // addJMod(phyJmod);
     // addJMod(pJmod);
     // addJMod(audioMod);
-    addJMod(rendJmod);
+    addJMod(new RenderModule());
     initJSGE();
 }
 

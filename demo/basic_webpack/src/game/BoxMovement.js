@@ -2,8 +2,8 @@
  * Moves the GameObject in a box
  */
 
-import Script from "jsge-core/src/components/Script.js";
-import Transform from "jsge-core/src/Transform.js";
+import {Script} from "jsge-core/src/components/Script.js";
+import Transform from "jsge-module-graphics2d/src/Transform.js";
 import { deltaTime } from "jsge-core/src/Engine.js";
 
 const MOE = 0.001; // Margin of Error

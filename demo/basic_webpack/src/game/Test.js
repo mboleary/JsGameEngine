@@ -12,7 +12,7 @@
 // import { asset, load } from '../engine/Asset/AssetLoader.js';
 
 import GameObject from 'jsge-core/src/GameObject.js';
-import Script from 'jsge-core/src/components/Script.js';
+import {Script} from 'jsge-core/src/components/Script.js';
 
 import { enrollGameObject, deleteGameObject, deltaTime, TARGET_MILLIS_PER_FRAME } from 'jsge-core/src/Engine.js';
 
@@ -21,8 +21,8 @@ import { getKeyState } from 'jsge-module-input/src/Input.js';
 import { getTime } from 'jsge-core/src/Time.js';
 
 import { define } from 'asset-loader/src/AssetLoader.js';
-import SpriteComponent from 'jsge-module-graphics2d/src/components/Sprite.component';
-import TransformComponent from 'jsge-module-graphics2d/src/components/Transform.component';
+import {SpriteComponent} from 'jsge-module-graphics2d/src/components/Sprite.component';
+import {TransformComponent} from 'jsge-module-graphics2d/src/components/Transform.component';
 
 let mainSpriteSheet = null;
 

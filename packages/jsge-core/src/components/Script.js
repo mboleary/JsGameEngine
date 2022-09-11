@@ -5,7 +5,7 @@
 import ComponentBase from "../ComponentBase";
 import {enrollScriptComponent, removeScriptComponent} from "../ScriptManager";
 
-export default class Script extends ComponentBase {
+export class Script extends ComponentBase {
     constructor({...params} = {}) {
         super({...params});
         this._priority = 1;
@@ -56,3 +56,5 @@ export const AsyncScript = Base => class extends Base {
         });
     }
 }
+
+export default Script;
