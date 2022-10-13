@@ -61,7 +61,7 @@ export default class GameObject {
         this.components.push(comp);
         if (this._initialized) {
             console.log("comp added after init");
-            comp.init();
+            comp._init();
         }
         if (comp._attrName && !(comp._attrName in KEY_BLACKLIST)) {
             this[comp._attrName] = comp;
@@ -79,7 +79,7 @@ export default class GameObject {
                 let component = this.components[i];
                 if (component.id === comp.id) {
                     this.components.splice(i, 1);
-                    component.onDestroy();
+                    component._destroy();
                     break;
                 }
             }
@@ -164,7 +164,7 @@ export default class GameObject {
     initialize() {
         if (this.components && this.components.length) {
             this.components.forEach((c) => {
-                c.init();
+                c._init();
             });
         }
         this._initialized = true;
@@ -176,7 +176,7 @@ export default class GameObject {
     beforeDestroy() {
         if (this.components && this.components.length) {
             this.components.forEach((c) => {
-                c.destroy();
+                c._destroy();
             });
         }
     }

@@ -14,9 +14,9 @@ const Renderable = (Base) => class extends Base {
         
     }
 
-    init() {
+    _init() {
         enrollRenderableComponent(this);
-        if (super.init) super.init();
+        if (super._init) super._init();
     }
 
     // Override to generate things when the context is first created
@@ -29,9 +29,9 @@ const Renderable = (Base) => class extends Base {
 
     }
 
-    destroy() {
+    _destroy() {
         removeRenderableComponent(this);
-        if (super.destroy) super.destroy();
+        if (super._destroy) super._destroy();
     }
 }
 

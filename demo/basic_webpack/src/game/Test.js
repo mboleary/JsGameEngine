@@ -75,7 +75,7 @@ export class TestBehavior extends Script {
         this.selfReplicate = 1; // was 3
     }
 
-    onInit() {
+    init() {
         let now = getTime();
         this.birthTimer = now;
         this.squishedTimer = now;
@@ -119,7 +119,7 @@ export class TestBehavior extends Script {
         }
     }
 
-    onDestroy() {
+    destroy() {
         // console.log("Destroyed");
         window.numGoombas++;
     }

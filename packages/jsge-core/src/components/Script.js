@@ -12,14 +12,14 @@ export class Script extends ComponentBase {
         
     }
 
-    init() {
+    _init() {
         enrollScriptComponent(this);
-        if (super.init) super.init();
-        this.onInit()
+        if (super._init) super._init();
+        this.init()
     }
 
     // Override this to initialize a script
-    onInit() {
+    init() {
 
     }
 
@@ -29,13 +29,13 @@ export class Script extends ComponentBase {
     }
 
     // Called before the object is destroyed
-    onDestroy() {
+    destroy() {
 
     }
 
-    destroy() {
+    _destroy() {
         removeScriptComponent(this);
-        this.onDestroy();
+        this.destroy();
     }
 }
 

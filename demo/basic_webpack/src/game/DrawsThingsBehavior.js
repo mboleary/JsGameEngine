@@ -31,7 +31,7 @@ export default class DrawsThingsBehavior extends RenderScript {
         this.vertSpeed = 0.25;
     }
 
-    onInit() {
+    init() {
         this.lastAddTime = getTime();
     }
 

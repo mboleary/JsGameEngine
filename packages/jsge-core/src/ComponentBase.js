@@ -15,13 +15,27 @@ export default class ComponentBase {
         this._attrSet = false; // true when the attribute has been set successfully
     }
 
-    // Function called when component created
-    init () {
+    /**
+     * Function called when Component initialized
+     */
+    _init () {
 
     }
 
-    // Function called when component destroyed
-    destroy () {
+    /**
+     * Public-facing function for component initialization
+     */
+    init() {}
+
+    /**
+     * Function called when component is destroyed
+     */
+    _destroy () {
 
     }
+
+    /**
+     * Public-facing function for component destruction
+     */
+    destroy() {}
 }

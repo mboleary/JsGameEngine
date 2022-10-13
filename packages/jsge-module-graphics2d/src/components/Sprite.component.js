@@ -18,8 +18,8 @@ export class SpriteComponent extends Renderable(ComponentBase) {
         this.hidden = false;
     }
 
-    init() {
-        super.init();
+    _init() {
+        super._init();
         load(this.assetName).then((img) => {
             // @TODO handle animations and spritesheets properly
             this.texture = img;
