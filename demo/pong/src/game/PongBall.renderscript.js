@@ -4,10 +4,10 @@
 
 import { RenderScript, Transform } from "jsge-module-graphics2d";
 
-export class PongBar extends RenderScript {
+export class PongBall extends RenderScript {
     constructor({
         size = 5,
-        color = "#FFFFFF",
+        color = "#000000",
         ...params
     } = {}) {
         super({...params});
@@ -20,11 +20,12 @@ export class PongBar extends RenderScript {
         const transform = this.gameObject.transform;
         if (!transform) return;
 
-        context.fillRect(
+        context.arc(
             transform.position.x, 
             transform.position.y, 
-            transform.position.x + this.size, 
-            transform.position.y + this.size
+            this.size / 2,
+            0,
+            2 * Math.PI
         );
     }
 }

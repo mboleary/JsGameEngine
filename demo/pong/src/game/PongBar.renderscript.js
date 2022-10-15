@@ -8,7 +8,7 @@ export class PongBar extends RenderScript {
     constructor({
         length = 50,
         width = 5,
-        color = "#FFFFFF",
+        color = "#000000",
         ...params
     } = {}) {
         super({...params});
