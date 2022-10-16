@@ -10,7 +10,7 @@ import { PlayerScript } from "./game/Player.script";
 import { PongBar } from './game/PongBar.renderscript';
 import { PongBall } from './game/PongBall.renderscript';
 
-import { Transform } from 'jsge-module-graphics2d';
+import { TransformComponent, CameraViewportComponent } from 'jsge-module-graphics2d';
 
 
 /**
@@ -26,15 +26,16 @@ export async function loadTitleScene() {
     
 }
 
-export async function loadGameScene() {
+export function loadGameScene() {
     const scene = new Scene();
 
     const leftPaddle = new GameObject();
+    leftPaddle.name = "Left Paddle";
     const lp_scr = new PlayerScript();
     const lp_bar = new PongBar();
-    const lp_tr = new Transform();
-    lp_tr.position.x = 5;
-    lp_tr.position.y = 5;
+    const lp_tr = new TransformComponent();
+    lp_tr.value.position.x = 5;
+    lp_tr.value.position.y = 5;
 
     leftPaddle.attachComponent(lp_bar);
     leftPaddle.attachComponent(lp_scr);
@@ -43,30 +44,46 @@ export async function loadGameScene() {
     scene.attachGameObject(leftPaddle);
 
     const rightPaddle = new GameObject();
-    const rp_scr = new PlayerScript();
+    rightPaddle.name = "Right Paddle";
+    // const rp_scr = new PlayerScript();
     const rp_bar = new PongBar();
-    const rp_tr = new Transform();
-    rp_tr.position.x = 45;
-    rp_tr.position.x = 5;
+    const rp_tr = new TransformComponent();
+    rp_tr.value.position.x = 45;
+    rp_tr.value.position.y = 5;
 
-    rightPaddle.attachComponent(rp_scr);
+    // rightPaddle.attachComponent(rp_scr);
     rightPaddle.attachComponent(rp_bar);
     rightPaddle.attachComponent(rp_tr);
 
     scene.attachGameObject(rightPaddle);
 
     const ball = new GameObject();
+    ball.name = "Ball";
     const b_scr = new BallScript();
+    b_scr.speed = 10;
     const b_cir = new PongBall();
-    const b_tr = new Transform();
-    b_tr.position.x = 95;
-    b_tr.position.x = 5;
+    b_cir.size = 50;
+    b_cir.name = "ball_render";
+    const b_tr = new TransformComponent();
+    b_tr.value.position.x = 100;
+    b_tr.value.position.y = 100;
 
     ball.attachComponent(b_scr);
     ball.attachComponent(b_cir);
     ball.attachComponent(b_tr);
 
     scene.attachGameObject(ball);
+
+    const camera = new GameObject();
+    camera.name = "camera";
+
+    const c_cam = new CameraViewportComponent();
+    camera.attachComponent(c_cam);
+
+    const c_tr = new TransformComponent();
+    camera.attachComponent(c_tr);
+
+    scene.attachGameObject(camera);
 
     return scene;
 }

@@ -19,14 +19,22 @@ export class PongBar extends RenderScript {
     }
 
     render(context, width, height, camTransform) {
-        const transform = this.gameObject.transform;
+        const transform = this.gameObject.transform?.value;
         if (!transform) return;
+
+
+        const oldFillstyle = context.fillStyle;
+
+        context.fillStyle = this.color;
+
 
         context.fillRect(
             transform.position.x, 
             transform.position.y, 
-            transform.position.x + this.width, 
-            transform.position.y + this.length
+            this.width, 
+            this.length
         );
+
+        context.fillStyle = oldFillstyle;
     }
 }

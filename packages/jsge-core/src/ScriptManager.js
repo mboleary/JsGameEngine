@@ -30,6 +30,7 @@ export function initGameObjectScripts(gos) {
     //         });
     //     }
     // });
+    // Note: This initializes all components attached to the gameobjects
     for (const go of gos) {
         go.initialize();
     }

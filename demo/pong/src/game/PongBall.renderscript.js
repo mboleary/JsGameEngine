@@ -17,8 +17,14 @@ export class PongBall extends RenderScript {
     }
 
     render(context, width, height, camTransform) {
-        const transform = this.gameObject.transform;
+        const transform = this.gameObject.transform?.value;
         if (!transform) return;
+
+        const oldFillstyle = context.fillStyle;
+
+        context.fillStyle = this.color;
+
+        context.beginPath();
 
         context.arc(
             transform.position.x, 
@@ -27,5 +33,16 @@ export class PongBall extends RenderScript {
             0,
             2 * Math.PI
         );
+
+        context.fill();
+
+        // context.fillRect(
+        //     transform.position.x, 
+        //     transform.position.y, 
+        //     this.size, 
+        //     this.size
+        // );
+
+        context.fillStyle = oldFillstyle;
     }
 }

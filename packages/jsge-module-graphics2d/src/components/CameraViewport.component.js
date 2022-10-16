@@ -19,6 +19,20 @@ export class CameraViewportComponent extends Renderable(Script) {
         this.name = "CameraViewport";
         this.prevTransform = new Transform();
         this._context = null;
+        this._viewport = {width: null, height: null};
+    }
+
+    get viewportWidth() {
+        return this._viewport.width;
+    }
+
+    get viewportHeight() {
+        return this._viewport.height;
+    }
+
+    onContextInit(context, width, height) {
+        this._viewport.width = width;
+        this._viewport.height = height;
     }
 
     // Override this to render things directly to the canvas

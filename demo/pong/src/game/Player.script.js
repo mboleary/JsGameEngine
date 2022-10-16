@@ -10,7 +10,7 @@ export class PlayerScript extends Script {
     constructor({...params} = {}) {
         super({...params});
 
-        this.acceleration = new Transform();
+        this.accel = new Transform();
 
         this.speed = 5;
         this.yMinBoundary = 0;

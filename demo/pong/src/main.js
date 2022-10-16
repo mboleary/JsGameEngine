@@ -3,7 +3,7 @@
  */
 
 import { setCurrentScene, initEngine, addJMod, initGameLoop } from "jsge-core/src/Engine";
-import { InputModule, defineKey, TYPE_DIGITAL } from "jsge-module-input";
+import { InputModule, defineKey, TYPE_DIGITAL, setKeybindings } from "jsge-module-input";
 import { RenderModule, setCanvas } from "jsge-module-graphics2d";
 import { loadGameScene } from "./scene.temp";
 
@@ -38,6 +38,7 @@ function main() {
     const scene = loadGameScene();
     setCurrentScene(scene);
     // Engine.initGameLoop();
+    initEngine();
     initGameLoop();
 }
 
