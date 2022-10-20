@@ -9,6 +9,14 @@ import { deg2rad, randInt } from "../util";
 
 import { PongBall } from "./PongBall.renderscript";
 
+const REFLECTIONS = Object.freeze({
+    DEFAULT: -1,
+    TOP: 0,
+    RIGHT: 1,
+    BOTTOM: 2,
+    LEFT: 3
+});
+
 export class BallScript extends Script {
     constructor({...params} = {}) {
         super({...params});
@@ -18,10 +26,11 @@ export class BallScript extends Script {
         this.speed = 3;
         this.isMoving = false;
         // Direction is in degrees
-        this.direction = 1;
+        this.direction = 0;
         this.yMinBoundary = 0;
         this.yMaxBoundary = null; // @TODO set this from another component
 
+        this._lastReflectionSide = REFLECTIONS.DEFAULT;
         this._cameraComponent = null;
     }
 
@@ -43,41 +52,45 @@ export class BallScript extends Script {
             // Note: since the origin is in the top-left corner, the y-axis is reflected on the unit circle
             if (
                 transform.position.y - radius <= 0 &&
-                this.direction >= 180 && 
-                this.direction <= 360
+                this._lastReflectionSide !== REFLECTIONS.TOP
             ) {
                 // Reflect off of top (0 to 180 degrees)
                 console.log("reflect top", this.direction);
-                let newDir = ((180 - this.direction) + 180) % 360
+                this._lastReflectionSide = REFLECTIONS.TOP;
+                // let newDir = ((180 - this.direction) + 180) % 360
+                let newDir = ((90 - this.direction) + 270) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
             } else if (
                 transform.position.y + radius >= this._cameraComponent.viewportHeight &&
-                this.direction >= 0 && 
-                this.direction <= 180
+                this._lastReflectionSide !== REFLECTIONS.BOTTOM
             ) {
                 // Reflect off of bottom (180 to 360 degrees)
                 console.log("reflect bottom", this.direction);
-                let newDir = (90 - (180 - this.direction)) % 360;
+                this._lastReflectionSide = REFLECTIONS.BOTTOM;
+                // let newDir = (90 - (180 - this.direction)) % 360;
+                let newDir = ((270 - this.direction) + 270 + 180) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
             }
             
             if (
                 transform.position.x - radius <= 0 &&
-                this.direction >= 90 && 
-                this.direction <= 270
+                this._lastReflectionSide !== REFLECTIONS.LEFT
             ) {
                 // Reflect on left side (90 to 270 degrees)
                 console.log("reflect left", this.direction);
-                let newDir = ((270 - this.direction) + 270) % 360;
+                this._lastReflectionSide = REFLECTIONS.LEFT;
+                // let newDir = ((270 - this.direction) + 270) % 360;
+                let newDir = ((360 - this.direction) + 360 + 180) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
             } else if (
                 transform.position.x + radius >= this._cameraComponent.viewportWidth &&
-                (this.direction >= 270 ||
-                this.direction <= 90)
+                this._lastReflectionSide !== REFLECTIONS.RIGHT
             ) {
                 // Reflect on right side (270 to 90 (450) degrees)
                 console.log("reflect right", this.direction);
-                let newDir = (this.direction - 90) % 360;
+                this._lastReflectionSide = REFLECTIONS.RIGHT;
+                // let newDir = (this.direction + 90) % 360;
+                let newDir = ((180 - this.direction) + 180 + 180) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
             }
 
@@ -91,8 +104,8 @@ export class BallScript extends Script {
 
     startMoving() {
         this.isMoving = true;
-        // this.direction = randInt(0, 359);
-        this.direction = 45;
+        this.direction = randInt(0, 359);
+        // this.direction = 45;
     }
 
     resetMovement() {

@@ -3,7 +3,7 @@
  */
 
 import ModuleBase from "jsge-core/src/ModuleBase";
-import {initializeWith2dContext, renderGameObjectsWith2dContext} from "./Render";
+import {initializeWith2dContext, renderGameObjectsWith2dContext} from "../Render";
 
 export class RenderModule extends ModuleBase {
     constructor({...options} = {}) {
