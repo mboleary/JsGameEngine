@@ -60,7 +60,7 @@ export function loadGameScene() {
     const ball = new GameObject();
     ball.name = "Ball";
     const b_scr = new BallScript();
-    b_scr.speed = 10;
+    b_scr.speed = 1;
     const b_cir = new PongBall();
     b_cir.size = 50;
     b_cir.name = "ball_render";

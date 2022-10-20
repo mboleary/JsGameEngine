@@ -40,24 +40,45 @@ export class BallScript extends Script {
         const radius = this._pongBallRenderScript.size / 2;
 
         if (this._cameraComponent && this.isMoving) {
-            if (transform.position.y - radius <= 0) {
+            // Note: since the origin is in the top-left corner, the y-axis is reflected on the unit circle
+            if (
+                transform.position.y - radius <= 0 &&
+                this.direction >= 180 && 
+                this.direction <= 360
+            ) {
                 // Reflect off of top (0 to 180 degrees)
-                this.direction = (180 - this.direction) + 180;
-                console.log("reflect top");
-            } else if (transform.position.y + radius >= this._cameraComponent.viewportHeight) {
+                console.log("reflect top", this.direction);
+                let newDir = ((180 - this.direction) + 180) % 360
+                this.direction = newDir > 0 ? newDir : 360 + newDir;
+            } else if (
+                transform.position.y + radius >= this._cameraComponent.viewportHeight &&
+                this.direction >= 0 && 
+                this.direction <= 180
+            ) {
                 // Reflect off of bottom (180 to 360 degrees)
-                this.direction = (90 - (360 - this.direction));
-                console.log("reflect bottom");
+                console.log("reflect bottom", this.direction);
+                let newDir = (90 - (180 - this.direction)) % 360;
+                this.direction = newDir > 0 ? newDir : 360 + newDir;
             }
             
-            if (transform.position.x - radius <= 0) {
+            if (
+                transform.position.x - radius <= 0 &&
+                this.direction >= 90 && 
+                this.direction <= 270
+            ) {
                 // Reflect on left side (90 to 270 degrees)
-                this.direction = ((270 - this.direction) + 270) % 360;
-                console.log("reflect left");
-            } else if (transform.position.x + radius >= this._cameraComponent.viewportWidth) {
+                console.log("reflect left", this.direction);
+                let newDir = ((270 - this.direction) + 270) % 360;
+                this.direction = newDir > 0 ? newDir : 360 + newDir;
+            } else if (
+                transform.position.x + radius >= this._cameraComponent.viewportWidth &&
+                (this.direction >= 270 ||
+                this.direction <= 90)
+            ) {
                 // Reflect on right side (270 to 90 (450) degrees)
-                this.direction = (360 - (270 - this.direction)) % 360;
-                console.log("reflect right");
+                console.log("reflect right", this.direction);
+                let newDir = (this.direction - 90) % 360;
+                this.direction = newDir > 0 ? newDir : 360 + newDir;
             }
 
             const rad = deg2rad(this.direction);
@@ -70,7 +91,8 @@ export class BallScript extends Script {
 
     startMoving() {
         this.isMoving = true;
-        this.direction = randInt(0, 359);
+        // this.direction = randInt(0, 359);
+        this.direction = 45;
     }
 
     resetMovement() {
