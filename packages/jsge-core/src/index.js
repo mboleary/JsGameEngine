@@ -6,6 +6,7 @@ export * as ScriptManager from './ScriptManager';
 export * from "./serialization";
 export * as Time from './Time';
 export * from "./components";
+export {default as ModuleBase} from './ModuleBase';
 
 // @TODO these need to be removed or refactored
 // export * as Physics from './Physics';
