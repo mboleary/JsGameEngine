@@ -1,0 +1,14 @@
+{
+  "name": "jsge-module-input",
+  "version": "1.0.0",
+  "description": "This module provides an API for getting user input from the keyboard, mouse, and Game Controllers",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsge-core": "file:../jsge-core"
+  }
+}

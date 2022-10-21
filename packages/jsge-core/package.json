@@ -1,0 +1,16 @@
+{
+  "name": "jsge-core",
+  "version": "1.0.0",
+  "description": "Core parts of the JS Game Engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "asset-loader": "file:../asset-loader",
+    "gl-matrix": "^3.4.3",
+    "uuid": "^8.3.2"
+  }
+}
