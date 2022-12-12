@@ -2,14 +2,15 @@
  * Contains the Input Module, replaces the old jmod export
  */
 
-import ModuleBase from "jsge-core/src/ModuleBase";
-import { initInput, pollGamepads } from "./Input";
+import ModuleBase, { EngineInternals } from "jsge-core/src/ModuleBase";
+import { pollGamepads } from "./Input";
 import { InputSubmodule, KeyDef, KeyMapping, ControlType, ControllerConnectParams, Direction, KeyState } from "./types";
 import { clamp } from "./util";
+import { InvalidKeyNameError } from "./errors";
 
 export type InputModuleParams = {
     submodules: InputSubmodule[],
-    config?: KeyDef[],
+    config: KeyDef[],
 }
 
 type ButtonMapping = {
@@ -21,6 +22,12 @@ type ButtonMapping = {
 const A2D_THRESHOLD = 0.5;
 
 export class InputModule extends ModuleBase {
+    readonly name = "Input";
+    readonly version = "0.0.0";
+    readonly debugName = "input";
+    readonly meta = {};
+
+
     // All connected submodules
     private readonly connectedSubmodules: Map<string, InputSubmodule> = new Map();
     // All Key Definitions
@@ -29,14 +36,20 @@ export class InputModule extends ModuleBase {
     private readonly keyValues: Map<string, KeyState> = new Map();
     // Contains all mappings of keys by submodule to which buttons they are mapped to (submodule.controller.name => ButtonMapping[])
     private readonly keyMappings: Map<string, Map<number, Map<string, ButtonMapping[]>>> = new Map();
-    constructor({ submodules, config, ...options } :InputModuleParams = {submodules:[]}) {
-        super(options);
 
-        // Metadata
-        this._name = "Input";
-        this._version = "0.0.0";
-        this._debugName = "input";
-        this._meta = {};
+    // For binding keys on next input
+    private setKeyOnNextInputActive: boolean = false;
+    private setKeyOnNextInputResolve: Function | null = null;
+    private setKeyOnNextInputReject: Function | null = null;
+    private setKeyOnNextInputName: string | null = null;
+    private setKeyOnNextInputReplace: boolean | null = null;
+
+    // Keep track of whether the module has been initialized for adding submodules afterwards
+    private initialized = false;
+    private submodulesToPoll: InputSubmodule[] = [];
+    
+    constructor({ submodules, config, ...options } :InputModuleParams = {submodules:[], config: []}) {
+        super(options);
 
         // Setup Submodules
         for (const submod of submodules) {
@@ -44,21 +57,33 @@ export class InputModule extends ModuleBase {
         }
 
         // Setup Config
-
+        for (const {mappings, ...keyDef} of config) {
+            this.keyDefs.set(keyDef.name, {...keyDef, mappings: []});
+            for (const mapping of mappings) {
+                this.bindKey(keyDef.name, mapping);
+            }
+        }
     }
 
     public init() {
-        initInput();
+        this.initialized = true;
+
+        for (const submod of this.connectedSubmodules.values()) {
+            submod.init();
+        }
     }
 
-    public loop(internals) {
-        pollGamepads();
+    public loop(internals: EngineInternals) {
+        for (const submod of this.submodulesToPoll) {
+            submod.poll();
+        }
     }
 
     public debug() {
         return {
             setKeyValue: this.setKeyValue,
             defineKey: this.defineKey,
+            bindKey: this.bindKey,
         };
     }
 
@@ -73,6 +98,85 @@ export class InputModule extends ModuleBase {
                 controllerConnectCallback: this.controllerConnectHandler,
                 controllerDisconnectCallback: this.controllerDisconnectHandler,
             });
+            this.connectedSubmodules.set(submodule.name, submodule);
+
+            // Ensure that submodule is initialized if added after that happens
+            if (this.initialized) {
+                submodule.init();
+            }
+
+            if (submodule.needsPolling) {
+                this.submodulesToPoll.push(submodule);
+            }
+        }
+    }
+
+    /**
+     * Returns the state of the key
+     * @param name 
+     */
+    public getKey(name: string): KeyState {
+        const toRet = this.keyValues.get(name);
+
+        if (toRet) {
+            return toRet;
+        }
+
+        throw new InvalidKeyNameError(`'${name}' is not a valid key!`);
+
+    }
+
+    /**
+     * Binds a key on the next input
+     * @param name key name
+     * @param replace true if all other bindings for that key should be replaced
+     * @returns Promise which will resolve on the next binding
+     */
+    public bindKeyOnNextInput(name: string, replace: boolean = false): Promise<KeyMapping<any>> {
+        if (this.setKeyOnNextInputActive) {
+            this.setKeyOnNextInputActive = false;
+            if (this.setKeyOnNextInputReject !== null) {
+                this.setKeyOnNextInputReject();
+            }
+        }
+        return new Promise<KeyMapping<any>>((resolve, reject) => {
+            this.setKeyOnNextInputActive = true;
+            this.setKeyOnNextInputResolve = resolve;
+            this.setKeyOnNextInputReject = reject;
+            this.setKeyOnNextInputName = name;
+            this.setKeyOnNextInputReplace = replace;
+        });
+    }
+
+    /**
+     * Cancel binding a key on next input
+     */
+    public cancelBindKeyOnNextInput() {
+        if (this.setKeyOnNextInputActive && this.setKeyOnNextInputReject !== null) {
+            this.setKeyOnNextInputReject();
+        }
+    }
+
+    /**
+     * Returns the current Key Config
+     * @returns KeyDef array
+     */
+    public getKeyConfig(): KeyDef[] {
+        return Array.from(this.keyDefs.values());
+    }
+
+    /**
+     * Replaces all existing keybindings with new ones
+     * @param config 
+     */
+    public setKeyBindings(config: Pick<KeyDef, "name" | "mappings">[]) {
+        for (const {name, mappings} of config) {
+            if (this.keyDefs.has(name)) {
+                this.unbindKey(name);
+                for (const mapping of mappings) {
+                    this.bindKey(name, mapping);
+                }
+            }
         }
     }
 
@@ -93,7 +197,14 @@ export class InputModule extends ModuleBase {
         this.keyDefs.set(name, toSave);
     }
 
-    private bindKey(name: string, mapping: KeyMapping<any>, replace: boolean = false) {
+    /**
+     * Binds a key to an input
+     * @param name 
+     * @param mapping 
+     * @param replace 
+     * @returns 
+     */
+    public bindKey(name: string, mapping: KeyMapping<any>, replace: boolean = false) {
         const keyDef = this.keyDefs.get(name);
 
         if (keyDef) {
@@ -150,6 +261,10 @@ export class InputModule extends ModuleBase {
         }
     }
 
+    /**
+     * Removes all bindings from a key
+     * @param name 
+     */
     private unbindKey(name: string) {
         const keyDef = this.keyDefs.get(name);
 
@@ -172,6 +287,9 @@ export class InputModule extends ModuleBase {
                     }
                 }
             }
+
+            // Update KeyDefs
+            keyDef.mappings = [];
         }
     }
 
@@ -214,7 +332,15 @@ export class InputModule extends ModuleBase {
      * @param keyState 
      * @param controlType 
      */
-    private inputHandler(params: KeyMapping<any>, keyState: KeyState, controlType: ControlType): void {
+    private inputHandler(params: KeyMapping<any>, keyState: KeyState): void {
+        if (this.setKeyOnNextInputActive && this.setKeyOnNextInputName !== null && this.setKeyOnNextInputReplace !== null && this.setKeyOnNextInputResolve !== null) {
+            // Set the key binding
+            this.bindKey(this.setKeyOnNextInputName, params, this.setKeyOnNextInputReplace);
+            this.setKeyOnNextInputResolve({...params});
+            this.setKeyOnNextInputActive = false;
+            this.setKeyOnNextInputName = null;
+            this.setKeyOnNextInputReplace = null;
+        }
         const submodDefMap = this.keyMappings.get(params.submodule);
         if (submodDefMap) {
             const controllerDefMap = submodDefMap.get(params.controller);

@@ -5,10 +5,11 @@
         "esModuleInterop": true,
         "sourceMap": true,
         "moduleResolution": "node",
-        "module": "nodenext",
+        "module": "es2020",
         "skipLibCheck": true,
         "strict": true,
-        "target": "es2020"
+        "target": "es2020",
+        "outDir": "./dist"
     },
     "include": [
         "src"

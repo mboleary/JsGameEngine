@@ -1,10 +1,10 @@
 export type Asset<T,Opts> = {
     name: string,
     loaded: boolean;
-    data: T;
+    data: T | null;
     path: string;
     type: string;
-    options: Opts;
+    options: Partial<Opts>;
     groups: string[]
 };
 
