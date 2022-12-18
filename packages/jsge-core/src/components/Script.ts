@@ -2,19 +2,19 @@
  * Interface for providing script functionality to GameObjects
  */
 
-import ComponentBase from "../ComponentBase";
+import {ComponentBase} from "../ComponentBase";
 import {enrollScriptComponent, removeScriptComponent} from "../ScriptManager";
 
 export class Script extends ComponentBase {
-    constructor({...params} = {}) {
+    public readonly priority: number;
+    constructor({priority = 0, ...params} = {}) {
         super({...params});
-        this._priority = 1;
-        
+        this.priority = priority;
     }
 
     _init() {
         enrollScriptComponent(this);
-        if (super._init) super._init();
+        // if (super._init) super._init();
         this.init()
     }
 

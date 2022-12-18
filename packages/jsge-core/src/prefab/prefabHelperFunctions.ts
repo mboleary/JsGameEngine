@@ -5,9 +5,11 @@
  */
 
 import Scene from '../Scene';
-import GameObject from '../GameObject';
+import {GameObject} from '../GameObject';
 import { deserialize } from '../serialization';
-import {define} from "asset-loader/src/AssetLoader.js";
+import {load} from "asset-loader";
+import { Prefab, PrefabOptions } from '../types/prefab/Prefab.type';
+import { PrefabAssetDefinition, PrefabComponentDefinition, PrefabGameObjectDefinition, PrefabModuleDefinition } from '../types/prefab';
 
  /**
   * Builds a GameObject from a prefab
@@ -15,18 +17,20 @@ import {define} from "asset-loader/src/AssetLoader.js";
   * @param {Object} options options Object
   * @returns {GameObject} hydrated GameObject
   */
-export function buildGameObjectFromPrefab(prefabJson, options) {
+export function buildGameObjectFromPrefab(prefabJson: Prefab, options: PrefabOptions) {
 
     // @TODO validate modules
 
-    loadAssets(prefabJson.assets);
+    if (prefabJson.assets) {
+        loadAssets(prefabJson.assets);
+    }
 
     let root = buildGameObjectTree(prefabJson.root, prefabJson.scene, options);
 
     return root;
 }
 
-function buildGameObjectTree(rootJson, scene = false, options) {
+function buildGameObjectTree(rootJson: PrefabGameObjectDefinition, scene = false, options: PrefabOptions) {
     const BaseClass = scene ? Scene : GameObject;
     let toRet = new BaseClass({
         name: rootJson.name,
@@ -35,7 +39,9 @@ function buildGameObjectTree(rootJson, scene = false, options) {
     });
 
     if (rootJson.children && rootJson.children.length) {
-        _buildGameObjectTreeHelper(rootJson.children, toRet, options);
+        for (const child of rootJson.children) {
+            _buildGameObjectTreeHelper(child, toRet, options);
+        }
     }
 
     if (rootJson.components && rootJson.components.length) {
@@ -46,18 +52,20 @@ function buildGameObjectTree(rootJson, scene = false, options) {
     return toRet;
 }
 
-function _buildGameObjectTreeHelper(json, parent, options) {
+function _buildGameObjectTreeHelper(json: PrefabGameObjectDefinition, parent: GameObject | Scene, options: PrefabOptions) {
     let toRet = new GameObject({
         name: json.name,
         id: json.id,
         group: json.group,
-        parent
+        parent: parent
     });
 
     parent.attachGameObject(toRet);
 
     if (json.children && json.children.length) {
-        _buildGameObjectTreeHelper(json.children, toRet, options);
+        for (const child of json.children) {
+            _buildGameObjectTreeHelper(child, toRet, options);
+        }
     }
 
     if (json.components && json.components.length) {
@@ -67,12 +75,11 @@ function _buildGameObjectTreeHelper(json, parent, options) {
     return toRet;
 }
 
-function _buildGameObjectComponents(componentJson, gameObject, options) {
+function _buildGameObjectComponents(componentJson: PrefabComponentDefinition[], gameObject: GameObject, options: PrefabOptions) {
     // @TODO this should go into the serialization part of the engine and build the components that are to be added
     if (componentJson && Array.isArray(componentJson)) {
         for (const compItem of componentJson) {
             try {
-
                 const component = deserialize(compItem);
                 gameObject.attachComponent(component);
             } catch (err) {
@@ -85,20 +92,20 @@ function _buildGameObjectComponents(componentJson, gameObject, options) {
     }
 }
 
-function loadAssets(assetArr) {
+function loadAssets(assetArr: PrefabAssetDefinition[]) {
     // @TODO should call out into the asset loader to load the assets used in this prefab if they are not already loaded
     if (assetArr && Array.isArray(assetArr)) {
         for (const assetItem of assetArr) {
-            define({...assetItem});
+            load({...assetItem});
         }
     }
 }
 
-function _loadExtraData(extraJson, assets, gameObjects) {
+function _loadExtraData(extraJson: object, assets: PrefabAssetDefinition[], gameObjects: GameObject[]) {
 
 }
 
-function validateModules(moduleArr) {
+function validateModules(moduleArr: PrefabModuleDefinition[]) {
 
 }
 

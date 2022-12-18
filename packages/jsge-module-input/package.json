@@ -2,7 +2,7 @@
   "name": "jsge-module-input",
   "version": "1.0.0",
   "description": "This module provides an API for getting user input from the keyboard, mouse, and Game Controllers",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },

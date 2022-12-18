@@ -2,7 +2,7 @@
  * A Scene contains the GameObjects for a particular part of the game.
  */
 
-import GameObject from './GameObject.js';
+import {GameObject} from './GameObject.js';
 
 export default class Scene extends GameObject {
     constructor({...params} = {}) {
@@ -18,8 +18,8 @@ export default class Scene extends GameObject {
     }
 }
 
-function getGameObjectChildren(go) {
-    let toRet = [];
+function getGameObjectChildren(go: GameObject) {
+    let toRet: GameObject[] = [];
     if (go && go.children && go.children.length) {
         go.children.forEach((child) => {
             toRet.push(child);

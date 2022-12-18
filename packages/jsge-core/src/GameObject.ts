@@ -5,11 +5,29 @@
 // import Transform from './Transform.js';
 // import uuid from './UUID.js';
 import {v4 as uuid} from "uuid";
+import { ComponentBase } from "./ComponentBase";
 
 const KEY_BLACKLIST = ["name", "group", "id", "parent", "children", "components"];
 
-export default class GameObject {
-    constructor({name = "", group = "", id, parent = null} = {}) {
+export type GameObjectConstructor = {
+    name?: string;
+    group?: string;
+    id?: string;
+    parent?: GameObject | null;
+}
+
+export class GameObject {
+    public name: string;
+    public group: string;
+    readonly id: string;
+    public parent: GameObject | null;
+    public children: GameObject[];
+    public components: ComponentBase[];
+    private _initialized: boolean;
+    private readonly _childrenIDs: Set<string>;
+    private readonly _componentIDs: Set<string>;
+
+    constructor({name = "", group = "", id, parent = null}: GameObjectConstructor = {}) {
         // Public
         // this.transform = new Transform(); // Position, Rotation, and Scale Relative to Parent, if any
         
@@ -18,8 +36,8 @@ export default class GameObject {
 
         // Private @TODO find a way to trim out these variables from scripts
         this.id = id || uuid(); // This should be unique, as this is how the gameObject will be serialized
-        this.zIndex = 0; // Used for order of rendering in 2D @TODO remove
-        this.priority = 0; // Determines the priority of the scripts. @TODO remove
+        // this.zIndex = 0; // Used for order of rendering in 2D @TODO remove
+        // this.priority = 0; // Determines the priority of the scripts. @TODO remove
         this.parent = parent; // Contains reference to the Parent GameObject
         // this.deleteFlag = false; // True if the GameObject should be destroyed.
         this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
@@ -37,7 +55,7 @@ export default class GameObject {
      * This does NOT initialize the gameobject or add it to the engine
      * @param {GameObject} go gameobject to attach
      */
-    attachGameObject(go) {
+    public attachGameObject(go: GameObject) {
         if (this._childrenIDs.has(go.id)) {
             console.warn("already has child", go);
             return;
@@ -51,7 +69,7 @@ export default class GameObject {
      * Attaches a Component to this GameObject. This _does_ initialize the component if it hasn't already been initialized
      * @param {Component} comp component to attach
      */
-    attachComponent(comp) {
+    public attachComponent(comp: ComponentBase) {
         if (this._componentIDs.has(comp.id)) {
             console.warn("already has component", comp);
             return;
@@ -63,17 +81,18 @@ export default class GameObject {
             console.log("comp added after init");
             comp._init();
         }
-        if (comp._attrName && !(comp._attrName in KEY_BLACKLIST)) {
-            this[comp._attrName] = comp;
-            comp._attrSet = true;
-        }
+        // if (comp._attrName && !(comp._attrName in KEY_BLACKLIST)) {
+        //     // @TODO this is hacky and it should be changed
+        //     this[comp._attrName] = comp;
+        //     comp._attrSet = true;
+        // }
     }
 
     /**
      * Removes a Component already attached to this GameObject. Component will be destroyed when removed
      * @param {Component} comp component to destroy
      */
-    detachComponent(comp) {
+    public detachComponent(comp: ComponentBase) {
         if (comp.id) {
             for (let i = 0; i < this.components.length; i++) {
                 let component = this.components[i];
@@ -83,9 +102,10 @@ export default class GameObject {
                     break;
                 }
             }
-            if (comp._attrSet && !comp._attrName in KEY_BLACKLIST) {
-                delete this[comp._attrName];
-            }
+            // @TODO change this
+            // if (comp._attrSet && !comp._attrName in KEY_BLACKLIST) {
+            //     delete this[comp._attrName];
+            // }
             this._componentIDs.delete(comp.id);
         }
     }
@@ -95,7 +115,7 @@ export default class GameObject {
      * @param {string} id UUID of component to return
      * @returns {Component | null} specified component or null
      */
-    getComponentByID(id) {
+    public getComponentByID(id: string): ComponentBase | null {
         for (let i = 0; i < this.components.length; i++) {
             let component = this.components[i];
             if (component.id === id) {
@@ -111,7 +131,7 @@ export default class GameObject {
      * @param {string} typename type of component to return
      * @returns {Component | null} specified component
      */
-    getComponentByType(typename) {
+    public getComponentByType(typename: string): ComponentBase | null {
         for (let i = 0; i < this.components.length; i++) {
             let component = this.components[i];
             if (component.constructor?.name === typename) {
@@ -125,9 +145,9 @@ export default class GameObject {
      * Detaches a GameObject attached to this GameObject. Warning: This will make the child GameObject an orphan!
      * @param {GameObject} go gameobject to detach
      */
-    detachGameObject(go) {
+    public detachGameObject(go: GameObject) {
         go.parent = null;
-        this._componentIDs.delete(comp.id);
+        this._childrenIDs.delete(go.id);
         for (let i = 0; i < this.children.length; i++) {
             if (go.id === this.children[i].id) {
                 this.children.splice(i, 1);
@@ -141,7 +161,7 @@ export default class GameObject {
      * @param {GameObject} go 
      * @returns 
      */
-    hasGameObject(go) {
+    public hasGameObject(go: GameObject): boolean {
         let result = this._childrenIDs.has(go.id);
         if (!result) {
             for (const child of this.children) {
@@ -154,14 +174,14 @@ export default class GameObject {
         return result;
     }
 
-    hasComponent(comp) {
+    public hasComponent(comp: ComponentBase): boolean {
         return this._componentIDs.has(comp.id);
     }
 
     /**
      * Gets called to initialize the Components
      */
-    initialize() {
+    public initialize(): void {
         if (this.components && this.components.length) {
             this.components.forEach((c) => {
                 c._init();
@@ -173,7 +193,7 @@ export default class GameObject {
     /**
      * Gets called before this GameObject is deleted
      */
-    beforeDestroy() {
+    public beforeDestroy(): void {
         if (this.components && this.components.length) {
             this.components.forEach((c) => {
                 c._destroy();

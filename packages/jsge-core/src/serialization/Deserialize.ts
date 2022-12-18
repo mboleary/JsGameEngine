@@ -1,10 +1,12 @@
 /**
  * Handles Deserialization
  */
+import { GameObject } from "../GameObject";
+import { PrefabComponentDefinition } from "../types/prefab";
 import {getSerializableType} from "./Types";
 
  // Deserializes parsed JSON and returns all parsed GameObjects
-export function deserialize(json, typeName) {
+export function deserialize(json: PrefabComponentDefinition, typeName?: string) {
     let name = typeName || json.type;
     let type = getSerializableType(name);
     let toRet = null;
@@ -20,7 +22,7 @@ export function deserialize(json, typeName) {
 }
 
 // Updates a GameObject with a given state (Like Deserialize, but the object is not instanciated)
-export function update(obj, state, typeName) {
+export function update(obj: GameObject, state, typeName: string) {
     let name = typeName || state.type;
     let type = getSerializableType(name);
 

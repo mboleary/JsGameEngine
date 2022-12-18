@@ -47,6 +47,6 @@ export function addSerializableType({
     }
 }
 
-export function getSerializableType(typename) {
+export function getSerializableType(typename: string) {
     return serialTypes.get(typename) || null;
 }
