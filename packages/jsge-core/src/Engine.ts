@@ -12,6 +12,7 @@ import { pauseTime, unpauseTime, advanceTime, getTime, isTimePaused } from './Ti
 
 import { addCustomLoader } from 'asset-loader/src/AssetLoader';
 import { ASSET_LOADERS } from './assetLoader';
+import { EngineInternals } from './types/index.js';
 
 // import { calculateAbsoluteTransform } from './Physics.js';
 
@@ -40,7 +41,7 @@ let loopFuncs = []; // Functions run on each Game Loop
 let debugFuncs = []; // Functions run on Debug Events
 
 // References passed to the JMods
-const engineInternals = {
+const engineInternals: EngineInternals = {
     gameObjects,
     currTime,
     TARGET_MILLIS_PER_FRAME

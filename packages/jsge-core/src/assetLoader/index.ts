@@ -1,2 +1,2 @@
 export * from "./const";
-export * from "./prefabAssetLoader";
+export * from "./prefab.loader";

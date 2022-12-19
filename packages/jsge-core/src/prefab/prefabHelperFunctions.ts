@@ -4,13 +4,14 @@
  * Is capable of reading version `0` of prefabJson
  */
 
-import Scene from '../Scene';
+import {Scene} from '../Scene';
 import {GameObject} from '../GameObject';
 import { deserialize } from '../serialization';
 // import {AssetLoader} from "asset-loader";
 import { Prefab, PrefabOptions } from '../types/prefab/Prefab.type';
 import { PrefabAssetDefinition, PrefabComponentDefinition, PrefabGameObjectDefinition, PrefabModuleDefinition } from '../types/prefab';
-import { Engine } from '..';
+import { AssetLoader } from 'asset-loader';
+
 
  /**
   * Builds a GameObject from a prefab
@@ -97,7 +98,7 @@ function loadAssets(assetArr: PrefabAssetDefinition[]) {
     // @TODO should call out into the asset loader to load the assets used in this prefab if they are not already loaded
     if (assetArr && Array.isArray(assetArr)) {
         for (const assetItem of assetArr) {
-            Engine.assetLoader.load({...assetItem});
+            AssetLoader.load({...assetItem});
         }
     }
 }

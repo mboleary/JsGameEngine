@@ -1,5 +1,10 @@
-import { prefabAssetLoader } from "./prefabAssetLoader";
+import { Loader } from "asset-loader";
+import { PrefabAssetLoader } from "./prefab.loader";
 
-export const ASSET_LOADERS = {
-    prefab: prefabAssetLoader
+export type AssetLoaderDictionary = {
+    [index: string]: Loader<any, any>
+}
+
+export const ASSET_LOADERS: AssetLoaderDictionary = {
+    prefab: new PrefabAssetLoader(),
 };
