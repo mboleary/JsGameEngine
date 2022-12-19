@@ -2,12 +2,8 @@
  * contains common functions for serialization
  */
 
-export function getConstructor(type) {
-    return serialTypes[type] && serialTypes[type].classRef;
-}
-
 // Get Keys from a class
-export function getKeys(classRef, blacklist) {
+export function getKeys(classRef: any, blacklist: string[]): string[] {
     // Construct the class
     let obj = new classRef();
 
@@ -24,5 +20,5 @@ export function getKeys(classRef, blacklist) {
         });
     }
 
-    return keys;
+    return keys as string[];
 }

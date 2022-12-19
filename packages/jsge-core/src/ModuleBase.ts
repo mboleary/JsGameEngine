@@ -2,7 +2,16 @@
  * Contains the module base class, also adds a pre-init step for adding custom loaders to the asset loader.
  */
 
-export default class ModuleBase {
+import { EngineInternals } from "./types";
+
+export class ModuleBase {
+    readonly _name: string;
+    readonly _debugName: string | null;
+    readonly _version: string;
+    readonly _meta: object;
+    readonly hasInit: boolean;
+    readonly hasLoop: boolean;
+
     constructor() {
         this._name = "Module";
         this._debugName = null;
@@ -44,7 +53,7 @@ export default class ModuleBase {
      * Override this method to gain access to the main loop
      * @param {*} internals 
      */
-    loop(internals) {}
+    loop(internals: EngineInternals) {}
 
     /**
      * Override this method to do something when the game is being stopped

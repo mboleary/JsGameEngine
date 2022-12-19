@@ -3,7 +3,7 @@
  */
 
 import { buildGameObjectFromPrefab } from "../prefab/prefabHelperFunctions";
-import type { Asset } from "asset-loader/src/types";
+import type { Asset } from "asset-loader";
 
 type PrefabAsset = {
     _cachedJsonLoaded: boolean;

@@ -2,13 +2,15 @@
  * Contains all functions required to manage scripts
  */
 
-let scripts = [];
+import { Script } from "./components";
+import { GameObject } from "./GameObject";
+
 let scriptsMap = new Map();
 
-window.scripts = scriptsMap;
+// window.scripts = scriptsMap;
 
 // Calls all Script Loop Functions
-export function processGameObjectScripts(gos) {
+export function processGameObjectScripts(gos: GameObject[]) {
     // @TODO fix this for components
     // gos.forEach((go) => {
     //     if (go.scripts && go.scripts.length) {
@@ -22,7 +24,7 @@ export function processGameObjectScripts(gos) {
     }
 }
 
-export function initGameObjectScripts(gos) {
+export function initGameObjectScripts(gos: GameObject[]) {
     // gos.forEach((go) => {
     //     if (go.scripts && go.scripts.length) {
     //         go.scripts.forEach((script) => {
@@ -35,10 +37,10 @@ export function initGameObjectScripts(gos) {
     }
 }
 
-export function enrollScriptComponent(scr) {
+export function enrollScriptComponent(scr: Script) {
     scriptsMap.set(scr.id, scr);
 }
 
-export function removeScriptComponent(id) {
+export function removeScriptComponent(id: string) {
     scriptsMap.delete(id);
 }

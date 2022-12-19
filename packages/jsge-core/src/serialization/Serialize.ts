@@ -2,23 +2,24 @@
  * Handles serializing and getting a partial state
  */
 
+import { SerializedData } from "../types/serialization";
 import {getSerializableType} from "./Types";
 
+
 // Serializes a GameObject or Script
-export function serialize(serObj, serializeChildren = true, typeName) {
+export function serialize<T extends object>(serObj: T, serializeChildren = true, typeName: string): SerializedData {
     let name = typeName || serObj.constructor.name;
     let type = getSerializableType(name);
-    let toRet = {};
 
     if (!type) {
         console.error("Cannot Serialize: Not in List!", serObj, typeName);
         throw new Error("Cannot Serialize: Not in List");
     }
 
-    toRet.type = name;
-    toRet.data = type.serializer(serObj, serializeChildren);
-
-    return toRet;
+    return {
+        type: name,
+        data: type.serializer(serObj, serializeChildren)
+    };
 }
 
 /**
@@ -29,18 +30,16 @@ export function serialize(serObj, serializeChildren = true, typeName) {
  * @param {Array} keys Keys of the object to save
  * @returns {Function} Serializer function
  */
-export function defaultSerializer(keys, serializeChildren) {
+export function defaultSerializer<T extends object>(keys: string[], serializeChildren: boolean) {
     /**
      * Serializer function
      * @param {Object} Object to Serialize
      * @param {Boolean} serializeChildren True if the children should be serialized
      * @returns {Object} Serialized Object
      */
-    return (obj) => {
-        let toRet = {};
+    return (obj: T) => {
         let data = {};
         let serKeys = {};
-        toRet.type = obj.constructor.name;
         if (obj && keys && keys.length > 0) {
             keys.forEach((key) => {
                 
@@ -51,21 +50,25 @@ export function defaultSerializer(keys, serializeChildren) {
                     return;
                 }
 
-                if (value && value.constructor && value.constructor.name) {
-                    let name = value.constructor.name;
-                    console.log("Name:", name);
-                    // Note: This only serializes the value if it is not in an Array/Object/etc.
-                    if (serializeChildren && serialTypes[name]) {
-                        data[key] = serialTypes[name].serializer(value);
-                    } else {
-                        data[key] = value;
-                    }
-                } else {
-                    data[key] = value;
-                }
+                // @TODO re-add this during refactoring serialization
+
+                // if (value && value.constructor && value.constructor.name) {
+                //     let name = value.constructor.name;
+                //     console.log("Name:", name);
+                //     // Note: This only serializes the value if it is not in an Array/Object/etc.
+                //     if (serializeChildren && serialTypes[name]) {
+                //         data[key] = serialTypes[name].serializer(value);
+                //     } else {
+                //         data[key] = value;
+                //     }
+                // } else {
+                //     data[key] = value;
+                // }
             });
         }
-        toRet.data = data;
-        return toRet;
+        return {
+            type: obj.constructor.name,
+            data
+        }
     }
 }

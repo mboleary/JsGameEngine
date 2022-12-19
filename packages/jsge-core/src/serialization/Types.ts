@@ -8,6 +8,15 @@ import { getKeys } from "./common";
 
 const serialTypes = new Map(); // Stores all serializable types with functions to handle them
 
+export type AddSerializableTypeParameters = {
+    classRef: any;
+    serializer: Function;
+    deserializer: Function;
+    stateUpdater: Function;
+    typename: string;
+    keys: string[];
+}
+
 export function addSerializableType({
     classRef, 
     serializer, 
@@ -15,7 +24,7 @@ export function addSerializableType({
     stateUpdater, 
     typename, 
     keys
-} = {}) {
+}: AddSerializableTypeParameters) {
     if (!typename) {
         // Use Class constructor name
         typename = classRef.name;

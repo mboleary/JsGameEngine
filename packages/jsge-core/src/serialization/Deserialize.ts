@@ -1,8 +1,10 @@
 /**
  * Handles Deserialization
  */
+import { ComponentBase } from "../ComponentBase";
 import { GameObject } from "../GameObject";
 import { PrefabComponentDefinition } from "../types/prefab";
+import { SerializedData } from "../types/serialization";
 import {getSerializableType} from "./Types";
 
  // Deserializes parsed JSON and returns all parsed GameObjects
@@ -21,8 +23,8 @@ export function deserialize(json: PrefabComponentDefinition, typeName?: string) 
     return toRet;
 }
 
-// Updates a GameObject with a given state (Like Deserialize, but the object is not instanciated)
-export function update(obj: GameObject, state, typeName: string) {
+// Updates a GameObject with a given state (Like Deserialize, but the object is not instantiated)
+export function update(obj: ComponentBase, state: SerializedData, typeName: string) {
     let name = typeName || state.type;
     let type = getSerializableType(name);
 
@@ -40,17 +42,17 @@ export function update(obj: GameObject, state, typeName: string) {
  * @param {Class} classRef Reference to the class constructor
  * @returns {Function} Function used to deserialize an object
  */
-export function defaultDeserializer(keys, classRef) {
+export function defaultDeserializer<T>(keys: string[], classRef: any) {
     /**
      * Deserializes an Object, given the serial data
      * @param {Object} json Serial Data
      * @returns {Object} Deserialized object
      */
-    return (json) => {
+    return (json: Partial<T>): T => {
         let obj = new classRef(); // Hopefully the contructor does not need parameters
         // @TODO Fix handling of functions (don't allow them to be overwritten), and NULL or undefined fields coming in
-        Object.keys(json).forEach((key) => {
-            if (!json[key]) delete json[key];
+        Object.keys(json).forEach((key: string) => {
+            if (!json[key as keyof typeof json]) delete json[key as keyof typeof json];
         })
 
         defaultStateUpdater(obj, json, keys);
@@ -59,16 +61,16 @@ export function defaultDeserializer(keys, classRef) {
 }
 
 // Updates the state of an object
-export function defaultStateUpdater(obj, state, keys) {
+export function defaultStateUpdater<T extends object>(obj: T, state: Partial<T>, keys: string[]) {
     if (keys) {
-        Object.keys(state).forEach((key) => {
+        Object.keys(state).forEach((key: string) => {
             if (keys.indexOf(key) > -1) {
-                Reflect.set(obj, key, state[key]);
+                Reflect.set(obj, key, state[key as keyof T]);
             }
         });
     } else {
         Object.keys(state).forEach((key) => {
-            Reflect.set(obj, key, state[key]);
+            Reflect.set(obj, key, state[key as keyof T]);
         });
     }
     return obj;

@@ -23,7 +23,7 @@ export function pauseTime() {
  * Advance time While paused for debugging
  * @param {Number} amt Amount to advance the time
  */
-export function advanceTime(amt) {
+export function advanceTime(amt: number) {
     if (!isPaused || !amt || amt <= 0) return;
     timePaused += amt;
 }
