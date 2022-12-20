@@ -41,6 +41,6 @@ export function enrollScriptComponent(scr: Script) {
     scriptsMap.set(scr.id, scr);
 }
 
-export function removeScriptComponent(id: string) {
-    scriptsMap.delete(id);
+export function removeScriptComponent(scr: Script) {
+    scriptsMap.delete(scr.id);
 }

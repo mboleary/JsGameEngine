@@ -4,6 +4,7 @@ import { AssetLoader } from "asset-loader";
 import { ASSET_LOADERS } from "../assetLoader";
 import { EngineInternalModuleManager } from "./EngineInternalModuleManager";
 import { EngineGameObjectManager } from "./EngineGameObjectManager";
+import { EngineHotloopManager } from "./EngineHotloopManager";
 
 export type EngineInitializationParams = {
     modules: ModuleBase[];
@@ -12,16 +13,22 @@ export type EngineInitializationParams = {
 }
 
 export class Engine {
-
-    private static gameLoopStarted: boolean = false;
     public static assetLoader = AssetLoader;
+    private static initialized = false;
     private static moduleManager = EngineInternalModuleManager;
     private static gameObjectManager = EngineGameObjectManager;
+    private static hotloopManager = EngineHotloopManager;
 
     /**
      * initializes the engine, locks out adding new modules
      */
     public static initialize({modules, debug = false}: EngineInitializationParams): void {
+        if (this.initialized) {
+            return;
+        }
+
+        this.initialized = true;
+        
         // load modules
         for (const module of modules) {
             this.moduleManager.add(module);
@@ -36,10 +43,17 @@ export class Engine {
     }
 
     public static setCurrentScene(scene: Scene): void {
-
+        this.gameObjectManager.setCurrentScene(scene);
     }
 
     public static start(): void {
+        // initialize modules
+        for (const initFunc of this.moduleManager.initFunctions) {
+            initFunc();
+        }
+
+        // start gameloop
+        this.hotloopManager.startLoop();
 
     }
 }

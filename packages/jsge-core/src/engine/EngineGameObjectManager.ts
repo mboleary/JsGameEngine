@@ -32,7 +32,8 @@ export class EngineGameObjectManager {
             this.currentScene.attachGameObject(go);
         }
         this.enrollGameObjectHelper(go, toInitScripts);
-        // initGameObjectScripts(toInitScripts.arr);
+
+        // Initialize the gameobjects
         for (const gameObject of toInitScripts.arr) {
             gameObject.initialize();
         }

@@ -5,12 +5,12 @@
 import { ModuleBase } from "../ModuleBase";
 
 export class EngineInternalModuleManager {
-    public static initFunctions: Function[] = [];
-    public static loopFunctions: Function[] = [];
-    public static debugFunctions: Function[] = [];
-    public static destroyFunctions: Function[] = [];
+    public static readonly initFunctions: Function[] = [];
+    public static readonly loopFunctions: Function[] = [];
+    public static readonly debugFunctions: Function[] = [];
+    public static readonly destroyFunctions: Function[] = [];
     private static _allowModuleLoading: boolean = true;
-    private static modules: Map<string, ModuleBase> = new Map();
+    private static readonly modules: Map<string, ModuleBase> = new Map();
 
     public static get allowModuleLoading(): boolean {
         return this._allowModuleLoading;
