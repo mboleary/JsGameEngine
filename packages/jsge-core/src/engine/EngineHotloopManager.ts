@@ -1,5 +1,5 @@
 import {EngineInternalModuleManager} from "./EngineInternalModuleManager";
-import { Time } from "../time";
+import { Time, TARGET_MILLIS_PER_FRAME } from "../time";
 
 export class EngineHotloopManager {
     private static _loopStarted: boolean = false;
@@ -35,9 +35,9 @@ export class EngineHotloopManager {
      */
     public static stepLoop(fakeDelta: number): void {
         if (fakeDelta || fakeDelta === 0) {
-            // advanceTime(fakeDelta);
+            Time.advanceTime(fakeDelta);
         } else {
-            // advanceTime(TARGET_MILLIS_PER_FRAME);
+            Time.advanceTime(TARGET_MILLIS_PER_FRAME);
         }
         this.loop();
     }
