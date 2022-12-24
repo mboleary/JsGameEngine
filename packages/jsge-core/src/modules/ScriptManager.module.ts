@@ -20,11 +20,11 @@ export class ScriptManagerModule extends ModuleBase {
         }
     }
 
-    enrollScriptComponent(script: Script) {
+    public static enrollScriptComponent(script: Script) {
         ScriptManagerModule.scriptMap.set(script.id, script);
     }
 
-    removeScriptComponent(script: Script) {
+    public static removeScriptComponent(script: Script) {
         ScriptManagerModule.scriptMap.delete(script.id);
     }
 }

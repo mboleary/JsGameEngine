@@ -3,7 +3,8 @@
  */
 
 import {ComponentBase} from "../ComponentBase";
-import {enrollScriptComponent, removeScriptComponent} from "../ScriptManager";
+// import {enrollScriptComponent, removeScriptComponent} from "../ScriptManager";
+import { ScriptManagerModule } from "../modules/ScriptManager.module";
 
 export class Script extends ComponentBase {
     public readonly priority: number;
@@ -13,7 +14,7 @@ export class Script extends ComponentBase {
     }
 
     _init() {
-        enrollScriptComponent(this);
+        ScriptManagerModule.enrollScriptComponent(this);
         // if (super._init) super._init();
         this.init()
     }
@@ -34,7 +35,7 @@ export class Script extends ComponentBase {
     }
 
     _destroy() {
-        removeScriptComponent(this);
+        ScriptManagerModule.removeScriptComponent(this);
         this.destroy();
     }
 }
