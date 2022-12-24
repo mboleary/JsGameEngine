@@ -18,6 +18,10 @@ export class EngineInternalModuleManager {
 
     public static add(module: ModuleBase): void {
         if (this._allowModuleLoading) {
+            if (this.modules.has(module.id)) {
+                throw new Error(`A module with id ${module.id} has already been loaded`);
+            }
+            
             console.log(`Loading Module [${module.name}${(module.version) ? " (v:" + module.version + ")" : ""}]...`);
             if (module.hasInit) {
                 this.initFunctions.push(module.init);

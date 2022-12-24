@@ -6,6 +6,7 @@ import { EngineInternals } from "./types";
 
 export class ModuleBase {
     readonly _name: string;
+    readonly _id: string;
     readonly _debugName: string | null;
     readonly _version: string;
     readonly _meta: object;
@@ -14,11 +15,16 @@ export class ModuleBase {
 
     constructor() {
         this._name = "Module";
+        this._id = "module";
         this._debugName = null;
         this._version = "0.0.0";
         this._meta = {};
         this.hasInit = false;
         this.hasLoop = false;
+    }
+
+    get id() {
+        return this._id;
     }
 
     get name() {

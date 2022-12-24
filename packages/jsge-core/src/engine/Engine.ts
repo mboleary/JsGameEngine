@@ -5,6 +5,7 @@ import { ASSET_LOADERS } from "../assetLoader";
 import { EngineInternalModuleManager } from "./EngineInternalModuleManager";
 import { EngineGameObjectManager } from "./EngineGameObjectManager";
 import { EngineHotloopManager } from "./EngineHotloopManager";
+import { EngineTimeInterface } from "./EngineTimeInterface";
 
 export type EngineInitializationParams = {
     modules: ModuleBase[];
@@ -18,6 +19,7 @@ export class Engine {
     private static moduleManager = EngineInternalModuleManager;
     private static gameObjectManager = EngineGameObjectManager;
     private static hotloopManager = EngineHotloopManager;
+    private static time = EngineTimeInterface;
 
     /**
      * initializes the engine, locks out adding new modules
@@ -54,6 +56,5 @@ export class Engine {
 
         // start gameloop
         this.hotloopManager.startLoop();
-
     }
 }

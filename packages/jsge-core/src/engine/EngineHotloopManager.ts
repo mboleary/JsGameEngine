@@ -1,31 +1,39 @@
 import {EngineInternalModuleManager} from "./EngineInternalModuleManager";
 import { Time, TARGET_MILLIS_PER_FRAME } from "../time";
+import { EngineTimeInterface } from "./EngineTimeInterface";
 
 export class EngineHotloopManager {
-    private static _loopStarted: boolean = false;
+    private static time = EngineTimeInterface;
+
+    private static _loopRunning: boolean = false;
     private static stopReference: number | null = null;
     private static loopFunctions: Function[] = [];
 
-    public static get loopStarted(): boolean {
-        return this._loopStarted;
+    public static get loopRunning(): boolean {
+        return this._loopRunning;
     }
 
     /**
      * Starts the game loop if not already started
      */
     public static startLoop(): void {
-        if (!this._loopStarted) {
-            this._loopStarted = true;
-            // @TODO set time as necessary
+        if (!this._loopRunning) {
+            this._loopRunning = true;
             this.loopFunctions = [...EngineInternalModuleManager.loopFunctions];
+            if (this.time.paused) {
+                this.time.unpauseTime();
+            } else {
+                this.time.initTime();
+            }
             this.main();
         }
     }
 
     public static stopLoop(): void {
-        if (this._loopStarted && this.stopReference) {
+        if (this._loopRunning && this.stopReference) {
             window.cancelAnimationFrame(this.stopReference);
-            // @TODO pause game timer
+            this._loopRunning = false;
+            this.time.pauseTime();
         }
     }
 
@@ -35,9 +43,9 @@ export class EngineHotloopManager {
      */
     public static stepLoop(fakeDelta: number): void {
         if (fakeDelta || fakeDelta === 0) {
-            Time.advanceTime(fakeDelta);
+            this.time.advanceTime(fakeDelta);
         } else {
-            Time.advanceTime(TARGET_MILLIS_PER_FRAME);
+            this.time.advanceTime(TARGET_MILLIS_PER_FRAME);
         }
         this.loop();
     }
@@ -59,9 +67,7 @@ export class EngineHotloopManager {
      * Runs all loop functions
      */
     private static loop(): void {
-        // @TODO do time stuff here
-
-        // @TODO handle script manager stuff here
+        this.time.updateDeltaTime();
 
         for (const func of this.loopFunctions) {
             func();

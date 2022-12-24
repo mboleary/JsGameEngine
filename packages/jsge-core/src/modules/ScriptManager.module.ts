@@ -1,8 +1,12 @@
 import { Script } from "../components";
 import { ModuleBase } from "../ModuleBase";
 
+/**
+ * This is an internal module which runs the scripts
+ */
 export class ScriptManagerModule extends ModuleBase {
     readonly _name = "ScriptManager";
+    readonly _id = "script";
     readonly _debugName = "script";
     readonly _version = "0.0.0";
     readonly _meta = {};
