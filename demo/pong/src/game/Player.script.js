@@ -2,7 +2,7 @@
  * Responsible for moving the player in response to input
  */
 
-import { Script, Engine } from "jsge-core";
+import { Script, Engine } from "jsge-core/src";
 import { Transform } from "jsge-module-graphics2d";
 import { getKeyState } from "jsge-module-input";
 
@@ -10,7 +10,7 @@ export class PlayerScript extends Script {
     constructor({...params} = {}) {
         super({...params});
 
-        this.acceleration = new Transform();
+        this.accel = new Transform();
 
         this.speed = 5;
         this.yMinBoundary = 0;

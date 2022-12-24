@@ -7,7 +7,7 @@ import { addSerializableType } from 'jsge-core/src/serialization';
  * @TODO Rewrite to use gl-matrix behind the scenes
  */
 export class TransformComponent extends ComponentBase {
-    constructor({...params} = {}) {
+    constructor({name = "transform", ...params} = {}) {
         super({...params, attribute: "transform"});
 
         this.value = new Transform(); // Actual transform value

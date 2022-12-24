@@ -2,9 +2,10 @@
  * Initializes the game and starts the execution loop
  */
 
-import { Engine } from "jsge-core";
-import { InputModule, defineKey, TYPE_DIGITAL } from "jsge-module-input";
+import { setCurrentScene, initEngine, addJMod, initGameLoop } from "jsge-core/src/Engine";
+import { InputModule, defineKey, TYPE_DIGITAL, setKeybindings } from "jsge-module-input";
 import { RenderModule, setCanvas } from "jsge-module-graphics2d";
+import { loadGameScene } from "./scene.temp";
 
 export const canvas = document.getElementById('canvas');
 export const overlay = document.getElementById('overlay');
@@ -31,10 +32,14 @@ function main() {
     setKeybindings({"test":{"state":0,"mapping":["k",32],"mappingName":" ","type":1},"up":{"state":0,"mapping":["k",38],"mappingName":"ArrowUp","type":1},"down":{"state":0,"mapping":["k",40],"mappingName":"ArrowDown","type":1},"left":{"state":0,"mapping":["k",37],"mappingName":"ArrowLeft","type":1},"right":{"state":0,"mapping":["k",39],"mappingName":"ArrowRight","type":1}});
 
     // @TODO make Engine into a class
-    modules.forEach(mod => Engine.addJMod(mod));
+    modules.forEach(mod => addJMod(mod));
 
     // Engine.setCurrentScene();
+    const scene = loadGameScene();
+    setCurrentScene(scene);
     // Engine.initGameLoop();
+    initEngine();
+    initGameLoop();
 }
 
 // @TODO put these into the render module
@@ -54,3 +59,5 @@ export function setOverlayVisibility(visible) {
     }
 }
 // END TODO
+
+main();

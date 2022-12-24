@@ -126,6 +126,21 @@ export class GameObject {
     }
 
     /**
+     * Get a component by its name
+     * @param {string} name name of the component
+     * @returns {Component | null} specified component or null 
+     */
+    getComponentByName(name) {
+        for (let i = 0; i < this.components.length; i++) {
+            let component = this.components[i];
+            if (component.name === name) {
+                return component;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Returns a component by the typename
      * @TODO change this to support using a class reference
      * @param {string} typename type of component to return
