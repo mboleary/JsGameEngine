@@ -13,6 +13,7 @@ export class RenderModule extends ModuleBase {
         this._name = "Graphics2d";
         this._version = "0.0.0";
         this._debugName = "graphics2d";
+        this._id = "graphics2d";
         this._meta = {};
 
         // Implementation

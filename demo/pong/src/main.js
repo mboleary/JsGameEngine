@@ -3,7 +3,6 @@
  */
 
 import { Engine } from "jsge-core";
-import { InputModule, KeyboardSubmodule, ControlType, Direction } from "jsge-module-input";
 import { RenderModule, setCanvas } from "jsge-module-graphics2d";
 import { loadGameScene } from "./scene.temp";
 

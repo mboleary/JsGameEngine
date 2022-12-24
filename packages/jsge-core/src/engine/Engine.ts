@@ -6,6 +6,7 @@ import { EngineInternalModuleManager } from "./EngineInternalModuleManager";
 import { EngineGameObjectManager } from "./EngineGameObjectManager";
 import { EngineHotloopManager } from "./EngineHotloopManager";
 import { GameObject } from "../GameObject";
+import { EngineDebugManager } from "./EngineDebugManager";
 
 export type EngineInitializationParams = {
     modules: ModuleBase[];
@@ -19,6 +20,7 @@ export class Engine {
     private static moduleManager = EngineInternalModuleManager;
     private static gameObjectManager = EngineGameObjectManager;
     private static hotloopManager = EngineHotloopManager;
+    private static debugManager = EngineDebugManager;
 
     /**
      * Returns all modules
@@ -30,7 +32,7 @@ export class Engine {
     /**
      * initializes the engine, locks out adding new modules
      */
-    public static initialize({modules, debug = false}: EngineInitializationParams): void {
+    public static initialize({modules, debug = true}: EngineInitializationParams): void {
         if (this.initialized) {
             return;
         }
@@ -45,6 +47,9 @@ export class Engine {
         this.moduleManager.lockModules();
 
         // @TODO set debug flags, setup debug
+        if (debug) {
+            this.debugManager.buildDebug();
+        }
 
         // Add asset loaders
         Object.keys(ASSET_LOADERS).forEach((key:string) => this.assetLoader.addLoader(ASSET_LOADERS[key]));

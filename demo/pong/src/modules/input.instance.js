@@ -1,3 +1,5 @@
+import { InputModule, KeyboardSubmodule, ControlType, Direction } from "jsge-module-input";
+
 const keyboardSubmoduleInstance = new KeyboardSubmodule();
 
 export const inputModuleInstance = new InputModule({

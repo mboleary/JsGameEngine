@@ -21,8 +21,8 @@ export class EngineInternalModuleManager {
             if (this.modules.has(module.id)) {
                 throw new Error(`A module with id ${module.id} has already been loaded`);
             }
-            
             console.log(`Loading Module [${module.name}${(module.version) ? " (v:" + module.version + ")" : ""}]...`);
+            this.modules.set(module.id, module);
             if (module.hasInit) {
                 this.initFunctions.push(module.init);
             }

@@ -210,4 +210,8 @@ export class EngineGameObjectManager {
     public static getGameObjectByGroup(group: string) {
         return this.gameObjectsByGroup.get(group) || null;
     }
+
+    public static getGameObjects(): GameObject[] {
+        return Array.from(this.gameObjects.values());
+    }
 }

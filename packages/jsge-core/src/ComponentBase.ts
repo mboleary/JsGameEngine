@@ -13,7 +13,7 @@ export type ComponentContructors = {
     attribute?: string | null;
 }
 
-export abstract class ComponentBase {
+export class ComponentBase {
 
     public name: string;
     readonly id: string;
@@ -32,20 +32,20 @@ export abstract class ComponentBase {
     /**
      * Function called when Component initialized
      */
-    abstract _init(): void;
+    public _init(): void {};
 
     /**
      * Public-facing function for component initialization
      */
-    abstract init(): void
+    public init(): void {};
 
     /**
      * Function called when component is destroyed
      */
-    abstract _destroy (): void;
+    public _destroy (): void {};
 
     /**
      * Public-facing function for component destruction
      */
-    abstract destroy(): void;
+    public destroy(): void {};
 }

@@ -130,7 +130,7 @@ export class GameObject {
      * @param {string} name name of the component
      * @returns {Component | null} specified component or null 
      */
-    getComponentByName(name) {
+    getComponentByName(name: string) {
         for (let i = 0; i < this.components.length; i++) {
             let component = this.components[i];
             if (component.name === name) {
