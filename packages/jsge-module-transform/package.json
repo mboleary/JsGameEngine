@@ -1,0 +1,21 @@
+{
+  "name": "jsge-module-transform",
+  "version": "1.0.0",
+  "description": "Contians the Transform module and component",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gl-matrix": "^3.4.3",
+    "jsge-core": "file:../jsge-core",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.0",
+    "typescript": "^4.9.4"
+  }
+}
