@@ -6,7 +6,7 @@
 import Transform from './Transform';
 
 // import RenderableInterface from './components/Renderable.interface.js';
-import { addCustomLoader } from 'asset-loader/src/AssetLoader';
+import { AssetLoader } from 'asset-loader';
 import { ASSET_LOADERS } from './assetLoader';
 import { CAMERA_ID } from "./constants.js";
 
@@ -33,7 +33,7 @@ window.mod = {
 // }
 
 export function initializeAssetLoaders() {
-    Object.keys(ASSET_LOADERS).forEach(key => addCustomLoader(key, ASSET_LOADERS[key]));
+    Object.keys(ASSET_LOADERS).forEach(key => AssetLoader.addLoader(key, ASSET_LOADERS[key]));
 }
 
 export function setCanvas(node) {

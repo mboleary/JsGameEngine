@@ -2,7 +2,7 @@ import { InputSubmodule } from "../types/InputSubmodule";
 import { ControlType } from "../types/ControlType.enum";
 import { KeyState } from "../types";
 
-export class KeyboardSubmodule extends InputSubmodule {
+export class GamepadSubmodule extends InputSubmodule {
     readonly needsPolling = true;
     readonly controllerNumber = 0;
     readonly name = "keyboard";
@@ -55,8 +55,8 @@ export class KeyboardSubmodule extends InputSubmodule {
     // }
 
     public init() {
-        window.addEventListener('keydown', this.handleKeydown);
-        window.addEventListener('keyup', this.handleKeyup);
+        // window.addEventListener('keydown', this.handleKeydown);
+        // window.addEventListener('keyup', this.handleKeyup);
     }
 
     public poll() {
@@ -68,7 +68,7 @@ export class KeyboardSubmodule extends InputSubmodule {
     }
 
     public destroy() {
-        window.removeEventListener('keydown', this.handleKeydown);
-        window.removeEventListener('keyup', this.handleKeyup);
+        // window.removeEventListener('keydown', this.handleKeydown);
+        // window.removeEventListener('keyup', this.handleKeyup);
     }
 }

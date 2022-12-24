@@ -1,8 +1,12 @@
+import { TARGET_MILLIS_PER_FRAME } from "./const";
+
 export class Time {
     protected static timeDiff: number = 0; // Difference between the actual time, and what should be reported to the game
     protected static timePaused = 0;
     protected static isPaused = false;
     protected static _deltaTime: number = 0;
+
+    public static readonly TARGET_MILLIS_PER_FRAME = TARGET_MILLIS_PER_FRAME;
 
     public static getTime() {
         if (this.isPaused) return this.timePaused;

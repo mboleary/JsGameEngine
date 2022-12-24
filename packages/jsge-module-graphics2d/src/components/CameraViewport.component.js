@@ -4,7 +4,7 @@
 
 // import Script from '../Script.js';
 
-import Script from 'jsge-core/src/components/Script.js';
+import {Script} from 'jsge-core';
 import Renderable from './Renderable.interface';
 import { CAMERA_ID } from '../constants';
 import Transform from '../Transform';

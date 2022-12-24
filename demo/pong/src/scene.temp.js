@@ -2,8 +2,7 @@
  * Temporary file currently being used to initialize the main scene until Level 2 prefabs are implemented
  */
 
-import { define, load } from 'asset-loader';
-import { Scene, GameObject } from 'jsge-core/src';
+import { Scene, GameObject } from 'jsge-core';
 
 import { BallScript } from './game/Ball.script';
 import { PlayerScript } from "./game/Player.script";

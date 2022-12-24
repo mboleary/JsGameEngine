@@ -2,17 +2,19 @@
  * Initializes the game and starts the execution loop
  */
 
-import { setCurrentScene, initEngine, addJMod, initGameLoop } from "jsge-core/src/Engine";
-import { InputModule, defineKey, TYPE_DIGITAL, setKeybindings } from "jsge-module-input";
+import { Engine } from "jsge-core";
+import { InputModule, KeyboardSubmodule, ControlType, Direction } from "jsge-module-input";
 import { RenderModule, setCanvas } from "jsge-module-graphics2d";
 import { loadGameScene } from "./scene.temp";
+
+import { inputModuleInstance } from "./modules/input.instance";
 
 export const canvas = document.getElementById('canvas');
 export const overlay = document.getElementById('overlay');
 
 function main() {
     const modules = [
-        new InputModule(),
+        inputModuleInstance,
         new RenderModule(),
     ];
 
@@ -23,23 +25,24 @@ function main() {
     setOverlayVisibility(false);
 
     // @TODO implement real options for input module
-    defineKey("test", TYPE_DIGITAL);
-    defineKey("up", TYPE_DIGITAL);
-    defineKey("down", TYPE_DIGITAL);
-    defineKey("left", TYPE_DIGITAL);
-    defineKey("right", TYPE_DIGITAL);
+    // defineKey("test", TYPE_DIGITAL);
+    // defineKey("up", TYPE_DIGITAL);
+    // defineKey("down", TYPE_DIGITAL);
+    // defineKey("left", TYPE_DIGITAL);
+    // defineKey("right", TYPE_DIGITAL);
     // Set Default Keymappings
-    setKeybindings({"test":{"state":0,"mapping":["k",32],"mappingName":" ","type":1},"up":{"state":0,"mapping":["k",38],"mappingName":"ArrowUp","type":1},"down":{"state":0,"mapping":["k",40],"mappingName":"ArrowDown","type":1},"left":{"state":0,"mapping":["k",37],"mappingName":"ArrowLeft","type":1},"right":{"state":0,"mapping":["k",39],"mappingName":"ArrowRight","type":1}});
+    // setKeybindings({"test":{"state":0,"mapping":["k",32],"mappingName":" ","type":1},"up":{"state":0,"mapping":["k",38],"mappingName":"ArrowUp","type":1},"down":{"state":0,"mapping":["k",40],"mappingName":"ArrowDown","type":1},"left":{"state":0,"mapping":["k",37],"mappingName":"ArrowLeft","type":1},"right":{"state":0,"mapping":["k",39],"mappingName":"ArrowRight","type":1}});
 
-    // @TODO make Engine into a class
-    modules.forEach(mod => addJMod(mod));
+
+
+    Engine.initialize({
+        modules
+    });
 
     // Engine.setCurrentScene();
     const scene = loadGameScene();
-    setCurrentScene(scene);
-    // Engine.initGameLoop();
-    initEngine();
-    initGameLoop();
+    Engine.setCurrentScene(scene);
+    Engine.start();
 }
 
 // @TODO put these into the render module

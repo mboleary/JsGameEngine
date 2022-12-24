@@ -2,7 +2,7 @@
  * Responsible for moving the player in response to input
  */
 
-import { Script, Engine } from "jsge-core/src";
+import { Script, Engine, Time } from "jsge-core";
 import { Transform } from "jsge-module-graphics2d";
 
 import { deg2rad, randInt } from "../util";
@@ -44,7 +44,7 @@ export class BallScript extends Script {
     }
 
     loop() {
-        const moveDelta = this.speed * (Engine.deltaTime / Engine.TARGET_MILLIS_PER_FRAME);
+        const moveDelta = this.speed * (Time.deltaTime / Time.TARGET_MILLIS_PER_FRAME);
         const transform = this.gameObject.transform.value;
         const radius = this._pongBallRenderScript.size / 2;
 

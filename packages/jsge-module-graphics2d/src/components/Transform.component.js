@@ -1,6 +1,5 @@
-import ComponentBase from "jsge-core/src/ComponentBase.js";
+import {ComponentBase, addSerializableType} from "jsge-core";
 import Transform from "../Transform";
-import { addSerializableType } from 'jsge-core/src/serialization';
 
 /**
  * A Transform holds position, rotation, and Scale data for an object

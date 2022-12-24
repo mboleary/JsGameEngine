@@ -2,10 +2,9 @@
  * Contains the texture component used for rendering
  */
 
-import ComponentBase from "jsge-core/src/ComponentBase.js";
+import {ComponentBase, addSerializableType} from "jsge-core";
 import Renderable from "./Renderable.interface";
-import {load} from "asset-loader/src/AssetLoader.js";
-import { addSerializableType } from 'jsge-core/src/serialization';
+import {AssetLoader} from "asset-loader";
 import { deg2rad } from "../util/conversions";
 
 export class SpriteComponent extends Renderable(ComponentBase) {
@@ -20,7 +19,7 @@ export class SpriteComponent extends Renderable(ComponentBase) {
 
     _init() {
         super._init();
-        load(this.assetName).then((img) => {
+        AssetLoader.load(this.assetName).then((img) => {
             // @TODO handle animations and spritesheets properly
             this.texture = img;
         });

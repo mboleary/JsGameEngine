@@ -2,7 +2,7 @@
  * Contains the Rendering Module, replaces the old jmod export
  */
 
-import ModuleBase from "jsge-core/src/ModuleBase";
+import {ModuleBase} from "jsge-core";
 import {initializeWith2dContext, renderGameObjectsWith2dContext} from "../Render";
 
 export class RenderModule extends ModuleBase {

@@ -5,7 +5,7 @@ import { ASSET_LOADERS } from "../assetLoader";
 import { EngineInternalModuleManager } from "./EngineInternalModuleManager";
 import { EngineGameObjectManager } from "./EngineGameObjectManager";
 import { EngineHotloopManager } from "./EngineHotloopManager";
-import { EngineTimeInterface } from "./EngineTimeInterface";
+import { GameObject } from "../GameObject";
 
 export type EngineInitializationParams = {
     modules: ModuleBase[];
@@ -19,7 +19,13 @@ export class Engine {
     private static moduleManager = EngineInternalModuleManager;
     private static gameObjectManager = EngineGameObjectManager;
     private static hotloopManager = EngineHotloopManager;
-    private static time = EngineTimeInterface;
+
+    /**
+     * Returns all modules
+     */
+    public static get modules(): ModuleBase[] {
+        return this.moduleManager.getModules();
+    }
 
     /**
      * initializes the engine, locks out adding new modules
@@ -44,10 +50,6 @@ export class Engine {
         Object.keys(ASSET_LOADERS).forEach((key:string) => this.assetLoader.addLoader(ASSET_LOADERS[key]));
     }
 
-    public static setCurrentScene(scene: Scene): void {
-        this.gameObjectManager.setCurrentScene(scene);
-    }
-
     public static start(): void {
         // initialize modules
         for (const initFunc of this.moduleManager.initFunctions) {
@@ -57,4 +59,34 @@ export class Engine {
         // start gameloop
         this.hotloopManager.startLoop();
     }
+
+    // GameObject-related functions
+    public static setCurrentScene(scene: Scene): void {
+        this.gameObjectManager.setCurrentScene(scene);
+    }
+
+    public static getCurrentScene() {
+        return this.gameObjectManager.getCurrentScene();
+    }
+
+    public static enrollGameObject(go: GameObject) {
+        return this.gameObjectManager.enrollGameObject(go);
+    }
+
+    public static deleteGameObject(go: GameObject) {
+        return this.gameObjectManager.deleteGameObject(go);
+    }
+
+    public static getGameObjectByID(id: string) {
+        return this.gameObjectManager.getGameObjectByID(id);
+    }
+
+    public static getGameObjectByName(name: string) {
+        return this.gameObjectManager.getGameObjectByName(name);
+    }
+
+    public static getGameObjectByGroup(group: string) {
+        return this.gameObjectManager.getGameObjectByGroup(group);
+    }
+
 }

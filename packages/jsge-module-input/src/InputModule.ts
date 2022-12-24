@@ -2,7 +2,7 @@
  * Contains the Input Module, replaces the old jmod export
  */
 
-import ModuleBase, { EngineInternals } from "jsge-core/src/ModuleBase";
+import {ModuleBase, EngineInternals} from "jsge-core";
 import { pollGamepads } from "./Input";
 import { InputSubmodule, KeyDef, KeyMapping, ControlType, ControllerConnectParams, Direction, KeyState } from "./types";
 import { clamp } from "./util";
@@ -22,10 +22,11 @@ type ButtonMapping = {
 const A2D_THRESHOLD = 0.5;
 
 export class InputModule extends ModuleBase {
-    readonly name = "Input";
-    readonly version = "0.0.0";
-    readonly debugName = "input";
-    readonly meta = {};
+    readonly _name = "Input";
+    readonly _version = "0.0.0";
+    readonly _debugName = "input";
+    readonly _id = "input";
+    readonly _meta = {};
 
 
     // All connected submodules
@@ -49,7 +50,7 @@ export class InputModule extends ModuleBase {
     private submodulesToPoll: InputSubmodule[] = [];
     
     constructor({ submodules, config, ...options } :InputModuleParams = {submodules:[], config: []}) {
-        super(options);
+        super();
 
         // Setup Submodules
         for (const submod of submodules) {
