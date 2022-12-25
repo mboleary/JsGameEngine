@@ -1,9 +1,9 @@
 import { mat2, glMatrix, ReadonlyMat2 } from "gl-matrix";
-import { CommonMatrixInterface } from "./interface/CommonMatrix.interface";
+import { CommonMatrixInterface, CommonStaticMatrixInterface } from "./interface/CommonMatrix.interface";
 
 export class Matrix2 implements CommonMatrixInterface<Matrix2> {
     private readonly matrix: mat2;
-    private static readonly MATRIX_LENGTH = 4;
+    private static readonly ARRAY_LENGTH = 4;
 
     constructor();
     constructor(a: Matrix2);
@@ -12,9 +12,9 @@ export class Matrix2 implements CommonMatrixInterface<Matrix2> {
     constructor(...args: number[] | [Matrix2] | [mat2]) {
         if (args?.length === 1 && args[0] instanceof Matrix2) {
             this.matrix = mat2.clone(args[0].matrix);
-        } else if (args?.length === 1 && args[0] instanceof glMatrix.ARRAY_TYPE && args[0].length === Matrix2.MATRIX_LENGTH) {
+        } else if (args?.length === 1 && args[0] instanceof glMatrix.ARRAY_TYPE && args[0].length === Matrix2.ARRAY_LENGTH) {
             this.matrix = args[0];
-        } else if (args?.length === 4 && typeof args[0] === "number") {
+        } else if (args?.length === Matrix2.ARRAY_LENGTH && typeof args[0] === "number") {
             const [m00, m01, m10, m11] = args;
             this.matrix = mat2.fromValues(m00, m01, m10, m11);
         } else {
@@ -188,6 +188,18 @@ export class Matrix2 implements CommonMatrixInterface<Matrix2> {
         const toRet = new Matrix2();
         mat2.transpose(toRet.matrix, a.matrix);
         return toRet;
+    }
+
+    public get array() {
+        return this.matrix;
+    }
+
+    public get x() {
+        return this.matrix[2];
+    }
+
+    public get y() {
+        return this.matrix[4];
     }
 
 }
