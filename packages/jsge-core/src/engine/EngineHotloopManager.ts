@@ -1,13 +1,20 @@
 import {EngineInternalModuleManager} from "./EngineInternalModuleManager";
 import { Time, TARGET_MILLIS_PER_FRAME } from "../time";
 import { EngineTimeInterface } from "./EngineTimeInterface";
+import { EngineInternals } from "../types";
+import { EngineGameObjectManager } from "./EngineGameObjectManager";
 
 export class EngineHotloopManager {
     private static time = EngineTimeInterface;
+    private static gameObjectManager = EngineGameObjectManager;
 
     private static _loopRunning: boolean = false;
     private static stopReference: number | null = null;
     private static loopFunctions: Function[] = [];
+
+    private static engineInternals: EngineInternals = {
+        gameObjects: EngineGameObjectManager.getGameObjects(),
+    }
 
     public static get loopRunning(): boolean {
         return this._loopRunning;
@@ -70,7 +77,7 @@ export class EngineHotloopManager {
         this.time.updateDeltaTime();
 
         for (const func of this.loopFunctions) {
-            func();
+            func(this.engineInternals);
         }
     }
 }

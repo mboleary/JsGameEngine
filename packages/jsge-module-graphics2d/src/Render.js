@@ -3,7 +3,7 @@
  */
 
 // import Transform from './Transform.js';
-import Transform from './Transform';
+import {Transform} from './Transform';
 
 // import RenderableInterface from './components/Renderable.interface.js';
 import { AssetLoader } from 'asset-loader';

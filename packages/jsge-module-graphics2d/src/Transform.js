@@ -2,7 +2,7 @@
  * A Transform holds position, rotation, and Scale data for an object
  * @TODO Rewrite to use gl-matrix behind the scenes
  */
-export default class Transform {
+export class Transform {
     constructor(...params) {
 
         this.position = new Three(0, 0, 0);

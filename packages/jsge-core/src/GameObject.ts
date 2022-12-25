@@ -21,11 +21,14 @@ export class GameObject {
     public group: string;
     readonly id: string;
     public parent: GameObject | null;
-    public children: GameObject[];
-    public components: ComponentBase[];
+    public readonly children: GameObject[];
+    // public components: ComponentBase[];
     private _initialized: boolean;
     private readonly _childrenIDs: Set<string>;
-    private readonly _componentIDs: Set<string>;
+    // private readonly _componentIDs: Set<string>;
+    private readonly _componentsByID: Map<string, ComponentBase> = new Map();
+    private readonly _componentsByName: Map<string, ComponentBase[]> = new Map();
+    private readonly _componentsByType: Map<string, ComponentBase[]> = new Map();
 
     constructor({name = "", group = "", id, parent = null}: GameObjectConstructor = {}) {
         // Public
@@ -41,13 +44,17 @@ export class GameObject {
         this.parent = parent; // Contains reference to the Parent GameObject
         // this.deleteFlag = false; // True if the GameObject should be destroyed.
         this.children = []; // Child GameObjects whose transformation will be relative to that of this GameObject
-        this.components = []; // Components of the GameObject
+        // this.components = []; // Components of the GameObject
         this._initialized = false;
 
         this._childrenIDs = new Set();
-        this._componentIDs = new Set();
+        // this._componentIDs = new Set();
 
         // this = {test: true};
+    }
+
+    public get components(): ComponentBase[] {
+        return Array.from(this._componentsByID.values());
     }
 
     /**
@@ -70,13 +77,13 @@ export class GameObject {
      * @param {Component} comp component to attach
      */
     public attachComponent(comp: ComponentBase) {
-        if (this._componentIDs.has(comp.id)) {
+        if (this._componentsByID.has(comp.id)) {
             console.warn("already has component", comp);
             return;
         }
-        this._componentIDs.add(comp.id);
+        this._componentsByID.set(comp.id, comp);
         comp.gameObject = this;
-        this.components.push(comp);
+        // this.components.push(comp);
         if (this._initialized) {
             console.log("comp added after init");
             comp._init();
@@ -93,20 +100,48 @@ export class GameObject {
      * @param {Component} comp component to destroy
      */
     public detachComponent(comp: ComponentBase) {
-        if (comp.id) {
-            for (let i = 0; i < this.components.length; i++) {
-                let component = this.components[i];
-                if (component.id === comp.id) {
-                    this.components.splice(i, 1);
-                    component._destroy();
-                    break;
-                }
-            }
+        const toDetach = this._componentsByID.get(comp.id);
+        if (toDetach) {
+            // for (let i = 0; i < this.components.length; i++) {
+            //     let component = this.components[i];
+            //     if (component.id === comp.id) {
+            //         this.components.splice(i, 1);
+            //         component._destroy();
+            //         break;
+            //     }
+            // }
             // @TODO change this
             // if (comp._attrSet && !comp._attrName in KEY_BLACKLIST) {
             //     delete this[comp._attrName];
             // }
-            this._componentIDs.delete(comp.id);
+
+            toDetach.destroy();
+            
+            this._componentsByID.delete(toDetach.id);
+
+            // Remove from names mapping
+            const byNameArr = this._componentsByName.get(toDetach.name);
+            if (byNameArr) {
+                for (let i = 0; i < byNameArr.length; i++) {
+                    const component = byNameArr[i];
+                    if (component.id === toDetach.id) {
+                        byNameArr.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+
+            // remove rom type mapping
+            const byTypeArr = this._componentsByType.get(toDetach.constructor.name);
+            if (byTypeArr) {
+                for (let i = 0; i < byTypeArr.length; i++) {
+                    const component = byTypeArr[i];
+                    if (component.id === toDetach.id) {
+                        byTypeArr.splice(i, 1);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -116,44 +151,41 @@ export class GameObject {
      * @returns {Component | null} specified component or null
      */
     public getComponentByID(id: string): ComponentBase | null {
-        for (let i = 0; i < this.components.length; i++) {
-            let component = this.components[i];
-            if (component.id === id) {
-                return component;
-            }
-        }
-        return null;
+        // for (let i = 0; i < this.components.length; i++) {
+        //     let component = this.components[i];
+        //     if (component.id === id) {
+        //         return component;
+        //     }
+        // }
+        // return null;
+
+        return this._componentsByID.get(id) || null;
     }
 
     /**
      * Get a component by its name
      * @param {string} name name of the component
-     * @returns {Component | null} specified component or null 
+     * @returns {Component[] | null} specified component or null 
      */
-    getComponentByName(name: string) {
-        for (let i = 0; i < this.components.length; i++) {
-            let component = this.components[i];
-            if (component.name === name) {
-                return component;
-            }
-        }
-        return null;
+    public getComponentByName(name: string): ComponentBase[] | null {
+        // for (let i = 0; i < this.components.length; i++) {
+        //     let component = this.components[i];
+        //     if (component.name === name) {
+        //         return component;
+        //     }
+        // }
+        // return null;
+
+        return this._componentsByName.get(name) || null;
     }
 
     /**
      * Returns a component by the typename
-     * @TODO change this to support using a class reference
      * @param {string} typename type of component to return
-     * @returns {Component | null} specified component
+     * @returns {Component[] | null} specified component
      */
-    public getComponentByType(typename: string): ComponentBase | null {
-        for (let i = 0; i < this.components.length; i++) {
-            let component = this.components[i];
-            if (component.constructor?.name === typename) {
-                return component;
-            }
-        }
-        return null;
+    public getComponentByType(classRef: typeof ComponentBase): ComponentBase[] | null | null {
+        return this._componentsByType.get(classRef.constructor.name) || null;
     }
 
     /**
@@ -190,7 +222,7 @@ export class GameObject {
     }
 
     public hasComponent(comp: ComponentBase): boolean {
-        return this._componentIDs.has(comp.id);
+        return this._componentsByID.has(comp.id);
     }
 
     /**

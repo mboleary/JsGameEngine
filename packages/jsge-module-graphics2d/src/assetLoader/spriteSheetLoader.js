@@ -2,7 +2,7 @@
  * Contains the spritesheet loaders for the asset loader
  */
 
-import SpriteSheet from "../SpriteSheet";
+import {SpriteSheet} from "../SpriteSheet";
 
 export async function spritesheetAssetLoader(options) {
     let s = new SpriteSheet();

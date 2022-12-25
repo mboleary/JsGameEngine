@@ -2,7 +2,7 @@
  * Contains Sprites
  */
 
-export default class SpriteSheet {
+export class SpriteSheet {
     
     constructor() {
         this.image = new Image();

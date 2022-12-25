@@ -11,6 +11,9 @@ export class EngineGameObjectManager {
     private static gameObjectsByName: Map<string, GameObject[]> = new Map();
     private static gameObjectsByGroup: Map<string, GameObject[]> = new Map();
 
+    // @TODO need to eventually remove this
+    private static gameObjectsArray: GameObject[] = [];
+
     public static setCurrentScene(scene: Scene) {
         let oldScn = this.currentScene;
         this.currentScene = scene;
@@ -50,6 +53,9 @@ export class EngineGameObjectManager {
         if (this.gameObjects.has(go.id)) return;
         refArr.arr.push(go); // Reference Array of things to Initialize
         this.gameObjects.set(go.id, go);
+
+        // @TODO eventually remove this
+        this.gameObjectsArray.push(go);
 
         // Add to Group Name List
         let groupArr;
@@ -94,6 +100,15 @@ export class EngineGameObjectManager {
         const toDel = this.gameObjects.get(go.id);
         if (!toDel) return; // Item was not found
         this.gameObjects.delete(go.id);
+
+        // @TODO eventually remove this
+        for (let i = 0; i < this.gameObjectsArray.length; i++) {
+            let item = this.gameObjectsArray[i];
+            if (item.id === go.id) {
+                this.gameObjectsArray.splice(i, 1);
+                break;
+            }
+        }
 
         // Delete from name array
         const goNameArr = this.gameObjectsByName.get(toDel.name);
@@ -212,6 +227,7 @@ export class EngineGameObjectManager {
     }
 
     public static getGameObjects(): GameObject[] {
-        return Array.from(this.gameObjects.values());
+        // return Array.from(this.gameObjects.values());
+        return this.gameObjectsArray;
     }
 }

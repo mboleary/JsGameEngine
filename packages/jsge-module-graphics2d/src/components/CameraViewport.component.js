@@ -5,9 +5,9 @@
 // import Script from '../Script.js';
 
 import {Script} from 'jsge-core';
-import Renderable from './Renderable.interface';
+import {Renderable} from './Renderable.interface';
 import { CAMERA_ID } from '../constants';
-import Transform from '../Transform';
+import {Transform} from '../Transform';
 
 // @TODO Make this not be a script? Use as base for Sprites and Camera?
 
@@ -37,8 +37,11 @@ export class CameraViewportComponent extends Renderable(Script) {
 
     // Override this to render things directly to the canvas
     render(context, width, height, camTransform) {
+        if (!this.transform) {
+            throw new Error("can't find transform component!");
+        }
         let delta = new Transform();
-        const transform = this.gameObject.transform.value;
+        const transform = this.transform.value;
         delta.position.x = transform.position.x - this.prevTransform.position.x;
         delta.position.y = transform.position.y - this.prevTransform.position.y;
         delta.position.z = transform.position.z - this.prevTransform.position.z;

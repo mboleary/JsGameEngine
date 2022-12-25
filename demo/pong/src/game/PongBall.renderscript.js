@@ -35,7 +35,7 @@ export class PongBall extends RenderScript {
     }
 
     render(context, width, height, camTransform) {
-        const transform = this.gameObject.transform?.value;
+        const transform = this.transform?.value;
         if (!transform) return;
 
         const oldFillstyle = context.fillStyle;

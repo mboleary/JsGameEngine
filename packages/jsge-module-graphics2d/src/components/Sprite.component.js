@@ -3,7 +3,7 @@
  */
 
 import {ComponentBase, addSerializableType} from "jsge-core";
-import Renderable from "./Renderable.interface";
+import {Renderable} from "./Renderable.interface";
 import {AssetLoader} from "asset-loader";
 import { deg2rad } from "../util/conversions";
 
@@ -17,8 +17,7 @@ export class SpriteComponent extends Renderable(ComponentBase) {
         this.hidden = false;
     }
 
-    _init() {
-        super._init();
+    init() {
         AssetLoader.load(this.assetName).then((img) => {
             // @TODO handle animations and spritesheets properly
             this.texture = img;
@@ -30,6 +29,9 @@ export class SpriteComponent extends Renderable(ComponentBase) {
     }
 
     render(context, width, height, cam) {
+        if (!this.transform) {
+            throw new Error("can't find transform component!");
+        }
         const tex = this._getCurrentFrame();
         const go = this.gameObject;
 
@@ -39,7 +41,7 @@ export class SpriteComponent extends Renderable(ComponentBase) {
         const iw = tex.width;
         const ih = tex.height;
         // Use the Absolute Transform, if available
-        const transform = go.transform._absolute ? go.transform._absolute : go.transform.value;
+        const transform = this.transform._absolute ? this.transform._absolute : this.transform.value;
         const pos = transform.position;
         const scl = transform.scale;
         // @TODO Do rotation

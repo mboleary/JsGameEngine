@@ -1,4 +1,4 @@
-import Transform from "../Transform";
+import {Transform} from "../Transform";
 
 export function calculateAbsoluteTransform(gos) {
     gos.forEach((go) => {
