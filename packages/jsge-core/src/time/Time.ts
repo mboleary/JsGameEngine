@@ -1,23 +1,18 @@
-import { TARGET_MILLIS_PER_FRAME } from "./const";
+import { TARGET_MILLIS_PER_FRAME as target } from "./const";
+import { EngineTimeInterface } from "../engine/EngineTimeInterface";
 
 export class Time {
-    protected static timeDiff: number = 0; // Difference between the actual time, and what should be reported to the game
-    protected static timePaused = 0;
-    protected static isPaused = false;
-    protected static _deltaTime: number = 0;
-
-    public static readonly TARGET_MILLIS_PER_FRAME = TARGET_MILLIS_PER_FRAME;
+    public static readonly TARGET_MILLIS_PER_FRAME = target;
 
     public static getTime() {
-        if (this.isPaused) return this.timePaused;
-        return window.performance.now() - this.timeDiff;
-    }
-    
-    public static get paused(): boolean {
-        return this.isPaused;
+        return EngineTimeInterface.getTime();
     }
 
-    public static get deltaTime(): number {
-        return this._deltaTime;
+    public static get paused() {
+        return EngineTimeInterface.paused;
+    }
+
+    public static get deltaTime() {
+        return EngineTimeInterface.deltaTime;
     }
 }

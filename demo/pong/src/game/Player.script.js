@@ -3,7 +3,7 @@
  */
 
 import { Script, Time } from "jsge-core";
-import { Transform } from "jsge-module-graphics2d";
+import { Transform, TransformComponent } from "jsge-module-graphics2d";
 // import { InputModule } from "jsge-module-input";
 
 export class PlayerScript extends Script {
@@ -17,9 +17,16 @@ export class PlayerScript extends Script {
         this.yMaxBoundary = null; // @TODO set this from another component
     }
 
+    init() {
+        const transform = this.gameObject.getComponentByType(TransformComponent);
+        if (transform) {
+            this._transform = transform[0];
+        }
+    }
+
     loop() {
         const moveDelta = this.speed * (Time.deltaTime / Time.TARGET_MILLIS_PER_FRAME);
-        const transform = this.gameObject.transform.value;
+        const transform = this._transform.value;
         transform.position.add(this.accel.position);
 
         // if (getKeyState("up")) {

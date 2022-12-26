@@ -7,6 +7,7 @@ import { EngineGameObjectManager } from "./EngineGameObjectManager";
 import { EngineHotloopManager } from "./EngineHotloopManager";
 import { GameObject } from "../GameObject";
 import { EngineDebugManager } from "./EngineDebugManager";
+import { ScriptManagerModule } from "../modules/ScriptManager.module";
 
 export type EngineInitializationParams = {
     modules: ModuleBase[];
@@ -38,18 +39,22 @@ export class Engine {
         }
 
         this.initialized = true;
+
+        this.moduleManager.add(new ScriptManagerModule());
         
         // load modules
         for (const module of modules) {
             this.moduleManager.add(module);
         }
 
-        this.moduleManager.lockModules();
-
         // @TODO set debug flags, setup debug
         if (debug) {
             this.debugManager.buildDebug();
         }
+
+        this.moduleManager.lockModules();
+
+        
 
         // Add asset loaders
         Object.keys(ASSET_LOADERS).forEach((key:string) => this.assetLoader.addLoader(ASSET_LOADERS[key]));

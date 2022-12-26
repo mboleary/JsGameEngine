@@ -5,13 +5,14 @@
 // import Script from '../Script.js';
 
 import {Script} from 'jsge-core';
-import {Renderable} from './Renderable.interface';
+// import {Renderable} from './Renderable.interface';
 import { CAMERA_ID } from '../constants';
 import {Transform} from '../Transform';
+import { RenderScript } from './RenderScript.component';
 
 // @TODO Make this not be a script? Use as base for Sprites and Camera?
 
-export class CameraViewportComponent extends Renderable(Script) {
+export class CameraViewportComponent extends RenderScript {
 
     constructor({...params} = {}) {
         super({...params});

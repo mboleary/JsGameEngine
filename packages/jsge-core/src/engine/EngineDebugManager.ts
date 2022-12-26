@@ -4,6 +4,7 @@
 import { EngineInternalModuleManager } from "./EngineInternalModuleManager";
 import { ModuleDebugInterface, EngineDebugInterface, GlobalDebugInterface } from "../types";
 import { EngineGameObjectManager } from "./EngineGameObjectManager";
+import { EngineTimeInterface } from "./EngineTimeInterface";
 
 
 export class EngineDebugManager {
@@ -12,6 +13,7 @@ export class EngineDebugManager {
         (window as GlobalDebugInterface).debug = {
             engine: this.buildEngineDebug(),
             module: this.buildModuleDebug(),
+            
         };
 
         console.log("debug:", (window as GlobalDebugInterface).debug);
@@ -21,7 +23,11 @@ export class EngineDebugManager {
         const engineObject: EngineDebugInterface = {
             get gameObjects() {
                 return EngineGameObjectManager.getGameObjects();
-            }
+            },
+            get modules() {
+                return EngineInternalModuleManager.getModules();
+            },
+            time: EngineTimeInterface,
         };
 
         
@@ -37,8 +43,6 @@ export class EngineDebugManager {
                 debugObject[module.debugName] = module.debug();
             }
         }
-
-        console.log("module dbg obj", debugObject);
 
         return debugObject;
     }

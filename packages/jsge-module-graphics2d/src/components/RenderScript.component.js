@@ -6,7 +6,7 @@
 
 import {Script} from 'jsge-core';
 import {Renderable} from './Renderable.interface';
-import { Transform } from "../Transform";
+import { TransformComponent } from './Transform.component';
 
 // @TODO Make this not be a script? Use as base for Sprites and Camera?
 
@@ -17,8 +17,13 @@ export class RenderScript extends Renderable(Script) {
         this.transform = null;
     }
 
+    _init() {
+        super._init();
+        this._getTransform();
+    }
+
     _getTransform() {
-        const goTransformArr = this.gameObject.getComponentByType(Transform);
+        const goTransformArr = this.gameObject.getComponentByType(TransformComponent);
         if (goTransformArr) {
             this.transform = goTransformArr[0];
         }

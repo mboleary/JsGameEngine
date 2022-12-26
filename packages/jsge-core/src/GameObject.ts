@@ -82,6 +82,23 @@ export class GameObject {
             return;
         }
         this._componentsByID.set(comp.id, comp);
+
+        // Add to components by name
+        if (this._componentsByName.has(comp.name)) {
+            const arr = this._componentsByName.get(comp.name);
+            arr && arr.push(comp);
+        } else {
+            this._componentsByName.set(comp.name, [comp]);
+        }
+
+        // Add to component by type
+        if (this._componentsByType.has(comp.constructor.name)) {
+            const arr = this._componentsByType.get(comp.constructor.name);
+            arr && arr.push(comp);
+        } else {
+            this._componentsByType.set(comp.constructor.name, [comp]);
+        }
+
         comp.gameObject = this;
         // this.components.push(comp);
         if (this._initialized) {
@@ -184,8 +201,9 @@ export class GameObject {
      * @param {string} typename type of component to return
      * @returns {Component[] | null} specified component
      */
-    public getComponentByType(classRef: typeof ComponentBase): ComponentBase[] | null | null {
-        return this._componentsByType.get(classRef.constructor.name) || null;
+    public getComponentByType(classRef: typeof ComponentBase): ComponentBase[] | null {
+        console.log("getComponentByType:", classRef, classRef.name);
+        return this._componentsByType.get(classRef.name) || null;
     }
 
     /**

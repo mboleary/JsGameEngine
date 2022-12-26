@@ -3,7 +3,7 @@
  */
 
 import { Script, Engine, Time } from "jsge-core";
-import { Transform } from "jsge-module-graphics2d";
+import { Transform, TransformComponent } from "jsge-module-graphics2d";
 
 import { deg2rad, randInt } from "../util";
 
@@ -36,16 +36,24 @@ export class BallScript extends Script {
 
     init() {
         const cameraGO = Engine.getGameObjectByName("camera");
+        const transform = this.gameObject.getComponentByType(TransformComponent);
+        const ballRender =  this.gameObject.getComponentByName("ball_render");
         if (cameraGO) {
-            this._cameraComponent = cameraGO[0].getComponentByName("CameraViewport");
+            const temp = cameraGO[0].getComponentByName("CameraViewport");
+            if (temp) this._cameraComponent = temp[0];
         }
-        this._pongBallRenderScript = this.gameObject.getComponentByName("ball_render");
+        if (ballRender) {
+            this._pongBallRenderScript = ballRender[0];
+        }
+        if (transform) {
+            this._transform = transform[0];
+        }
         this.startMoving();
     }
 
     loop() {
         const moveDelta = this.speed * (Time.deltaTime / Time.TARGET_MILLIS_PER_FRAME);
-        const transform = this.gameObject.transform.value;
+        const transform = this._transform.value;
         const radius = this._pongBallRenderScript.size / 2;
 
         if (this._cameraComponent && this.isMoving) {

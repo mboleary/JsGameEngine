@@ -19,6 +19,9 @@ export class RenderModule extends ModuleBase {
         // Implementation
         this.canvas = null;
         this.context = null;
+
+        this.hasInit = true;
+        this.hasLoop = true;
     }
 
     init() {

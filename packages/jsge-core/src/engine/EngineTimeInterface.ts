@@ -2,10 +2,29 @@
  * This interfaces with the time class to set values such as delta time and advancing time while paused for debugging
  */
 
-import { Time } from "../time";
+import { TARGET_MILLIS_PER_FRAME as target } from "../time/const";
 
-export class EngineTimeInterface extends Time {
-    private static currTime = 0;
+export class EngineTimeInterface {
+    protected static timeDiff: number = 0; // Difference between the actual time, and what should be reported to the game
+    protected static timePaused = 0;
+    protected static isPaused = false;
+    protected static _deltaTime: number = 0;
+    protected static currTime = 0;
+
+    public static readonly TARGET_MILLIS_PER_FRAME = target;
+
+    public static getTime() {
+        if (this.isPaused) return this.timePaused;
+        return window.performance.now() - this.timeDiff;
+    }
+    
+    public static get paused(): boolean {
+        return this.isPaused;
+    }
+
+    public static get deltaTime(): number {
+        return this._deltaTime;
+    }
 
     /**
      * Initializes time
