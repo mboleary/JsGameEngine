@@ -63,7 +63,7 @@ export class BallScript extends Script {
                 this._lastReflectionSide !== REFLECTIONS.TOP
             ) {
                 // Reflect off of top (0 to 180 degrees)
-                console.log("reflect top", this.direction);
+                // console.log("reflect top", this.direction);
                 this._lastReflectionSide = REFLECTIONS.TOP;
                 // let newDir = ((180 - this.direction) + 180) % 360
                 let newDir = ((90 - this.direction) + 270) % 360;
@@ -73,7 +73,7 @@ export class BallScript extends Script {
                 this._lastReflectionSide !== REFLECTIONS.BOTTOM
             ) {
                 // Reflect off of bottom (180 to 360 degrees)
-                console.log("reflect bottom", this.direction);
+                // console.log("reflect bottom", this.direction);
                 this._lastReflectionSide = REFLECTIONS.BOTTOM;
                 // let newDir = (90 - (180 - this.direction)) % 360;
                 let newDir = ((270 - this.direction) + 270 + 180) % 360;
@@ -85,7 +85,7 @@ export class BallScript extends Script {
                 this._lastReflectionSide !== REFLECTIONS.LEFT
             ) {
                 // Reflect on left side (90 to 270 degrees)
-                console.log("reflect left", this.direction);
+                // console.log("reflect left", this.direction);
                 this._lastReflectionSide = REFLECTIONS.LEFT;
                 // let newDir = ((270 - this.direction) + 270) % 360;
                 let newDir = ((360 - this.direction) + 360 + 180) % 360;
@@ -95,7 +95,7 @@ export class BallScript extends Script {
                 this._lastReflectionSide !== REFLECTIONS.RIGHT
             ) {
                 // Reflect on right side (270 to 90 (450) degrees)
-                console.log("reflect right", this.direction);
+                // console.log("reflect right", this.direction);
                 this._lastReflectionSide = REFLECTIONS.RIGHT;
                 // let newDir = (this.direction + 90) % 360;
                 let newDir = ((180 - this.direction) + 180 + 180) % 360;

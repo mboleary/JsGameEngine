@@ -10,6 +10,7 @@ import { PongBar } from './game/PongBar.renderscript';
 import { PongBall } from './game/PongBall.renderscript';
 
 import { TransformComponent, CameraViewportComponent } from 'jsge-module-graphics2d';
+import { randInt } from './util';
 
 
 /**
@@ -28,50 +29,56 @@ export async function loadTitleScene() {
 export function loadGameScene() {
     const scene = new Scene();
 
-    const leftPaddle = new GameObject();
-    leftPaddle.name = "Left Paddle";
-    const lp_scr = new PlayerScript();
-    const lp_bar = new PongBar();
-    const lp_tr = new TransformComponent();
-    lp_tr.value.position.x = 5;
-    lp_tr.value.position.y = 5;
+    // const leftPaddle = new GameObject();
+    // leftPaddle.name = "Left Paddle";
+    // const lp_scr = new PlayerScript();
+    // const lp_bar = new PongBar();
+    // const lp_tr = new TransformComponent();
+    // lp_tr.value.position.x = 5;
+    // lp_tr.value.position.y = 5;
 
-    leftPaddle.attachComponent(lp_bar);
-    leftPaddle.attachComponent(lp_scr);
-    leftPaddle.attachComponent(lp_tr);
+    // leftPaddle.attachComponent(lp_bar);
+    // leftPaddle.attachComponent(lp_scr);
+    // leftPaddle.attachComponent(lp_tr);
 
-    scene.attachGameObject(leftPaddle);
+    // scene.attachGameObject(leftPaddle);
 
-    const rightPaddle = new GameObject();
-    rightPaddle.name = "Right Paddle";
-    // const rp_scr = new PlayerScript();
-    const rp_bar = new PongBar();
-    const rp_tr = new TransformComponent();
-    rp_tr.value.position.x = 45;
-    rp_tr.value.position.y = 5;
+    // const rightPaddle = new GameObject();
+    // rightPaddle.name = "Right Paddle";
+    // // const rp_scr = new PlayerScript();
+    // const rp_bar = new PongBar();
+    // const rp_tr = new TransformComponent();
+    // rp_tr.value.position.x = 45;
+    // rp_tr.value.position.y = 5;
 
-    // rightPaddle.attachComponent(rp_scr);
-    rightPaddle.attachComponent(rp_bar);
-    rightPaddle.attachComponent(rp_tr);
+    // // rightPaddle.attachComponent(rp_scr);
+    // rightPaddle.attachComponent(rp_bar);
+    // rightPaddle.attachComponent(rp_tr);
 
-    scene.attachGameObject(rightPaddle);
+    // scene.attachGameObject(rightPaddle);
 
-    const ball = new GameObject();
-    ball.name = "Ball";
-    const b_scr = new BallScript();
-    b_scr.speed = 5;
-    const b_cir = new PongBall();
-    b_cir.size = 50;
-    b_cir.name = "ball_render";
-    const b_tr = new TransformComponent();
-    b_tr.value.position.x = 100;
-    b_tr.value.position.y = 400;
+    // const num = randInt(1,1000);
+    const num = 1000;
+    console.log("Number of balls:", num);
+    for (let i = 0; i < num; i++) {
+        const ball = new GameObject();
+        ball.name = "Ball " + num;
+        const b_scr = new BallScript();
+        b_scr.speed = 5;
+        const b_cir = new PongBall();
+        b_cir.size = 50;
+        b_cir.name = "ball_render";
+        b_cir.trail = false;
+        const b_tr = new TransformComponent();
+        b_tr.value.position.x = 100;
+        b_tr.value.position.y = 400;
 
-    ball.attachComponent(b_scr);
-    ball.attachComponent(b_cir);
-    ball.attachComponent(b_tr);
+        ball.attachComponent(b_scr);
+        ball.attachComponent(b_cir);
+        ball.attachComponent(b_tr);
 
-    scene.attachGameObject(ball);
+        scene.attachGameObject(ball);
+    }
 
     const camera = new GameObject();
     camera.name = "camera";

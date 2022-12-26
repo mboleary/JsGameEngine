@@ -202,7 +202,6 @@ export class GameObject {
      * @returns {Component[] | null} specified component
      */
     public getComponentByType(classRef: typeof ComponentBase): ComponentBase[] | null {
-        console.log("getComponentByType:", classRef, classRef.name);
         return this._componentsByType.get(classRef.name) || null;
     }
 
