@@ -3,7 +3,7 @@
  */
 
 import {ModuleBase, EngineInternals} from "jsge-core";
-import { pollGamepads } from "./Input";
+// import { pollGamepads } from "./Input";
 import { InputSubmodule, KeyDef, KeyMapping, ControlType, ControllerConnectParams, Direction, KeyState } from "./types";
 import { clamp } from "./util";
 import { InvalidKeyNameError } from "./errors";
@@ -21,11 +21,13 @@ type ButtonMapping = {
 // Threshold of pushing a button if it's bound to an axis
 const A2D_THRESHOLD = 0.5;
 
+export const INPUT_MODULE_ID = "input";
+
 export class InputModule extends ModuleBase {
     readonly _name = "Input";
     readonly _version = "0.0.0";
     readonly _debugName = "input";
-    readonly _id = "input";
+    readonly _id = INPUT_MODULE_ID;
     readonly _meta = {};
 
 

@@ -41,4 +41,10 @@ export class EngineInternalModuleManager {
     public static getModules(): ModuleBase[] {
         return Array.from(this.modules.values());
     }
+
+    public static getModuleByID(id: string): ModuleBase | null {
+        const toRet = this.modules.get(id);
+        console.log("test", toRet);
+        return toRet || null;
+    }
 }

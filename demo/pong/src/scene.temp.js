@@ -29,33 +29,33 @@ export async function loadTitleScene() {
 export function loadGameScene() {
     const scene = new Scene();
 
-    // const leftPaddle = new GameObject();
-    // leftPaddle.name = "Left Paddle";
-    // const lp_scr = new PlayerScript();
-    // const lp_bar = new PongBar();
-    // const lp_tr = new TransformComponent();
-    // lp_tr.value.position.x = 5;
-    // lp_tr.value.position.y = 5;
+    const leftPaddle = new GameObject();
+    leftPaddle.name = "Left Paddle";
+    const lp_scr = new PlayerScript();
+    const lp_bar = new PongBar();
+    const lp_tr = new TransformComponent();
+    lp_tr.value.position.x = 5;
+    lp_tr.value.position.y = 5;
 
-    // leftPaddle.attachComponent(lp_bar);
-    // leftPaddle.attachComponent(lp_scr);
-    // leftPaddle.attachComponent(lp_tr);
+    leftPaddle.attachComponent(lp_bar);
+    leftPaddle.attachComponent(lp_scr);
+    leftPaddle.attachComponent(lp_tr);
 
-    // scene.attachGameObject(leftPaddle);
+    scene.attachGameObject(leftPaddle);
 
-    // const rightPaddle = new GameObject();
-    // rightPaddle.name = "Right Paddle";
-    // // const rp_scr = new PlayerScript();
-    // const rp_bar = new PongBar();
-    // const rp_tr = new TransformComponent();
-    // rp_tr.value.position.x = 45;
-    // rp_tr.value.position.y = 5;
+    const rightPaddle = new GameObject();
+    rightPaddle.name = "Right Paddle";
+    // const rp_scr = new PlayerScript();
+    const rp_bar = new PongBar();
+    const rp_tr = new TransformComponent();
+    rp_tr.value.position.x = 45;
+    rp_tr.value.position.y = 5;
 
-    // // rightPaddle.attachComponent(rp_scr);
-    // rightPaddle.attachComponent(rp_bar);
-    // rightPaddle.attachComponent(rp_tr);
+    // rightPaddle.attachComponent(rp_scr);
+    rightPaddle.attachComponent(rp_bar);
+    rightPaddle.attachComponent(rp_tr);
 
-    // scene.attachGameObject(rightPaddle);
+    scene.attachGameObject(rightPaddle);
 
     // const num = randInt(1,1000);
     const num = 1000;

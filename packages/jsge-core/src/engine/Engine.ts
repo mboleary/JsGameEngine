@@ -30,6 +30,11 @@ export class Engine {
         return this.moduleManager.getModules();
     }
 
+    public static getModuleByID<T extends ModuleBase>(id: string): T | null {
+        console.log("This is a test");
+        return this.moduleManager.getModuleByID(id) as T;
+    }
+
     /**
      * initializes the engine, locks out adding new modules
      */
