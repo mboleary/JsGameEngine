@@ -25,10 +25,10 @@ export class EngineInternalModuleManager {
             console.log(`Loading Module [${module.name}${(module.version) ? " (v:" + module.version + ")" : ""}]...`);
             this.modules.set(module.id, module);
             if (module.hasInit) {
-                this.initFunctions.push(module.init);
+                this.initFunctions.push(module.init.bind(module));
             }
             if (module.hasLoop) {
-                this.loopFunctions.push(module.loop);
+                this.loopFunctions.push(module.loop.bind(module));
             }
         } else {
             throw new Error("A module cannot be loaded after the modules are locked");

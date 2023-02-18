@@ -29,6 +29,7 @@ export class InputModule extends ModuleBase {
     readonly _debugName = "input";
     readonly _id = INPUT_MODULE_ID;
     readonly _meta = {};
+    readonly hasInit = true;
 
 
     // All connected submodules
@@ -65,6 +66,12 @@ export class InputModule extends ModuleBase {
             for (const mapping of mappings) {
                 this.bindKey(keyDef.name, mapping);
             }
+            this.keyValues.set(keyDef.name, {
+                rawValue: 0,
+                maxValue: 0,
+                minValue: 0,
+                value: 0
+            });
         }
     }
 
@@ -96,8 +103,9 @@ export class InputModule extends ModuleBase {
      */
     public connectSubmodule(submodule: InputSubmodule) {
         if (!this.connectedSubmodules.has(submodule.name)) {
+            console.log("connecting submodule:", submodule);
             submodule.connect({
-                inputCallback: this.inputHandler,
+                inputCallback: this.inputHandler.bind(this),
                 controllerConnectCallback: this.controllerConnectHandler,
                 controllerDisconnectCallback: this.controllerDisconnectHandler,
             });
@@ -327,6 +335,8 @@ export class InputModule extends ModuleBase {
         keyValue.minValue = pressedKeyState.minValue;
         keyValue.maxValue = pressedKeyState.maxValue;
         keyValue.rawValue = pressedKeyState.rawValue;
+
+        console.log(keyValue);
     }
 
     /**
@@ -336,6 +346,7 @@ export class InputModule extends ModuleBase {
      * @param controlType 
      */
     private inputHandler(params: KeyMapping<any>, keyState: KeyState): void {
+        console.log("handling input:", params, keyState);
         if (this.setKeyOnNextInputActive && this.setKeyOnNextInputName !== null && this.setKeyOnNextInputReplace !== null && this.setKeyOnNextInputResolve !== null) {
             // Set the key binding
             this.bindKey(this.setKeyOnNextInputName, params, this.setKeyOnNextInputReplace);
