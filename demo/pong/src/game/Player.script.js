@@ -4,11 +4,6 @@
 
 import { Script, Time, Engine } from "jsge-core";
 import { Transform, TransformComponent } from "jsge-module-graphics2d";
-import { InputModule, INPUT_MODULE_ID } from "jsge-module-input";
-
-const inputModule = Engine.getModuleByID<InputModule>(INPUT_MODULE_ID);
-
-console.log("Input Module:", inputModule, INPUT_MODULE_ID);
 
 export class PlayerScript extends Script {
     constructor({...params} = {}) {
@@ -33,16 +28,16 @@ export class PlayerScript extends Script {
         const transform = this._transform.value;
         transform.position.add(this.accel.position);
 
-        if (inputModule.getKey("up")) {
+        if (Engine.modules.input.getKey("up")) {
             this.accel.position.y = moveDelta * -1;
-        } else if (inputModule.getKey("down")) {
+        } else if (Engine.modules.input.getKey("down")) {
             this.accel.position.y = moveDelta;
         } else {
             this.accel.position.y = 0;
         }
-        if (inputModule.getKey("left")) {
+        if (Engine.modules.input.getKey("left")) {
             this.accel.position.x = moveDelta * -1;
-        } else if (inputModule.getKey("right")) {
+        } else if (Engine.modules.input.getKey("right")) {
             this.accel.position.x = moveDelta;
         } else {
             this.accel.position.x = 0;

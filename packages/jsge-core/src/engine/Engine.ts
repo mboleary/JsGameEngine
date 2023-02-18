@@ -8,6 +8,7 @@ import { EngineHotloopManager } from "./EngineHotloopManager";
 import { GameObject } from "../GameObject";
 import { EngineDebugManager } from "./EngineDebugManager";
 import { ScriptManagerModule } from "../modules/ScriptManager.module";
+import { EngineModules } from "../types";
 
 export type EngineInitializationParams = {
     modules: ModuleBase[];
@@ -26,12 +27,11 @@ export class Engine {
     /**
      * Returns all modules
      */
-    public static get modules(): ModuleBase[] {
+    public static get modules(): EngineModules {
         return this.moduleManager.getModules();
     }
 
     public static getModuleByID<T extends ModuleBase>(id: string): T | null {
-        console.log("This is a test");
         return this.moduleManager.getModuleByID(id) as T;
     }
 

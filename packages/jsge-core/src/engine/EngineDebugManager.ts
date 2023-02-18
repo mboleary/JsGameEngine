@@ -2,7 +2,7 @@
  * Contains debug helper functions
  */
 import { EngineInternalModuleManager } from "./EngineInternalModuleManager";
-import { ModuleDebugInterface, EngineDebugInterface, GlobalDebugInterface } from "../types";
+import { EngineModules, EngineDebugInterface, GlobalDebugInterface } from "../types";
 import { EngineGameObjectManager } from "./EngineGameObjectManager";
 import { EngineTimeInterface } from "./EngineTimeInterface";
 
@@ -25,7 +25,7 @@ export class EngineDebugManager {
                 return EngineGameObjectManager.getGameObjects();
             },
             get modules() {
-                return EngineInternalModuleManager.getModules();
+                return EngineInternalModuleManager.getModuleArray();
             },
             time: EngineTimeInterface,
         };
@@ -35,15 +35,7 @@ export class EngineDebugManager {
         return engineObject;
     }
 
-    private static buildModuleDebug(): ModuleDebugInterface {
-        const debugObject: ModuleDebugInterface = {};
-
-        for (const module of EngineInternalModuleManager.getModules()) {
-            if (module.debugName) {
-                debugObject[module.debugName] = module.debug();
-            }
-        }
-
-        return debugObject;
+    private static buildModuleDebug(): EngineModules {
+        return EngineInternalModuleManager.getModules();
     }
 }

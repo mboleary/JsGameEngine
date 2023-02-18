@@ -3,6 +3,7 @@
  */
 
 import { ModuleBase } from "../ModuleBase";
+import { EngineModules } from "../types";
 
 export class EngineInternalModuleManager {
     public static readonly initFunctions: Function[] = [];
@@ -38,13 +39,16 @@ export class EngineInternalModuleManager {
         this._allowModuleLoading = false;
     }
 
-    public static getModules(): ModuleBase[] {
+    public static getModules(): EngineModules {
+        return Object.fromEntries(this.modules);
+    }
+
+    public static getModuleArray(): ModuleBase[] {
         return Array.from(this.modules.values());
     }
 
     public static getModuleByID(id: string): ModuleBase | null {
         const toRet = this.modules.get(id);
-        console.log("test", toRet);
         return toRet || null;
     }
 }
