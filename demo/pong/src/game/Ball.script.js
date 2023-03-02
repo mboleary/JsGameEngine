@@ -5,9 +5,7 @@
 import { Script, Engine, Time } from "jsge-core";
 import { Transform, TransformComponent } from "jsge-module-graphics2d";
 
-import { deg2rad, randInt } from "../util";
-
-import { PongBall } from "./PongBall.renderscript";
+import { deg2rad, randInt, randColor } from "../util";
 
 const REFLECTIONS = Object.freeze({
     DEFAULT: -1,
@@ -22,6 +20,8 @@ export class BallScript extends Script {
         super({...params});
 
         this.accel = new Transform();
+
+        this.changeColorOnReflect = true;
 
         this.speed = 3;
         this.isMoving = false;
@@ -68,6 +68,7 @@ export class BallScript extends Script {
                 // let newDir = ((180 - this.direction) + 180) % 360
                 let newDir = ((90 - this.direction) + 270) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
+                this._onReflect();
             } else if (
                 transform.position.y + radius >= this._cameraComponent.viewportHeight &&
                 this._lastReflectionSide !== REFLECTIONS.BOTTOM
@@ -78,6 +79,7 @@ export class BallScript extends Script {
                 // let newDir = (90 - (180 - this.direction)) % 360;
                 let newDir = ((270 - this.direction) + 270 + 180) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
+                this._onReflect();
             }
             
             if (
@@ -90,6 +92,7 @@ export class BallScript extends Script {
                 // let newDir = ((270 - this.direction) + 270) % 360;
                 let newDir = ((360 - this.direction) + 360 + 180) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
+                this._onReflect();
             } else if (
                 transform.position.x + radius >= this._cameraComponent.viewportWidth &&
                 this._lastReflectionSide !== REFLECTIONS.RIGHT
@@ -100,6 +103,7 @@ export class BallScript extends Script {
                 // let newDir = (this.direction + 90) % 360;
                 let newDir = ((180 - this.direction) + 180 + 180) % 360;
                 this.direction = newDir > 0 ? newDir : 360 + newDir;
+                this._onReflect();
             }
 
             const rad = deg2rad(this.direction);
@@ -107,6 +111,12 @@ export class BallScript extends Script {
             this.accel.position.y = Math.sin(rad) * moveDelta;
 
             transform.position.add(this.accel.position);
+        }
+    }
+
+    _onReflect() {
+        if (this.changeColorOnReflect) {
+            this._pongBallRenderScript.color = randColor();
         }
     }
 

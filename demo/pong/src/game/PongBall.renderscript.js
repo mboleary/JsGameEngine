@@ -54,6 +54,7 @@ export class PongBall extends RenderScript {
             this.color
         );
 
+        // Because `this._drawCircle` changes the `fillStyle`, we need to set it back to the original value
         context.fillStyle = oldFillstyle;
 
         if (this.trail) {
