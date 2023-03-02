@@ -2,7 +2,7 @@ import { InputSubmodule } from "../types/InputSubmodule";
 import { ControlType } from "../types/ControlType.enum";
 import { KeyState } from "../types";
 
-const CONTROLLER_NUMBER = 0;
+export const KEYBOARD_CONTROLLER_NUMBER = 0;
 
 export class KeyboardSubmodule extends InputSubmodule {
     readonly needsPolling = false;
@@ -21,7 +21,7 @@ export class KeyboardSubmodule extends InputSubmodule {
                 value: 1
             };
             this.inputCallback({
-                controller: CONTROLLER_NUMBER,
+                controller: KEYBOARD_CONTROLLER_NUMBER,
                 submodule: this.name,
                 code: event.key,
                 name: event.key
@@ -38,7 +38,7 @@ export class KeyboardSubmodule extends InputSubmodule {
                 value: 0
             };
             this.inputCallback({
-                controller: CONTROLLER_NUMBER,
+                controller: KEYBOARD_CONTROLLER_NUMBER,
                 submodule: this.name,
                 code: event.key,
                 name: event.key

@@ -1,4 +1,4 @@
-import { InputModule, KeyboardSubmodule, ControlType, Direction } from "jsge-module-input";
+import { InputModule, KeyboardSubmodule, ControlType, Direction, KEYBOARD_CONTROLLER_NUMBER } from "jsge-module-input";
 
 const keyboardSubmoduleInstance = new KeyboardSubmodule();
 
@@ -14,7 +14,7 @@ export const inputModuleInstance = new InputModule({
             mappings: [
                 {
                     submodule: keyboardSubmoduleInstance.name,
-                    controller: 1,
+                    controller: KEYBOARD_CONTROLLER_NUMBER,
                     code: " ",
                     name: " "
                 }
@@ -27,7 +27,7 @@ export const inputModuleInstance = new InputModule({
             mappings: [
                 {
                     submodule: keyboardSubmoduleInstance.name,
-                    controller: 1,
+                    controller: KEYBOARD_CONTROLLER_NUMBER,
                     code: "ArrowUp",
                     name: "ArrowUp"
                 }
@@ -40,7 +40,7 @@ export const inputModuleInstance = new InputModule({
             mappings: [
                 {
                     submodule: keyboardSubmoduleInstance.name,
-                    controller: 1,
+                    controller: KEYBOARD_CONTROLLER_NUMBER,
                     code: "ArrowDown",
                     name: "ArrowDown"
                 }
@@ -53,7 +53,7 @@ export const inputModuleInstance = new InputModule({
             mappings: [
                 {
                     submodule: keyboardSubmoduleInstance.name,
-                    controller: 1,
+                    controller: KEYBOARD_CONTROLLER_NUMBER,
                     code: "ArrowLeft",
                     name: "ArrowLeft"
                 }
@@ -66,7 +66,7 @@ export const inputModuleInstance = new InputModule({
             mappings: [
                 {
                     submodule: keyboardSubmoduleInstance.name,
-                    controller: 1,
+                    controller: KEYBOARD_CONTROLLER_NUMBER,
                     code: "ArrowRight",
                     name: "ArrowRight"
                 }

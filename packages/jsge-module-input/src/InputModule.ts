@@ -356,6 +356,7 @@ export class InputModule extends ModuleBase {
             this.setKeyOnNextInputReplace = null;
         }
         const submodDefMap = this.keyMappings.get(params.submodule);
+        console.log({submodDefMap});
         if (submodDefMap) {
             const controllerDefMap = submodDefMap.get(params.controller);
             if (controllerDefMap) {
@@ -364,8 +365,14 @@ export class InputModule extends ModuleBase {
                     for (const {name, modifier} of buttonMappings) {
                         this.setButtonState(name, keyState, modifier);
                     }
+                } else {
+                    console.warn(`Input Module: button ${params.name} not mapped for controller ${params.controller} in submodule ${params.submodule}`);
                 }
+            } else {
+                console.warn(`Input Module: controller ${params.controller} not bound in submodule ${params.submodule}`);
             }
+        } else {
+            console.warn(`Input Module: Submodule ${params.submodule} not bound in keyMappings`);
         }
     }
 
