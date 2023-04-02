@@ -61,13 +61,13 @@ export class EngineHotloopManager {
      * This calls the hotloop and registers the callback for the next animation frame
      */
     private static main(): void {
-        this.stopReference = window.requestAnimationFrame(this.main.bind(this));
         try {
             this.loop();
         } catch (err) {
             console.error("Error thrown in main loop:", err);
             this.stopLoop();
         }
+        this.stopReference = window.requestAnimationFrame(this.main.bind(this));
     }
 
     /**
