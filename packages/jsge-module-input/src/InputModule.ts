@@ -21,7 +21,7 @@ type ButtonMapping = {
 // Threshold of pushing a button if it's bound to an axis
 const A2D_THRESHOLD = 0.5;
 
-export const INPUT_MODULE_ID = "input";
+export const INPUT_MODULE_ID = "jsge.module.input";
 
 export class InputModule extends ModuleBase {
     readonly _name = "Input";

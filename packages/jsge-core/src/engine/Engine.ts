@@ -9,6 +9,7 @@ import { GameObject } from "../GameObject";
 import { EngineDebugManager } from "./EngineDebugManager";
 import { ScriptManagerModule } from "../modules/ScriptManager.module";
 import { EngineModules } from "../types";
+import { EngineEventManager } from "./EventEventManager";
 
 export type EngineInitializationParams = {
     modules: ModuleBase[];
@@ -19,20 +20,16 @@ export type EngineInitializationParams = {
 export class Engine {
     public static assetLoader = AssetLoader;
     private static initialized = false;
-    private static moduleManager = EngineInternalModuleManager;
-    private static gameObjectManager = EngineGameObjectManager;
-    private static hotloopManager = EngineHotloopManager;
-    private static debugManager = EngineDebugManager;
 
     /**
      * Returns all modules
      */
     public static get modules(): EngineModules {
-        return this.moduleManager.getModules();
+        return EngineInternalModuleManager.getModules();
     }
 
     public static getModuleByID<T extends ModuleBase>(id: string): T | null {
-        return this.moduleManager.getModuleByID(id) as T;
+        return EngineInternalModuleManager.getModuleByID(id) as T;
     }
 
     /**
@@ -45,63 +42,68 @@ export class Engine {
 
         this.initialized = true;
 
-        this.moduleManager.add(new ScriptManagerModule());
+        EngineInternalModuleManager.add(new ScriptManagerModule());
         
         // load modules
         for (const module of modules) {
-            this.moduleManager.add(module);
+            EngineInternalModuleManager.add(module);
         }
 
         // @TODO set debug flags, setup debug
         if (debug) {
-            this.debugManager.buildDebug();
+            EngineDebugManager.buildDebug();
         }
 
-        this.moduleManager.lockModules();
-
-        
+        EngineInternalModuleManager.lockModules();
 
         // Add asset loaders
-        Object.keys(ASSET_LOADERS).forEach((key:string) => this.assetLoader.addLoader(ASSET_LOADERS[key]));
+        Object.keys(ASSET_LOADERS).forEach((key:string) => AssetLoader.addLoader(ASSET_LOADERS[key]));
+
+        EngineEventManager.callInitFunctions();
     }
 
     public static start(): void {
         // initialize modules
-        for (const initFunc of this.moduleManager.initFunctions) {
+        for (const initFunc of EngineInternalModuleManager.initFunctions) {
             initFunc();
         }
 
         // start gameloop
-        this.hotloopManager.startLoop();
+        EngineHotloopManager.startLoop();
     }
 
     // GameObject-related functions
     public static setCurrentScene(scene: Scene): void {
-        this.gameObjectManager.setCurrentScene(scene);
+        EngineGameObjectManager.setCurrentScene(scene);
     }
 
     public static getCurrentScene() {
-        return this.gameObjectManager.getCurrentScene();
+        return EngineGameObjectManager.getCurrentScene();
     }
 
     public static enrollGameObject(go: GameObject) {
-        return this.gameObjectManager.enrollGameObject(go);
+        return EngineGameObjectManager.enrollGameObject(go);
     }
 
     public static deleteGameObject(go: GameObject) {
-        return this.gameObjectManager.deleteGameObject(go);
+        return EngineGameObjectManager.deleteGameObject(go);
     }
 
     public static getGameObjectByID(id: string) {
-        return this.gameObjectManager.getGameObjectByID(id);
+        return EngineGameObjectManager.getGameObjectByID(id);
     }
 
     public static getGameObjectByName(name: string) {
-        return this.gameObjectManager.getGameObjectByName(name);
+        return EngineGameObjectManager.getGameObjectByName(name);
     }
 
     public static getGameObjectByGroup(group: string) {
-        return this.gameObjectManager.getGameObjectByGroup(group);
+        return EngineGameObjectManager.getGameObjectByGroup(group);
+    }
+
+    // Engine-based event handling
+    public static onInit(func: Function) {
+        return EngineEventManager.onInit(func);
     }
 
 }
