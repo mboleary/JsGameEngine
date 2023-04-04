@@ -57,28 +57,23 @@ export function loadGameScene() {
 
     scene.attachGameObject(rightPaddle);
 
-    // const num = randInt(1,1000);
-    const num = 1000;
-    console.log("Number of balls:", num);
-    for (let i = 0; i < num; i++) {
-        const ball = new GameObject();
-        ball.name = "Ball " + num;
-        const b_scr = new BallScript();
-        b_scr.speed = 5;
-        const b_cir = new PongBall();
-        b_cir.size = 50;
-        b_cir.name = "ball_render";
-        b_cir.trail = false;
-        const b_tr = new TransformComponent();
-        b_tr.value.position.x = 100;
-        b_tr.value.position.y = 400;
+    const ball = new GameObject();
+    ball.name = "Ball";
+    const b_scr = new BallScript();
+    b_scr.speed = 5;
+    const b_cir = new PongBall();
+    b_cir.size = 50;
+    b_cir.name = "ball_render";
+    b_cir.trail = false;
+    const b_tr = new TransformComponent();
+    b_tr.value.position.x = 100;
+    b_tr.value.position.y = 400;
 
-        ball.attachComponent(b_scr);
-        ball.attachComponent(b_cir);
-        ball.attachComponent(b_tr);
+    ball.attachComponent(b_scr);
+    ball.attachComponent(b_cir);
+    ball.attachComponent(b_tr);
 
-        scene.attachGameObject(ball);
-    }
+    scene.attachGameObject(ball);
 
     const camera = new GameObject();
     camera.name = "camera";

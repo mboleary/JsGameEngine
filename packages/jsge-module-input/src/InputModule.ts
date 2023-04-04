@@ -339,8 +339,6 @@ export class InputModule extends ModuleBase {
         // keyValue.minValue = pressedKeyState.minValue;
         // keyValue.maxValue = pressedKeyState.maxValue;
         keyValue.rawValue = pressedKeyState.rawValue;
-
-        console.log(keyValue);
     }
 
     /**
