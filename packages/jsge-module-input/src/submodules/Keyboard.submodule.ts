@@ -12,7 +12,6 @@ export class KeyboardSubmodule extends InputSubmodule {
     }
 
     private handleKeydown(event:KeyboardEvent) {
-        console.log("keydown:", event, this.callbacksAssigned);
         if (this.callbacksAssigned) {
             const keyState: KeyState = {
                 rawValue: 1,
@@ -47,7 +46,6 @@ export class KeyboardSubmodule extends InputSubmodule {
     }
 
     public init() {
-        console.log("test");
         window.addEventListener('keydown', this.handleKeydown.bind(this));
         window.addEventListener('keyup', this.handleKeyup.bind(this));
     }

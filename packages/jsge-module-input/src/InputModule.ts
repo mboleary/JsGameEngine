@@ -103,7 +103,6 @@ export class InputModule extends ModuleBase {
      */
     public connectSubmodule(submodule: InputSubmodule) {
         if (!this.connectedSubmodules.has(submodule.name)) {
-            console.log("connecting submodule:", submodule);
             submodule.connect({
                 inputCallback: this.inputHandler.bind(this),
                 controllerConnectCallback: this.controllerConnectHandler,
@@ -126,11 +125,11 @@ export class InputModule extends ModuleBase {
      * Returns the state of the key
      * @param name 
      */
-    public getKey(name: string): KeyState {
+    public getKey(name: string): number {
         const toRet = this.keyValues.get(name);
 
         if (toRet) {
-            return toRet;
+            return toRet.value;
         }
 
         throw new InvalidKeyNameError(`'${name}' is not a valid key!`);
@@ -240,6 +239,7 @@ export class InputModule extends ModuleBase {
 
             let submodDefMap, controllerDefMap, buttonMappings: ButtonMapping[];
 
+            // Check for Submodule
             if (this.keyMappings.has(mapping.submodule)) {
                 submodDefMap = this.keyMappings.get(mapping.submodule);
             } else {
@@ -248,6 +248,7 @@ export class InputModule extends ModuleBase {
             }
 
             if (submodDefMap) {
+                // Check for controller
                 if (submodDefMap.has(mapping.controller)) {
                     controllerDefMap = submodDefMap.get(mapping.controller);
                 } else {
@@ -256,11 +257,12 @@ export class InputModule extends ModuleBase {
                 }
 
                 if (controllerDefMap) {
-                    if (controllerDefMap.has(mapping.controller)) {
-                        buttonMappings = controllerDefMap.get(mapping.controller);
+                    // Check the button code
+                    if (controllerDefMap.has(mapping.code)) {
+                        buttonMappings = controllerDefMap.get(mapping.code);
                     } else {
                         buttonMappings = [];
-                        controllerDefMap.set(mapping.controller, buttonMappings);
+                        controllerDefMap.set(mapping.code, buttonMappings);
                     }
 
                     buttonMappings.push({
@@ -317,23 +319,25 @@ export class InputModule extends ModuleBase {
 
         let value = 0;
 
-        if (keyValue.minValue === 0 && keyValue.maxValue === 1 && keyValue.rawValue >= 0 && keyValue.rawValue <= 1) {
-            value = keyValue.rawValue * modifier;
-        } else if (keyValue.minValue === -1 && keyValue.maxValue === 1 && keyValue.rawValue >= -1 && keyValue.rawValue <= 1) {
-            value = keyValue.rawValue * modifier;
-        } else {
-            value = ((keyValue.rawValue - keyValue.minValue) / (keyValue.maxValue - keyValue.minValue)) * modifier;
-        }
+        // @TODO unbreak modifiers at some point
+        // if (keyValue.minValue === 0 && keyValue.maxValue === 1 && keyValue.rawValue >= 0 && keyValue.rawValue <= 1) {
+        //     value = keyValue.rawValue * modifier;
+        // } else if (keyValue.minValue === -1 && keyValue.maxValue === 1 && keyValue.rawValue >= -1 && keyValue.rawValue <= 1) {
+        //     value = keyValue.rawValue * modifier;
+        // } else {
+        //     value = ((keyValue.rawValue - keyValue.minValue) / (keyValue.maxValue - keyValue.minValue)) * modifier;
+        // }
 
         if (destKeydef.type === ControlType.DIGITAL) {
-            value = value > A2D_THRESHOLD ? 1 : 0;
+            value = value > A2D_THRESHOLD ? 0 : 1;
         } else {
             value = clamp(value, -1, 1);
         }
 
-        keyValue.value = value;
-        keyValue.minValue = pressedKeyState.minValue;
-        keyValue.maxValue = pressedKeyState.maxValue;
+        // keyValue.value = value;
+        keyValue.value = pressedKeyState.rawValue; // Temp fix for now
+        // keyValue.minValue = pressedKeyState.minValue;
+        // keyValue.maxValue = pressedKeyState.maxValue;
         keyValue.rawValue = pressedKeyState.rawValue;
 
         console.log(keyValue);
@@ -346,7 +350,6 @@ export class InputModule extends ModuleBase {
      * @param controlType 
      */
     private inputHandler(params: KeyMapping<any>, keyState: KeyState): void {
-        console.log("handling input:", params, keyState);
         if (this.setKeyOnNextInputActive && this.setKeyOnNextInputName !== null && this.setKeyOnNextInputReplace !== null && this.setKeyOnNextInputResolve !== null) {
             // Set the key binding
             this.bindKey(this.setKeyOnNextInputName, params, this.setKeyOnNextInputReplace);
@@ -355,12 +358,14 @@ export class InputModule extends ModuleBase {
             this.setKeyOnNextInputName = null;
             this.setKeyOnNextInputReplace = null;
         }
+        // Check submodule
         const submodDefMap = this.keyMappings.get(params.submodule);
-        console.log({submodDefMap});
         if (submodDefMap) {
+            // Check controller number
             const controllerDefMap = submodDefMap.get(params.controller);
             if (controllerDefMap) {
-                const buttonMappings = controllerDefMap.get(params.name);
+                // Check button code
+                const buttonMappings = controllerDefMap.get(params.code);
                 if (buttonMappings) {
                     for (const {name, modifier} of buttonMappings) {
                         this.setButtonState(name, keyState, modifier);
