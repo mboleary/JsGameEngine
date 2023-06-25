@@ -77,3 +77,334 @@
 {"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
 {"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
 {"level":"debug","message":"SELECT * FROM room   ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room   ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /null [object Object]: 16879.59635400027","service":"jsge-multiplayer-websocket-server"}
+{"0":"null","level":"debug","message":"SELECT * FROM room WHERE uuid = ? ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]: 32919.206656999886","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]: 2215.4086330011487","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]: 56834.67603300512","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]: 1172.5148460045457","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]: 2709.229816004634","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]: 9701.677441000938","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]: 10406.474024005234","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room   ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"error","message":"Uncaught error /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room   ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"error","message":"Uncaught error /a {}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"error","message":"Uncaught error /a {}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"error","message":"Uncaught error /a {}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] / [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room   ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] / [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room   ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"level":"debug","message":"INSERT INTO room (name, open, private) VALUES (?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS room (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nprivate INTEGER ,\nname TEXT ,\ncode TEXT ,\nclientLimit INTEGER ,\nopen INTEGER \n            );\nCREATE UNIQUE INDEX idx_room_uuid ON room(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":"test","1":true,"2":false,"3":"6ea919d1-2bc2-4aef-a2d4-b5715d1f91e7","level":"debug","message":"INSERT INTO room (name, open, private, uuid) VALUES (?,?,?,?)","service":"jsge-multiplayer-websocket-server"}
+{"level":"info","message":"Server listening on port 8080","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"Connected to in-memory sqlite db","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"CREATE TABLE IF NOT EXISTS persisted_entity (\n                id INTEGER PRIMARY KEY,\nuuid TEXT ,\nownerUuid TEXT \n            );\nCREATE UNIQUE INDEX persisted_entity_uuid ON persisted_entity(uuid);","service":"jsge-multiplayer-websocket-server"}
+{"0":1,"level":"debug","message":"SELECT * FROM room WHERE id = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /a [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"a","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}
+{"level":"warn","message":"HTTP Error caught /a {\"httpCode\":404,\"code\":\"room.get_one.not_found\",\"message\":\"Room could not be found\"}","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] / [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"SELECT * FROM room   ","service":"jsge-multiplayer-websocket-server"}
+{"level":"debug","message":"[GET] /6ea919d1-2bc2-4aef-a2d4-b5715d1f91e7 [object Object]","service":"jsge-multiplayer-websocket-server"}
+{"0":"6ea919d1-2bc2-4aef-a2d4-b5715d1f91e7","level":"debug","message":"SELECT * FROM room WHERE uuid = ? LIMIT 1","service":"jsge-multiplayer-websocket-server"}

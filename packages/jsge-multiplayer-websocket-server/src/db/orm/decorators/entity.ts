@@ -3,9 +3,6 @@
  */
 
 import { getEntityProperties, registerEntity } from "../internals/typeTracker";
-import { DB_TYPES } from "../types/dbTypes.enum";
-
-
 
 /**
  * Put this decorator on a class to turn it into an Entity
@@ -14,8 +11,8 @@ import { DB_TYPES } from "../types/dbTypes.enum";
  */
 export function DBEntity(tableName: string): Function {
     return (target: FunctionConstructor) => {
+        console.log('DBEntity target:', target);
         const properties = getEntityProperties(target);
-        console.log("DBEntity", properties);
         if (properties) {
             properties.table = tableName;
         } else {

@@ -9,18 +9,19 @@ import cors from "cors";
 
 import { logger } from "../logger";
 
-import roomsRouter from "./rooms.router";
+import {RoomsRouter} from "./rooms.router";
 
 import { config } from "../config";
+import { connectRouter } from "./framework/decorators/router";
 
 export function initHTTPServer() {
     const app = express();
     app.use(express.json());
     app.use(cors());
-
-    app.use('/rooms', roomsRouter);
     
     const server = http.createServer();
+
+    connectRouter(app, new RoomsRouter());
 
     server.on('request', app);
 

@@ -1,0 +1,7 @@
+export enum HTTP_DATA_TYPES {
+    NUMBER = "NUMBER",
+    STRING = "STRING",
+    BOOLEAN = "BOOLEAN",
+    OBJECT = "OBJECT",
+    ARRAY = "ARRAY"
+}
