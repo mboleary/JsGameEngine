@@ -1,2 +1,0 @@
-{"level":"info","message":"Server listening on port 8080","service":"user-service"}
-{"level":"info","message":"Server listening on port 8080","service":"user-service"}
