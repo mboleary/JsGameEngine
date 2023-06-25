@@ -18,4 +18,5 @@ export type EntityField = {
     nullable: boolean,
     pk: boolean,
     readonly: boolean;
+    unique: boolean;
 }

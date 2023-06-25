@@ -14,3 +14,4 @@ export const db = new sqlite3.Database(':memory:', (err) => {
     }
     logger.debug('Connected to in-memory sqlite db');
 });
+

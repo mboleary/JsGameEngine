@@ -5,5 +5,6 @@ export const entityFieldDefaults: EntityField = {
     type: null,
     nullable: true,
     pk: false,
-    readonly: false
+    readonly: false,
+    unique: false,
 }

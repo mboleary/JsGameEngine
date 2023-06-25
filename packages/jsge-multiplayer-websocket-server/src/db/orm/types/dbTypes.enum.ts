@@ -1,5 +1,5 @@
 export enum DB_TYPES {
-    INTEGER = "INETEGER",
+    INTEGER = "INTEGER",
     REAL = "REAL",
     TEXT = "TEXT",
     BLOB = "BLOB"
