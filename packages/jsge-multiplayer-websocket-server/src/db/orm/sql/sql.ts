@@ -30,7 +30,7 @@ export class SQL {
         let sqlRows: string[] = [];
 
         for (const index of properties.indexes) {
-            sqlRows.push(`CREATE ${index.unique ? 'UNIQUE': ''} INDEX ${index.name} ON ${properties.table}(${index.field});`);
+            sqlRows.push(`CREATE ${index.unique ? 'UNIQUE': ''} INDEX ${index.name} ON ${resolveTableName(properties)}(${index.field});`);
         }
 
         return {
@@ -42,7 +42,7 @@ export class SQL {
         const keys = commonKeys(Object.keys(properties.keys), Object.keys(parameters));
 
         return {
-            sql: `INSERT INTO ${properties.table} (${keys.join(', ')}) VALUES (${keys.map(val => '?').join(',')})`,
+            sql: `INSERT INTO ${resolveTableName(properties)} (${keys.join(', ')}) VALUES (${keys.map(val => '?').join(',')})`,
             params: keys.map((key: string) => parameters[key as keyof T])
         };
     }
@@ -51,7 +51,7 @@ export class SQL {
         const keys = commonKeys(Object.keys(properties.keys), Object.keys(whereParameters));
 
         return {
-            sql: `SELECT * FROM ${properties.table} WHERE ${keys.map(val => `${val} = ?`)} ${options?.limit ? `LIMIT ${options.limit}`: ''}`,
+            sql: `SELECT * FROM ${resolveTableName(properties)} ${keys.length > 0 ? 'WHERE': ''} ${keys.map(val => `${val} = ?`)} ${options?.limit ? `LIMIT ${options.limit}`: ''}`,
             params: keys.map((key: string) => whereParameters[key as keyof T])
         };
     }
@@ -63,7 +63,7 @@ export class SQL {
         const params = (updateKeys.map(k => updateParameters[k as keyof T])).concat(whereKeys.map(k => whereParameters[k as keyof T]));
 
         return {
-            sql: `UPDATE ${properties.table} SET ${
+            sql: `UPDATE ${resolveTableName(properties)} SET ${
                 updateKeys.map(key => `${key} = ?`).join(',')
             } WHERE ${
                 whereKeys.map(key => `${key} = ?`).join(',')
@@ -76,7 +76,7 @@ export class SQL {
         const keys = commonKeys(Object.keys(properties.keys), Object.keys(whereParameters));
 
         return {
-            sql: `DELETE FROM ${properties.table} WHERE ${keys.map(k => `${k} = ?`)} ${options?.limit ? `LIMIT ${options.limit}`: ''}`,
+            sql: `DELETE FROM ${resolveTableName(properties)} WHERE ${keys.map(k => `${k} = ?`)} ${options?.limit ? `LIMIT ${options.limit}`: ''}`,
             params: keys.map((key: string) => whereParameters[key as keyof T])
         };
     }

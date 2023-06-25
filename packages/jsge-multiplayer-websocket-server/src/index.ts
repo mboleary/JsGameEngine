@@ -6,26 +6,16 @@ import "./config";
 import {initHTTPServer} from "./http";
 
 // initHTTPServer();
-import { Room } from "./db";
+import { Room, initDB, models } from "./db";
 import { RoomsModel } from "./db/models";
-import { SQL } from "./db/orm";
+import { SQL } from "./db/orm/sql/sql";
 import { getEntityProperties } from "./db/orm/internals/typeTracker";
+import { db } from "./db/db";
 
-console.log(Room.prototype);
-
-const r = new Room();
-r.id = 1;
-console.log(r);
-
-console.log(Object.keys(r));
-
-// const m = new RoomsModel();
-// console.log(m);
-
-// m.init();
-
-const roomProps = getEntityProperties(r.constructor as FunctionConstructor);
-
-if (roomProps) {
-    console.log(SQL.createTable(roomProps))
+async function main() {
+    initDB();
+    models.get('room')?.insert({name: 'test', private: false, open: true});
+    initHTTPServer();
 }
+
+main();

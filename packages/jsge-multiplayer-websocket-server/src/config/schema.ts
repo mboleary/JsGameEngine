@@ -22,6 +22,11 @@ const schema = {
         env: 'PORT',
         arg: 'port'
     },
+    logLevel: {
+        doc: 'Level in which to log',
+        format: ['debug', 'info', 'warn', 'error'],
+        default: 'debug'
+    }
 };
 
 export default schema;

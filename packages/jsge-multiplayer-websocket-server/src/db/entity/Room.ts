@@ -15,7 +15,7 @@ export class Room {
     id: number = 0;
     
     @Text()
-    @Index('room_uuid', true)
+    @Index('idx_room_uuid', true)
     @ReadOnly()
     uuid: string = "";
 
@@ -33,7 +33,7 @@ export class Room {
 
     // Client limit
     @Integer()
-    limit: number = 0;
+    clientLimit: number = 0;
 
     // Room is available to be joined
     @Integer()
