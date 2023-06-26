@@ -15,7 +15,6 @@ export class RoomsRouter {
     async getOne(
         @Param('id') id: string,
     ): Promise<Room> {
-        console.log("uuid param:", id);
         const data = await models.get('room')?.findOne({uuid: id});
         if (!data) {
             throw new HTTPNotFoundError("Room could not be found", "room.get_one.not_found");

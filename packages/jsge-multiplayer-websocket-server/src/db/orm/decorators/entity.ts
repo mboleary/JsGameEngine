@@ -11,7 +11,6 @@ import { getEntityProperties, registerEntity } from "../internals/typeTracker";
  */
 export function DBEntity(tableName: string): Function {
     return (target: FunctionConstructor) => {
-        console.log('DBEntity target:', target);
         const properties = getEntityProperties(target);
         if (properties) {
             properties.table = tableName;

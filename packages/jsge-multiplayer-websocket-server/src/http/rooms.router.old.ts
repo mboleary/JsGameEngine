@@ -17,7 +17,6 @@ router.get('/:id', async (req, res) => {
     }
     try {
         const data = await models.get('room')?.findOne({uuid: req.params.id});
-        console.log("test");
         if (!data) {
             throw new HTTPNotFoundError("Room could not be found", "room.get_one.not_found");
         }

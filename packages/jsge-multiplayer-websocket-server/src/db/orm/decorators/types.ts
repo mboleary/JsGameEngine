@@ -118,7 +118,6 @@ export function PrimaryKey(): Function {
     return (target: any, propertyKey: string) => {
         const properties = getEntityProperties(target.constructor);
         if (properties) {
-            console.log(properties);
             const key = properties.keys[propertyKey];
             if (key) {
                 key.pk = true;

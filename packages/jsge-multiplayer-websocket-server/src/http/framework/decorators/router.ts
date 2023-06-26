@@ -18,10 +18,8 @@ export type RouteableClass = {
 
 export function Router(path: string): Function {
     // note that this should be called after routes are registered
-    console.log("eval Router");
     return (target: any, propertyKey: string) => {
         let properties = getRouterProperties(target);
-        console.log("call Router", properties, target, propertyKey);
         if (properties) {
             properties.path = path;
         } else {
@@ -38,10 +36,8 @@ export function Router(path: string): Function {
 }
 
 export function Route(method: HTTP_METHODS, path: string): Function {
-    console.log("eval Route", method, path);
     return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
         const properties = getRouterProperties(target.constructor);
-        console.log("call Route", properties, target.constructor, propertyKey, descriptor);
         if (properties) {
             const key = properties.routes[propertyKey];
             if (key) {
@@ -74,9 +70,7 @@ export function Route(method: HTTP_METHODS, path: string): Function {
 }
 
 export function Param(name: string): Function {
-    console.log("Param eval", name);
     return (target: any, propertyKey: string, parameterIndex: number) => {
-        console.log("Param:", target.constructor, propertyKey, parameterIndex);
         const properties = getRouterProperties(target.constructor);
         if (properties) {
             const key = properties.routes[propertyKey];
@@ -116,9 +110,7 @@ export function Param(name: string): Function {
 }
 
 export function Body(): Function {
-    console.log("Body eval");
     return (target: any, propertyKey: string, parameterIndex: number) => {
-        console.log("Body:", target.constructor, propertyKey, parameterIndex);
         const properties = getRouterProperties(target.constructor);
         if (properties) {
             const key = properties.routes[propertyKey];
@@ -158,9 +150,7 @@ export function Body(): Function {
 }
 
 export function Request(): Function {
-    console.log("Body eval");
     return (target: any, propertyKey: string, parameterIndex: number) => {
-        console.log("Body:", target.constructor, propertyKey, parameterIndex);
         const properties = getRouterProperties(target.constructor);
         if (properties) {
             const key = properties.routes[propertyKey];
@@ -200,9 +190,7 @@ export function Request(): Function {
 }
 
 export function Response(): Function {
-    console.log("Body eval");
     return (target: any, propertyKey: string, parameterIndex: number) => {
-        console.log("Body:", target.constructor, propertyKey, parameterIndex);
         const properties = getRouterProperties(target.constructor);
         if (properties) {
             const key = properties.routes[propertyKey];
@@ -243,7 +231,6 @@ export function Response(): Function {
 
 export function connectRouter(app: express.Application, instance: any): void {
     const router = (instance as RouteableClass);
-    console.log("connectRouter", router);
     app.use(router.__path, router.__router);
 
 }
@@ -251,16 +238,10 @@ export function connectRouter(app: express.Application, instance: any): void {
 function buildRoutes(properties: HTTPRouterProperties, target: any) {
     const router = express.Router();
 
-    console.log("buildRoutes properties", properties, target);
-
     for (const key of Object.keys(properties.routes)) {
         const route = properties.routes[key];
 
-        console.log("buildRoutes", route);
-
         if (!route.handler) continue;
-
-        
 
         if (route.method === HTTP_METHODS.GET) {
             router.get(route.path, (req, res) => routeHandler(req, res, route.handler as Function, route.params));
@@ -288,7 +269,6 @@ async function routeHandler(req: express.Request, res: express.Response, next: F
                 functionParams.push(req.body);
                 break;
             case HTTPRouterHandlerParamTypes.PARAM:
-                console.log(req.params);
                 functionParams.push(req.params[param.key as string]);
                 break;
             case HTTPRouterHandlerParamTypes.REQUEST:
@@ -300,7 +280,6 @@ async function routeHandler(req: express.Request, res: express.Response, next: F
         }
     }
 
-    console.log("routerHandler: functionParams", functionParams, params);
     try {
         const data = await next(...functionParams);
         res.json(data);
